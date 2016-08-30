@@ -149,6 +149,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         ft.show(fm.findFragmentByTag(checkedId + ""));
         currentIndex = checkedId;
         ft.commit();
+
     }
 
 
