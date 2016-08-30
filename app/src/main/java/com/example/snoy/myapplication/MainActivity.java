@@ -124,6 +124,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         radioButtons[0].setSelected(true);
         rgTab.setOnCheckedChangeListener(this);
         initService();
+        
+
     }
 
     /**
