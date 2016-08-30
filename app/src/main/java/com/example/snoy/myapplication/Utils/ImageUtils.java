@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;
 
@@ -18,8 +17,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,10 +40,10 @@ import java.util.concurrent.Executors;
  * public long getFileSize() ;
  * 删除SD卡缓存图片
  * public void deleteFile()
- * 清除内存缓存图片 再重新分配内存
- * public void cancelCache()
- * 清除url对应的内存缓存图片
- * public void cancelBitampFromCacheByUrl(String url)
+ * 从SD卡获取图片
+ * public Bitmap getBitmapToSDCardByUrl(String url)
+ * 保存图片到SD卡
+ * public void saveBitmapToSDCardByUrl(String url, Bitmap bitmap)
  */
 public final class ImageUtils {
 
@@ -53,7 +54,7 @@ public final class ImageUtils {
     private volatile static ImageUtils imageDownLoader;
 
     //目标路径 SD卡路径 用来存储图片
-    private static final String IMAGE_PATH = Environment.getExternalStorageDirectory() + "/project_test/images/";
+    private static final String IMAGE_PATH = Environment.getExternalStorageDirectory() + "/project_helen/images/";
 
     //外界传入的ImageView
     private ImageView imageView;
@@ -100,21 +101,23 @@ public final class ImageUtils {
             @Override
             protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
                 if (evicted) {
-                    //如果被缓存移除 直接被系统回收好了
-                    if (oldValue != null && !oldValue.isRecycled()) {
-                        oldValue.recycle();
-                    }
-                    System.gc();
+                    //如果被一级缓存移除，则放入二级缓存
+                    softCache.put(key, new SoftReference<Bitmap>(oldValue));
                 }
             }
+
             // 必须重写此方法，来测量Bitmap的大小
             @Override
             protected int sizeOf(String key, Bitmap value) {
                 return value.getRowBytes() * value.getHeight();
             }
         };
-
     }
+
+    /**
+     * 二级缓存
+     */
+    private static HashMap<String, SoftReference<Bitmap>> softCache = new HashMap<String, SoftReference<Bitmap>>();
 
     /**
      * 获取线程池的方法，因为涉及到并发的问题，我们加上同步锁
@@ -148,41 +151,6 @@ public final class ImageUtils {
     }
 
     /**
-     * 清除内存缓存图片 再重新分配内存
-     */
-    public void cancelCache() {
-        if (lruCache != null) {
-            lruCache = null;
-            lruCache = new LruCache<String, Bitmap>(1024 * 1024 * MemoryNum) {
-                @Override
-                protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
-                    if (evicted) {
-                        //如果被缓存移除 直接被系统回收好了
-                        if (oldValue != null && !oldValue.isRecycled()) {
-                            oldValue.recycle();
-                        }
-                        System.gc();
-                    }
-                }
-                // 必须重写此方法，来测量Bitmap的大小
-                @Override
-                protected int sizeOf(String key, Bitmap value) {
-                    return value.getRowBytes() * value.getHeight();
-                }
-            };
-        }
-    }
-
-    /**
-     * 清除url对应的内存缓存图片
-     */
-    public void cancelBitampFromCacheByUrl(String url) {
-        if (null != lruCache.get(url)) {
-            lruCache.remove(url);
-        }
-    }
-
-    /**
      * 先从内存缓存中获取Bitmap,如果没有就从SD卡或者手机缓存中获取，SD卡或者手机缓存 没有就去下载
      */
     private static Handler handler = new Handler();
@@ -205,7 +173,7 @@ public final class ImageUtils {
                             }
                         });
                         // 保存在SD卡或者手机目录
-                        saveImage(url, bitmap);
+                        saveBitmapToSDCardByUrl(url, bitmap);
                         // 将Bitmap 加入内存缓存
                         addBitmapToMemoryCache(url, bitmap);
                     } else {
@@ -223,15 +191,31 @@ public final class ImageUtils {
      * 获取Bitmap, 内存中没有就去手机或者sd卡中获取
      */
     public Bitmap getBitmapByCache(String url) {
+        //从一级缓存中取
         Bitmap bitmap = getBitmapFromMemCache(url);
+        //从二级缓存中取
         if (bitmap == null) {
-            // 从SD卡获取手机里面获取Bitmap
-            bitmap = getImage(url);
+            if(softCache.containsKey(url)){
+                SoftReference<Bitmap> soft = softCache.get(url);
+                bitmap = soft.get();
+                if(bitmap != null){
+                    //放回一级缓存
+                    lruCache.put(url, bitmap);
+                    softCache.remove(url);
+                }
+            }
+        }
+        // 从SD卡获取手机里面获取Bitmap
+        if (bitmap==null){
+            bitmap = getBitmapToSDCardByUrl(url);
             // 将Bitmap 加入内存缓存
             addBitmapToMemoryCache(url, bitmap);
         }
         return bitmap;
     }
+
+
+
 
 
     /**
@@ -295,7 +279,7 @@ public final class ImageUtils {
     /**
      * 保存图片到拓展卡
      */
-    private void saveImage(String url, Bitmap bitmap) {
+    public void saveBitmapToSDCardByUrl(String url, Bitmap bitmap) {
         if (!isMounted())
             return;
         File file = new File(IMAGE_PATH);
@@ -311,9 +295,9 @@ public final class ImageUtils {
     }
 
     /**
-     * 获取图片
+     * 获取图片从扩展开
      */
-    private Bitmap getImage(String url) {
+    public Bitmap getBitmapToSDCardByUrl(String url) {
         if (!isMounted())
             return null;
         File file = new File(IMAGE_PATH, "" + url.hashCode());
@@ -470,6 +454,7 @@ public final class ImageUtils {
      */
     public interface OnImageUtilsListener {
         void onImageSuccess(String url, Bitmap bitmap);
+
         void onImageFailure(String url);
     }
 

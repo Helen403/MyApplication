@@ -54,17 +54,17 @@ public final class DButils {
     private static final String DB_NAME = "dbname.db";
 
     //数据库文件存放在SD卡
-    private static String DB_PATH = Environment.getExternalStorageDirectory() + "/project_test/db/";
+    private static String DB_PATH = Environment.getExternalStorageDirectory() + "/project_helen/db/";
     //数据库文件存放在默认位置
     //private static String DB_PATH = "/data/data/com.HyKj.UJiFen/databases/";
 
     /********************************************************************/
 
     //数据库表名                 ----------没什么必要不需要改
-    private static final String TABLE_NAME = "tablename";
+    private static final String TABLE_NAME = "helen_db";
 
     //数据库名                  ---------用来存储都不会变的数据
-    private static final String TABLE_NAME_FOREVER = "tablename_forever";
+    private static final String TABLE_NAME_FOREVER = "helen_db_forever";
 
 
     //SharedPreferences的文件名 ----------没什么必要不需要改
