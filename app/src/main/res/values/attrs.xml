@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ToolBar">
+        <attr name="text" format="reference"></attr>
+        <attr name="textColor" format="reference"></attr>
+        <attr name="textSize" format="dimension"></attr>
+        <attr name="width" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="Customer">
+        <attr name="src" format="reference" />
+        <attr name="label" format="reference"></attr>
+        <attr name="checked" format="boolean"></attr>
+        <attr name="value" format="integer"></attr>
+        <attr name="style">
+            <enum name="rectangle" value="1" />
+            <enum name="circle" value="2" />
+        </attr>
+    </declare-styleable>
+
+
+
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean"/>
+        <attr name="pstsTabTextSize" format="dimension" />
+        <attr name="pstsTabTextColor" format="color" />
+        <attr name="pstsTabSelectedTextSize" format="dimension" />
+        <attr name="pstsTabSelectedTextColor" format="color" />
+    </declare-styleable>
+
+
+
+    <declare-styleable name="navattr">
+        <attr name="checkedimg" format="reference"/>
+        <attr name="uncheckedimg" format="reference"/>
+        <attr name="count" format="integer"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="animimageattr">
+        <attr name="datas" format="reference"/>
+        <attr name="loutanim" format="reference"/>
+        <attr name="rinanim" format="reference"/>
+        <attr name="routanim" format="reference"/>
+        <attr name="linanim" format="reference"/>
+    </declare-styleable>
+
+
+</resources>
