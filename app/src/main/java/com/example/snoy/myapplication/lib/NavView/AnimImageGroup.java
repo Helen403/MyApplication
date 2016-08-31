@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class AnimImageGroup extends FrameLayout implements Animation.AnimationListener {
 
-    private static final String TAG = "print";
     private List<Integer> datasIds;
     private Animation loutAnim, rinAnim, linAnim, routAnim;
     private LayoutParams layoutParams;
