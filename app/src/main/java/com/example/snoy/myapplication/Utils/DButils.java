@@ -130,9 +130,9 @@ public final class DButils {
      */
     public static void delectTableTmpBySQL() {
         SQLiteDatabase db = mdbHelper.getWritableDatabase();
-        db.execSQL("drop table " + TABLE_NAME);
+        db.execSQL("drop table if exists" + TABLE_NAME);
         //这张表用来存储定时的数据
-        db.execSQL("create table " + TABLE_NAME + "(_id integer primary key autoincrement ,url text,value text)");
+        db.execSQL("create table if not exists" + TABLE_NAME + "(_id integer primary key autoincrement ,url text,value text)");
         mdbHelper.close();
         db.close();
     }
@@ -175,9 +175,9 @@ public final class DButils {
      */
     public static void delectTableForeverBySQL() {
         SQLiteDatabase db = mdbHelper.getWritableDatabase();
-        db.execSQL("drop table " + TABLE_NAME_FOREVER);
+        db.execSQL("drop table if exists " + TABLE_NAME_FOREVER);
         //这张表用来存储不变的数据
-        db.execSQL("create table " + TABLE_NAME_FOREVER + "(_id integer primary key autoincrement ,url text,value text)");
+        db.execSQL("create table if not exists" + TABLE_NAME_FOREVER + "(_id integer primary key autoincrement ,url text,value text)");
         mdbHelper.close();
         db.close();
     }
@@ -251,9 +251,9 @@ public final class DButils {
         @Override
         public void onCreate(SQLiteDatabase db) {
             //这张表用来存储定时的数据
-            db.execSQL("create table " + TABLE_NAME + "(_id integer primary key autoincrement ,url text,value text)");
+            db.execSQL("create table if not exists" + TABLE_NAME + "(_id integer primary key autoincrement ,url text,value text)");
             //这张表用来存储固定不变的数据
-            db.execSQL("create table " + TABLE_NAME_FOREVER + "(_id integer primary key autoincrement ,url text,value text)");
+            db.execSQL("create table if not exists" + TABLE_NAME_FOREVER + "(_id integer primary key autoincrement ,url text,value text)");
         }
 
         @Override

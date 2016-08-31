@@ -26,8 +26,8 @@ import java.util.Map;
  * public static <T, E> void posts(String url, final E e, final Class<T> cls, final OnControlUtilsListener onControlUtilsListener)
  * ***********************************************************************
  * 参数方面请参考demo
- *
- *
+ * <p/>
+ * <p/>
  * ***********************************************************************
  * ---------------------------存储到另一张表格  数据不会改变的
  * get请求数据并转化
@@ -189,7 +189,7 @@ public final class ControlUtils {
     /**
      * 集合转成Json
      */
-    public static<T> String getJsonFromList(List<T> t) {
+    public static <T> String getJsonFromList(List<T> t) {
         if (gson != null) {
             return gson.toJson(t);
         }
@@ -216,28 +216,21 @@ public final class ControlUtils {
         assert params != null;
         String tmp = DButils.get(url + params);
         if (tmp != null) {
-            onSuccess(url, cls, onControlUtilsListener, tmp);
-            bufferCircleView.hide();
+            onSuccess(bufferCircleView, url, cls, onControlUtilsListener, tmp);
             return;
         }
         final String finalParams = params;
         HttpUtils.gets(url, map, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
-                onSuccess(url, cls, onControlUtilsListener, result);
+                onSuccess(bufferCircleView, url, cls, onControlUtilsListener, result);
                 //数据成功返回就存储到数据库
                 DButils.put(url + finalParams, result);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
             }
 
             @Override
             public void onHttpFailure(String url) {
-                onControlUtilsListener.onFailure(url);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
+                onFailure(bufferCircleView, url, onControlUtilsListener);
             }
         });
     }
@@ -246,7 +239,7 @@ public final class ControlUtils {
     /**
      * post请求数据并转化
      */
-    public static <T, E> void posts(final BufferCircleView bufferCircleView,String url, final E e, final Class<T> cls, final OnControlUtilsListener<T> onControlUtilsListener) {
+    public static <T, E> void posts(final BufferCircleView bufferCircleView, String url, final E e, final Class<T> cls, final OnControlUtilsListener<T> onControlUtilsListener) {
         if (bufferCircleView != null && !bufferCircleView.isVisibility()) {
             bufferCircleView.show();
         }
@@ -260,28 +253,21 @@ public final class ControlUtils {
         assert params != null;
         String tmp = DButils.get(url + params);
         if (tmp != null) {
-            onSuccess(url, cls, onControlUtilsListener, tmp);
-            bufferCircleView.hide();
+            onSuccess(bufferCircleView, url, cls, onControlUtilsListener, tmp);
             return;
         }
         final String finalParams = params;
         HttpUtils.posts(url, map, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
-                onSuccess(url, cls, onControlUtilsListener, result);
+                onSuccess(bufferCircleView, url, cls, onControlUtilsListener, result);
                 //数据成功返回就存储到数据库
                 DButils.put(url + finalParams, result);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
             }
 
             @Override
             public void onHttpFailure(String url) {
-                onControlUtilsListener.onFailure(url);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
+                onFailure(bufferCircleView, url, onControlUtilsListener);
             }
         });
     }
@@ -289,7 +275,7 @@ public final class ControlUtils {
     /**
      * get请求数据并转化    缓存到不变的表
      */
-    public static <T, E> void getsForever(final BufferCircleView bufferCircleView,String url, final E e, final Class<T> cls, final OnControlUtilsListener<T> onControlUtilsListener) {
+    public static <T, E> void getsForever(final BufferCircleView bufferCircleView, String url, final E e, final Class<T> cls, final OnControlUtilsListener<T> onControlUtilsListener) {
         if (bufferCircleView != null && !bufferCircleView.isVisibility()) {
             bufferCircleView.show();
         }
@@ -303,28 +289,21 @@ public final class ControlUtils {
         assert params != null;
         String tmp = DButils.queryStringForeverBySql(url + params);
         if (tmp != null) {
-            onSuccess(url, cls, onControlUtilsListener, tmp);
-            bufferCircleView.hide();
+            onSuccess(bufferCircleView, url, cls, onControlUtilsListener, tmp);
             return;
         }
         final String finalParams = params;
         HttpUtils.gets(url, map, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
-                onSuccess(url, cls, onControlUtilsListener, result);
+                onSuccess(bufferCircleView, url, cls, onControlUtilsListener, result);
                 //数据成功返回就存储到数据库
                 DButils.insertStringForeverBySql(url + finalParams, result);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
             }
 
             @Override
             public void onHttpFailure(String url) {
-                onControlUtilsListener.onFailure(url);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
+                onFailure(bufferCircleView, url, onControlUtilsListener);
             }
         });
     }
@@ -333,7 +312,7 @@ public final class ControlUtils {
     /**
      * post请求数据并转化   缓存到不变的表
      */
-    public static <T, E> void postsForever(final BufferCircleView bufferCircleView,String url, final E e, final Class<T> cls, final OnControlUtilsListener<T> onControlUtilsListener) {
+    public static <T, E> void postsForever(final BufferCircleView bufferCircleView, String url, final E e, final Class<T> cls, final OnControlUtilsListener<T> onControlUtilsListener) {
         if (bufferCircleView != null && !bufferCircleView.isVisibility()) {
             bufferCircleView.show();
         }
@@ -347,28 +326,21 @@ public final class ControlUtils {
         assert params != null;
         String tmp = DButils.queryStringForeverBySql(url + params);
         if (tmp != null) {
-            onSuccess(url, cls, onControlUtilsListener, tmp);
-            bufferCircleView.hide();
+            onSuccess(bufferCircleView, url, cls, onControlUtilsListener, tmp);
             return;
         }
         final String finalParams = params;
         HttpUtils.posts(url, map, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
-                onSuccess(url, cls, onControlUtilsListener, result);
+                onSuccess(bufferCircleView, url, cls, onControlUtilsListener, result);
                 //数据成功返回就存储到数据库
                 DButils.insertStringForeverBySql(url + finalParams, result);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
             }
 
             @Override
             public void onHttpFailure(String url) {
-                onControlUtilsListener.onFailure(url);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
+                onFailure(bufferCircleView, url, onControlUtilsListener);
             }
         });
     }
@@ -389,18 +361,12 @@ public final class ControlUtils {
         HttpUtils.gets(url, map, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
-                onSuccess(url, cls, onControlUtilsListener, result);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
+                onSuccess(bufferCircleView, url, cls, onControlUtilsListener, result);
             }
 
             @Override
             public void onHttpFailure(String url) {
-                onControlUtilsListener.onFailure(url);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
+                onFailure(bufferCircleView, url, onControlUtilsListener);
             }
         });
     }
@@ -409,7 +375,7 @@ public final class ControlUtils {
     /**
      * post请求数据并转化
      */
-    public static <T, E> void postsEveryTime(final BufferCircleView bufferCircleView,String url, final E e, final Class<T> cls, final OnControlUtilsListener<T> onControlUtilsListener) {
+    public static <T, E> void postsEveryTime(final BufferCircleView bufferCircleView, String url, final E e, final Class<T> cls, final OnControlUtilsListener<T> onControlUtilsListener) {
         if (bufferCircleView != null && !bufferCircleView.isVisibility()) {
             bufferCircleView.show();
         }
@@ -421,18 +387,12 @@ public final class ControlUtils {
         HttpUtils.posts(url, map, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
-                onSuccess(url, cls, onControlUtilsListener, result);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
+                onSuccess(bufferCircleView, url, cls, onControlUtilsListener, result);
             }
 
             @Override
             public void onHttpFailure(String url) {
-                onControlUtilsListener.onFailure(url);
-                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
-                    bufferCircleView.hide();
-                }
+                onFailure(bufferCircleView, url, onControlUtilsListener);
             }
         });
     }
@@ -441,19 +401,35 @@ public final class ControlUtils {
     /**
      * 为了方便切换网络请求框架而提出来的方法
      */
-    private static <T> void onSuccess(String url, Class<T> cls, OnControlUtilsListener<T> onControlUtilsListener, String result) {
+    private static <T> void onSuccess(BufferCircleView bufferCircleView, String url, Class<T> cls, OnControlUtilsListener<T> onControlUtilsListener, String result) {
         if (cls != null) {
             T entity = getEntityFromJson(result, cls);
             ArrayList<T> list = getListFromJson(result);
             if (entity != null || list != null) {
                 onControlUtilsListener.onSuccess(url, entity, list, result);
+                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
+                    bufferCircleView.hide();
+                }
             } else {
                 onControlUtilsListener.onFailure(url);
                 ToastUtils("请检测网络");
+                if (bufferCircleView != null && bufferCircleView.isVisibility()) {
+                    bufferCircleView.hide();
+                }
             }
         } else {
             onControlUtilsListener.onFailure(url);
             ToastUtils("请检测网络");
+            if (bufferCircleView != null && bufferCircleView.isVisibility()) {
+                bufferCircleView.hide();
+            }
+        }
+    }
+
+    private static <T> void onFailure(BufferCircleView bufferCircleView, String url, OnControlUtilsListener<T> onControlUtilsListener) {
+        onControlUtilsListener.onFailure(url);
+        if (bufferCircleView != null && bufferCircleView.isVisibility()) {
+            bufferCircleView.hide();
         }
     }
 
@@ -462,9 +438,6 @@ public final class ControlUtils {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void L(String msg) {
-        Log.d("Helen", msg);
-    }
     /*********************************************************************/
 
     /**
@@ -472,6 +445,7 @@ public final class ControlUtils {
      */
     public interface OnControlUtilsListener<T> {
         void onSuccess(String url, T obj, ArrayList<T> list, String result);
+
         void onFailure(String url);
     }
 
