@@ -12,15 +12,15 @@ import com.example.snoy.myapplication.base.BaseApplication;
 
 /**
  * 向外界推荐使用的方法
- *
+ * <p/>
  * 往SQL,SharedPreferences中插入数据
  * public static String get(String url)             -------没有就返回null
  * 往SQL,SharedPreferences中插入数据
  * public static void put(String url, String value)
  * 删除SQL数据库,SharedPreferences的文件
  * public static void delect()
- *
- ****************************************************
+ * <p/>
+ * ***************************************************
  * 具体方法的细分
  * 以url为key插入String 用：SQL
  * public static void insertStringBySql(String url, String value)
@@ -28,16 +28,16 @@ import com.example.snoy.myapplication.base.BaseApplication;
  * public static String queryStringBySql(String url)   -------没有就返回null
  * 删除数据库  用：SQL
  * public static void delectTableTmpBySQL()
- *
- ***********************************************************
+ * <p/>
+ * **********************************************************
  * 已url为key插入String 用：SharedPreferences
  * public void putString(String url, String value)
  * 根据url查询String 用：SharedPreferences             -------没有就返回null
  * public static String getString(String key)
  * 删除数据库  用：SharedPreferences
  * public static void clear()
- *
- ************************************************************************
+ * <p/>
+ * ***********************************************************************
  * ---------------------------存储到另一张表格  数据不会改变的  提供的 增 删 查 的方法
  * 以url为key插入String 用：SQL
  * public static void insertStringForeverBySql(String url, String value)
@@ -51,20 +51,20 @@ public final class DButils {
     //需要配置一下Context
     private static Context context = BaseApplication.context;
     //数据库名                  ---------根据需求项目名改
-    private static final String DB_NAME = "dbname.db";
+    private static final String DB_NAME = "helen_db.db";
 
     //数据库文件存放在SD卡
-    private static String DB_PATH = Environment.getExternalStorageDirectory() + "/project_test/db/";
+    private static String DB_PATH_SD = Environment.getExternalStorageDirectory() + "/project_helen/db/";
     //数据库文件存放在默认位置
-    //private static String DB_PATH = "/data/data/com.HyKj.UJiFen/databases/";
+    private static String DB_PATH_LOCATION = "/data/data/" + context.getPackageName() + "/databases/";
 
     /********************************************************************/
 
     //数据库表名                 ----------没什么必要不需要改
-    private static final String TABLE_NAME = "tablename";
+    private static final String TABLE_NAME = "helen_table";
 
     //数据库名                  ---------用来存储都不会变的数据
-    private static final String TABLE_NAME_FOREVER = "tablename_forever";
+    private static final String TABLE_NAME_FOREVER = "helen_table_forever";
 
 
     //SharedPreferences的文件名 ----------没什么必要不需要改
@@ -243,9 +243,8 @@ public final class DButils {
 
     static class MyDBHelper extends SQLiteOpenHelper {
 
-
         public MyDBHelper(Context context) {
-            super(context, DB_PATH + DB_NAME, null, 1);
+            super(context, isMounted() ? (DB_PATH_SD + DB_NAME) : (DB_PATH_LOCATION + DB_NAME), null, 1);
         }
 
         @Override
@@ -262,5 +261,15 @@ public final class DButils {
             db.execSQL("drop table " + TABLE_NAME_FOREVER);
             onCreate(db);
         }
+
+
+        /**
+         * 判断拓展卡是否装载
+         */
+        private static boolean isMounted() {
+            return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+        }
     }
+
+
 }

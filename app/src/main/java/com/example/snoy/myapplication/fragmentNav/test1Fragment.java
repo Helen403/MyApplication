@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.Utils.DButils;
 import com.example.snoy.myapplication.base.BaseFragment;
 import com.example.snoy.myapplication.custemview.ImageCycleView;
 import com.example.snoy.myapplication.activity.testActivity;
@@ -40,6 +41,7 @@ public class test1Fragment extends BaseFragment {
 
     @Override
     public void initData() {
+        DButils.insertStringBySql("Helen","Helen");
         ArrayList<String> data = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             data.add("1" + i);
@@ -52,7 +54,6 @@ public class test1Fragment extends BaseFragment {
 
             @Override
             public void onImageClick(View imageView, int position) {
-
             }
         });
 
@@ -75,8 +76,7 @@ public class test1Fragment extends BaseFragment {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), testActivity.class);
-                startActivity(intent);
+               L(DButils.queryStringBySql("Helen"));
             }
         });
     }

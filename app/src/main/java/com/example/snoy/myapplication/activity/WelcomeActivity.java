@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.example.snoy.myapplication.MainActivity;
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.Utils.DButils;
 import com.example.snoy.myapplication.Utils.HttpUtils;
+import com.example.snoy.myapplication.Utils.ImageUtils;
 import com.example.snoy.myapplication.constant.Constants;
 import com.example.snoy.myapplication.lib.NavView.AnimImageGroup;
 import com.example.snoy.myapplication.lib.NavView.NavImgLayout;
@@ -46,7 +48,6 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
         setContentView(R.layout.activity_welcome);
         initView();
         initDetector();
-        loadDatas();
         gotoTimer();
     }
 
@@ -71,14 +72,18 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
     }
 
     /**
+     * 只加载一次
      * 预加载数据
      */
     private void loadDatas() {
         //遍历Constants.JSON的URL
-        int count = Constants.JSON.length;
-        for (int i = 0; i < count; i++) {
-            final String url = Constants.JSON[i];
-            InsertSQL(url);
+        int countJ = Constants.JSON.length;
+        for (int i = 0; i < countJ; i++) {
+            InsertSqlByUrl(Constants.JSON[i]);
+        }
+        int countB = Constants.BITMAP.length;
+        for (int i = 0; i < countB; i++) {
+            InsertSDCardByUrl(Constants.BITMAP[i]);
         }
     }
 
@@ -87,7 +92,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
      * 从网络请求数据插入数据库
      * 存进Forever的表中
      */
-    private void InsertSQL(final String url) {
+    private void InsertSqlByUrl(final String url) {
         HttpUtils.posts(url, null, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
@@ -96,6 +101,23 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
 
             @Override
             public void onHttpFailure(String url) {
+            }
+        });
+    }
+
+    /**
+     *
+     */
+    private void InsertSDCardByUrl(final String url) {
+        HttpUtils.getBitmapByUrl(url, new HttpUtils.OnHttpUtilsBitmapListener() {
+            @Override
+            public void onImageSuccess(String url, Bitmap bitmap) {
+                ImageUtils.getInstance().saveBitmapToSDCardByUrl(url, bitmap);
+            }
+
+            @Override
+            public void onImageFailure(String url) {
+
             }
         });
     }
@@ -110,7 +132,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (!TextUtils.isEmpty(DButils.get("once"))) {
+                        if (!TextUtils.isEmpty(DButils.getString("once"))) {
                             //不是第一次登录
                             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                             overridePendingTransition(R.anim.activity_in_from_rigth, R.anim.activity_out_to_scale);
@@ -160,7 +182,9 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
                             flag = true;
 
                             //标记为第一次登录
-                            DButils.put("once","Helen");
+                            DButils.putString("once", "Helen");
+                            //加载一次网络数据
+                            loadDatas();
                         }
                     }
                 });

@@ -1,15 +1,9 @@
 package com.example.snoy.myapplication.Utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.text.TextUtils;
-
-import com.example.snoy.myapplication.base.BaseApplication;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -294,7 +288,6 @@ public final class HttpUtils {
      */
     public interface OnHttpUtilsBitmapListener {
         void onImageSuccess(String url, Bitmap bitmap);
-
         void onImageFailure(String url);
     }
 
@@ -304,7 +297,6 @@ public final class HttpUtils {
      */
     public interface OnHttpUtilsResultListener {
         void onHttpSuccess(String url, String result);
-
         void onHttpFailure(String url);
     }
 

@@ -98,13 +98,12 @@
         android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Helen测试项目"
+        android:label="Helen"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.WelcomeActivity"
-
-            android:label="Helen测试项目"
+            android:label="Helen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
