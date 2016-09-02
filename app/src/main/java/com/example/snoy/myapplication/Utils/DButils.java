@@ -12,15 +12,15 @@ import com.example.snoy.myapplication.base.BaseApplication;
 
 /**
  * 向外界推荐使用的方法
- * <p/>
+ *
  * 往SQL,SharedPreferences中插入数据
  * public static String get(String url)             -------没有就返回null
  * 往SQL,SharedPreferences中插入数据
  * public static void put(String url, String value)
  * 删除SQL数据库,SharedPreferences的文件
  * public static void delect()
- * <p/>
- * ***************************************************
+ *
+ ****************************************************
  * 具体方法的细分
  * 以url为key插入String 用：SQL
  * public static void insertStringBySql(String url, String value)
@@ -28,16 +28,16 @@ import com.example.snoy.myapplication.base.BaseApplication;
  * public static String queryStringBySql(String url)   -------没有就返回null
  * 删除数据库  用：SQL
  * public static void delectTableTmpBySQL()
- * <p/>
- * **********************************************************
+ *
+ ***********************************************************
  * 已url为key插入String 用：SharedPreferences
  * public void putString(String url, String value)
  * 根据url查询String 用：SharedPreferences             -------没有就返回null
  * public static String getString(String key)
  * 删除数据库  用：SharedPreferences
  * public static void clear()
- * <p/>
- * ***********************************************************************
+ *
+ ************************************************************************
  * ---------------------------存储到另一张表格  数据不会改变的  提供的 增 删 查 的方法
  * 以url为key插入String 用：SQL
  * public static void insertStringForeverBySql(String url, String value)
@@ -54,6 +54,7 @@ public final class DButils {
     private static final String DB_NAME = "helen_db.db";
 
     //数据库文件存放在SD卡
+    private static String DB_PATH = Environment.getExternalStorageDirectory() + "/project_helen/db/";
     private static String DB_PATH_SD = Environment.getExternalStorageDirectory() + "/project_helen/db/";
     //数据库文件存放在默认位置
     private static String DB_PATH_LOCATION = "/data/data/" + context.getPackageName() + "/databases/";

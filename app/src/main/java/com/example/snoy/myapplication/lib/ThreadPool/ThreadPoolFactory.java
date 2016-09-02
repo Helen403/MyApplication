@@ -6,8 +6,8 @@ package com.example.snoy.myapplication.lib.ThreadPool;
 public class ThreadPoolFactory {
 
     private static ThreadPoolProxy commonThreadPool;
-    public static final int Common_CORE_POOL_SIZE = 5;
-    public static final int Common_MAX_POOL_SIZE = 5;
+    public static final int Common_CORE_POOL_SIZE = 3;
+    public static final int Common_MAX_POOL_SIZE = 3;
     public static final int Common_KEEP_LIVE_TIME = 1;
 
     public static ThreadPoolProxy getCommonThreadPool() {

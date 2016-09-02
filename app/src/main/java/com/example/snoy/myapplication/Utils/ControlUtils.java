@@ -2,6 +2,7 @@ package com.example.snoy.myapplication.Utils;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.snoy.myapplication.base.BaseApplication;
@@ -25,8 +26,8 @@ import java.util.Map;
  * public static <T, E> void posts(String url, final E e, final Class<T> cls, final OnControlUtilsListener onControlUtilsListener)
  * ***********************************************************************
  * 参数方面请参考demo
- * <p/>
- * <p/>
+ *
+ *
  * ***********************************************************************
  * ---------------------------存储到另一张表格  数据不会改变的
  * get请求数据并转化

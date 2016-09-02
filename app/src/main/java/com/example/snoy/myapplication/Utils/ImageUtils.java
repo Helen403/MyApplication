@@ -454,6 +454,7 @@ public final class ImageUtils {
      */
     public interface OnImageUtilsListener {
         void onImageSuccess(String url, Bitmap bitmap);
+
         void onImageFailure(String url);
     }
 
