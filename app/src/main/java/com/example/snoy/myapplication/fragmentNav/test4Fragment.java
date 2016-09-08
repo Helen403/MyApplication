@@ -1,6 +1,7 @@
 package com.example.snoy.myapplication.fragmentNav;
 
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
@@ -22,6 +23,12 @@ public class test4Fragment extends BaseFragment {
     @Override
     public int getContentView() {
         return R.layout.fragment_test_1;
+    }
+
+    @Override
+    protected void showMessage(RelativeLayout relativeLayout) {
+        super.showMessage(relativeLayout);
+
     }
 
     @Override

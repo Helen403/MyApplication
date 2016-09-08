@@ -37,17 +37,7 @@ public class testActivity extends BaseActivity {
     public void initData() {
         click.setText("这是测试Activity");
 
-        ControlUtils.getsEveryTime(bufferCircleView, "http://m2.qiushibaike.com/article/list/suggest?page=1", null, Result.class, new ControlUtils.OnControlUtilsListener<Result>() {
-            @Override
-            public void onSuccess(String url, Result obj, ArrayList<Result> list, String result) {
-                L(result);
-            }
 
-            @Override
-            public void onFailure(String url) {
-                L(url);
-            }
-        });
 
         tv[0].setText("成功");
         L(tv.length);

@@ -17,7 +17,7 @@
         android:gravity="center"
         android:padding="3dp"
         android:text="首页"
-        android:textColor="@drawable/txt_home_selector"
+        android:textColor="@drawable/custermview_txt_selector"
         android:textSize="10sp" />
 
     <RadioButton
@@ -30,7 +30,7 @@
         android:gravity="center"
         android:padding="3dp"
         android:text="分类"
-        android:textColor="@drawable/txt_home_selector"
+        android:textColor="@drawable/custermview_txt_selector"
         android:textSize="10sp" />
 
     <RadioButton
@@ -44,7 +44,7 @@
         android:padding="3dp"
         android:singleLine="true"
         android:text="展示"
-        android:textColor="@drawable/txt_home_selector"
+        android:textColor="@drawable/custermview_txt_selector"
         android:textSize="10sp" />
 
     <RadioButton
@@ -57,7 +57,7 @@
         android:gravity="center"
         android:padding="3dp"
         android:text="无忧"
-        android:textColor="@drawable/txt_home_selector"
+        android:textColor="@drawable/custermview_txt_selector"
         android:textSize="10sp" />
 
     <RadioButton
@@ -70,6 +70,6 @@
         android:gravity="center"
         android:padding="3dp"
         android:text="个人"
-        android:textColor="@drawable/txt_home_selector"
+        android:textColor="@drawable/custermview_txt_selector"
         android:textSize="10sp" />
 </RadioGroup>

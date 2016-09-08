@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.Utils.DButils;
 import com.example.snoy.myapplication.base.BaseFragment;
-import com.example.snoy.myapplication.custemview.ImageCycleView;
+import com.example.snoy.myapplication.lib.custemview.ImageCycleView;
 import com.example.snoy.myapplication.activity.testActivity;
 
 import java.util.ArrayList;

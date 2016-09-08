@@ -19,10 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snoy.myapplication.MainActivity;
-import com.example.snoy.myapplication.Utils.HttpUtils;
 import com.example.snoy.myapplication.Utils.ImageUtils;
-import com.example.snoy.myapplication.custemview.BufferCircleView;
-import com.example.snoy.myapplication.custemview.MyNetFailView;
+import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
+import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 
 import java.util.ArrayList;
 
@@ -65,6 +64,7 @@ public abstract class BaseFragment extends Fragment {
         LinearLayout.LayoutParams llNet = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         myNetFailView.setLayoutParams(llNet);
         content.addView(myNetFailView);
+        showMessage(content);
         return content;
     }
 
@@ -77,6 +77,15 @@ public abstract class BaseFragment extends Fragment {
         //检测网络状态
         checkNet();
     }
+
+
+    /**
+     * 添加自定义的遮盖提示
+     * 特殊提供
+     */
+    protected void showMessage(RelativeLayout relativeLayout){
+    }
+
 
     /**
      * 解决MyRecyclerViewBug

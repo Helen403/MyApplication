@@ -28,8 +28,8 @@ import android.widget.Toast;
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.Utils.ImageUtils;
 import com.example.snoy.myapplication.Utils.SystemBarUtils;
-import com.example.snoy.myapplication.custemview.BufferCircleView;
-import com.example.snoy.myapplication.custemview.MyNetFailView;
+import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
+import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -98,11 +98,20 @@ public abstract class BaseActivity extends Activity {
         setFullScreen(isAllowFullScreen);
         SystemBarUtils.initSystemBarElse(this, color);
         getBuildContentView();
+        showMessage(content);
         setContentView(content);
         attachMyRecycleViewAdapter();
         setBack();
         //检测网络状态
         checkNet();
+    }
+
+    /**
+     * 添加自定义的遮盖提示
+     * 特殊提供
+     */
+    protected void showMessage(RelativeLayout relativeLayout){
+
     }
 
 

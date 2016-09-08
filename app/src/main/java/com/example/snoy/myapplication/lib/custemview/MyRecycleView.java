@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.custemview;
+package com.example.snoy.myapplication.lib.custemview;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

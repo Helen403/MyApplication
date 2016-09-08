@@ -13,10 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.snoy.myapplication.Utils.ImageUtils;
-import com.example.snoy.myapplication.custemview.MyRecycleView;
+import com.example.snoy.myapplication.lib.custemview.MyRecycleView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SNOY on 2016/8/13.
@@ -76,10 +78,6 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
      * 留给调用者去实现
      */
 
-    public abstract int getHeadView();
-
-    public abstract int getFootView();
-
     public abstract int getContentView();
 
     public abstract void onInitView(RecycleViewHolder holder, T t, int position);
@@ -123,7 +121,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         /**
          * 返回一个具体的view对象
          */
-        protected <T extends View> T getViewById(int viewId) {
+        public <T extends View> T getViewById(int viewId) {
             View view = views.get(viewId);
             if (view == null) {
                 view = convertView.findViewById(viewId);
@@ -149,7 +147,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         /**
          * 设置文字数据
          */
-        public void setText(int resId, String text) {
+        public void setText(String text, int resId) {
             TextView view = getViewById(resId);
             view.setText(text);
         }
@@ -157,7 +155,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         /**
          * 下面的这个是加载显示图片的
          */
-        public void setImageByUrl(int resId, String url) {
+        public void setImageByUrl(String url, int resId) {
             ImageView imageView = getViewById(resId);
             ImageUtils.getInstance().setImageByUrl(url, imageView);
         }
@@ -166,7 +164,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         /**
          * 设置文本数据
          */
-        public void setText(View view, int resId, String text) {
+        public void setText(View view, String text, int resId) {
             TextView textView = (TextView) view.findViewById(resId);
             textView.setText(text);
         }
@@ -174,7 +172,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         /**
          * 设置图片数据  使用自己定义的图片加载器
          */
-        public void setImageByUrl(View view, int resId, String url) {
+        public void setImageByUrl(View view, String url, int resId) {
             ImageView imageView = (ImageView) view.findViewById(resId);
             ImageUtils.getInstance().setImageByUrl(url, imageView);
         }
@@ -234,26 +232,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
 
 
     /*************************************************************/
-
-
-    protected View headerView;
-    protected View footerView;
-
     private void init() {
-
-        if (getHeadView() != 0) {
-            // 头部
-            headerView = LayoutInflater.from(context).inflate(getHeadView(), null);
-            mRecyclerView.addHeaderView(headerView);
-            onInitHeadView(headerView);
-        }
-
-        if (getFootView() != 0) {
-            //脚部
-            footerView = LayoutInflater.from(context).inflate(getFootView(), null);
-            mRecyclerView.addFootView(footerView);
-            onInitFootView(footerView);
-        }
 
         // 设置刷新动画的颜色
         mRecyclerView.setColor(Color.RED, Color.BLUE);
@@ -293,43 +272,46 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
                 @Override
                 public void run() {
                     if (isRefresh) {
-                        onrefreshCallBack.onRefresh();
-                        refreshComplate();
-                        // 刷新完成后调用，必须在UI线程中
-                        mRecyclerView.refreshComplate();
+                        onrefresh.onRefresh();
+                        //在UI线程中调用
+//                        refreshComplate();
                     } else {
-                        onrefreshCallBack.onAddData();
-                        loadMoreComplate();
+                        onrefresh.onAddData();
                         // 加载更多完成后调用，必须在UI线程中
-                        mRecyclerView.loadMoreComplate();
+//                        loadMoreComplate();
                     }
                 }
             }, 1200);
         }
     }
 
-    public void refreshComplate() {
+    protected void refreshComplate() {
         mRecyclerView.getAdapter().notifyDataSetChanged();
+        // 刷新完成后调用，必须在UI线程中
+        mRecyclerView.refreshComplate();
     }
 
-    public void loadMoreComplate() {
+    protected void loadMoreComplate() {
         mRecyclerView.getAdapter().notifyDataSetChanged();
+        mRecyclerView.loadMoreComplate();
     }
 
     /**
      * 添加数据
      */
-    public void setAddData(ArrayList<T> dataTmp) {
+    public void setAddData(List<T> dataTmp) {
         if (dataTmp != null) {
             data.addAll(dataTmp);
         }
+        loadMoreComplate();
     }
 
-    public void setRefresh(ArrayList<T> dataTmp) {
+    public void setRefresh(List<T> dataTmp) {
         if (dataTmp != null) {
             data.clear();
             data.addAll(dataTmp);
         }
+        refreshComplate();
     }
 
     /*********************************************************************/
@@ -376,26 +358,15 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
     /*********************************************************************************/
 
 
-    private OnRefreshCallBack onrefreshCallBack;
+    private OnRefresh onrefresh;
 
 
-    public void setOnrefreshCallBack(OnRefreshCallBack onrefreshCallBack) {
-        this.onrefreshCallBack = onrefreshCallBack;
+    public void setOnRefresh(OnRefresh onrefresh) {
+        this.onrefresh = onrefresh;
     }
 
-    /**
-     * 留给调用者去实现
-     * 复杂的头部View和复杂的尾部View
-     */
-    protected void onInitHeadView(View headerView) {
-    }
-
-    protected void onInitFootView(View footerView) {
-    }
-
-    public interface OnRefreshCallBack {
+    public interface OnRefresh {
         void onRefresh();
-
         void onAddData();
     }
 

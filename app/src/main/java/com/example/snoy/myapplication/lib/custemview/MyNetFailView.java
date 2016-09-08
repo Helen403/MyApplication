@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.custemview;
+package com.example.snoy.myapplication.lib.custemview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -15,7 +15,7 @@ import com.example.snoy.myapplication.R;
 /**
  * Created by Administrator on 2016/8/26.
  */
-public class MyNetFailView extends RelativeLayout implements View.OnClickListener {
+public final class MyNetFailView extends RelativeLayout implements View.OnClickListener {
     public View view;
     public TextView refresh;
 
@@ -25,7 +25,7 @@ public class MyNetFailView extends RelativeLayout implements View.OnClickListene
     }
 
     private void initView() {
-        view = View.inflate(getContext(), R.layout.custemview_net_fail_view, this);
+        view = View.inflate(getContext(), R.layout.custermview_net_fail_view, this);
         refresh = (TextView) findViewById(R.id.refresh);
         refresh.setOnClickListener(this);
         onNormal();

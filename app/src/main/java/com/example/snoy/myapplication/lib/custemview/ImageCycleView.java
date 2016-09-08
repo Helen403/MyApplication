@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.custemview;
+package com.example.snoy.myapplication.lib.custemview;
 
 import java.util.ArrayList;
 
@@ -67,7 +67,7 @@ public final class ImageCycleView extends LinearLayout {
         super(context, attrs);
         mContext = context;
         mScale = context.getResources().getDisplayMetrics().density;
-        LayoutInflater.from(context).inflate(R.layout.custemview_ad_cycle_view, this);
+        LayoutInflater.from(context).inflate(R.layout.custermview_ad_cycle_view, this);
         mAdvPager = (ViewPager) findViewById(R.id.adv_pager);
         mAdvPager.setOnPageChangeListener(new GuidePageChangeListener());
         mAdvPager.setOnTouchListener(new OnTouchListener() {

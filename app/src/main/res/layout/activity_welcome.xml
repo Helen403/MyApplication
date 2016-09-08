@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#18bbff" >
-    
-    
+    android:background="#18bbff">
+
+
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_logo"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:src="@drawable/icon_logo" />
+
+
 
 
     <com.example.snoy.myapplication.lib.NavView.AnimImageGroup
@@ -19,30 +22,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/animtitleid"
-        android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         app:datas="@array/content_group"
+        app:linanim="@anim/img_left_in"
         app:loutanim="@anim/img_left_out"
         app:rinanim="@anim/img_right_in"
-        app:routanim="@anim/img_rigth_out"
-        app:linanim="@anim/img_left_in"
-        />
+        app:routanim="@anim/img_rigth_out" />
 
     <com.example.snoy.myapplication.lib.NavView.AnimImageGroup
         android:id="@+id/animtitleid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/animpicid"
-        android:layout_marginBottom="70dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
         app:datas="@array/title_group"
+        app:linanim="@anim/img_left_in"
         app:loutanim="@anim/img_left_out"
         app:rinanim="@anim/img_right_in"
-        app:routanim="@anim/img_rigth_out"
-        app:linanim="@anim/img_left_in"
-        />
-    
-    
+        app:routanim="@anim/img_rigth_out" />
+
+
     <com.example.snoy.myapplication.lib.NavView.NavImgLayout
         android:id="@+id/navImag"
         android:layout_width="match_parent"
@@ -50,11 +51,10 @@
         android:layout_above="@+id/animpicid"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
-        app:checkedimg="@drawable/img_dot_white"
-        app:uncheckedimg="@drawable/img_dot_gray"
         android:visibility="invisible"
-        app:count="4"/>
-
+        app:checkedimg="@drawable/img_dot_white"
+        app:count="4"
+        app:uncheckedimg="@drawable/img_dot_gray" />
 
 
     <com.example.snoy.myapplication.lib.NavView.AnimImageGroup
@@ -64,11 +64,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:datas="@array/pic_group"
+        app:linanim="@anim/img_left_in"
         app:loutanim="@anim/img_left_out"
         app:rinanim="@anim/img_right_in"
-        app:routanim="@anim/img_rigth_out"
-        app:linanim="@anim/img_left_in"
-        />
+        app:routanim="@anim/img_rigth_out" />
 
 
 </RelativeLayout>

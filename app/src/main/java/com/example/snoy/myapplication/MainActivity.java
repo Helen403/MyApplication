@@ -27,7 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snoy.myapplication.Utils.SystemBarUtils;
-import com.example.snoy.myapplication.custemview.BufferCircleView;
+import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.fragmentNav.test1Fragment;
 import com.example.snoy.myapplication.fragmentNav.test2Fragment;
 import com.example.snoy.myapplication.fragmentNav.test3Fragment;
@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     private int[] bg_pressed = {R.drawable.commodity_pressed, R.drawable.commodity_pressed, R.drawable.commodity_pressed, R.drawable.commodity_pressed, R.drawable.commodity_pressed};
 
     //导航栏的布局ID
-    private static final int controlNavID = R.layout.custemview_control_nav;
+    private static final int controlNavID = R.layout.custermview_control_nav;
     //沉侵的颜色  和导航栏颜色
     private static final int color = Color.rgb(228, 238, 249);
 

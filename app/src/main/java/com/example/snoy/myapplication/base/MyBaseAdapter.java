@@ -141,7 +141,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     /**
      * 设置文本数据
      */
-    public void setText(int resId, String text) {
+    public void setText(String text, int resId) {
         TextView view = getViewById(resId);
         view.setText(text);
     }
@@ -149,7 +149,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     /**
      * 设置图片数据  使用自己定义的图片加载器
      */
-    public void setImageByUrl(int resId, String url) {
+    public void setImageByUrl(String url, int resId) {
         ImageView imageView = getViewById(resId);
         ImageUtils.getInstance().setImageByUrl(url, imageView);
     }
@@ -157,7 +157,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     /**
      * 设置文本数据
      */
-    public void setText(View view, int resId, String text) {
+    public void setText(View view, String text, int resId) {
         TextView textView = (TextView) view.findViewById(resId);
         textView.setText(text);
     }
@@ -165,7 +165,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     /**
      * 设置图片数据  使用自己定义的图片加载器
      */
-    public void setImageByUrl(View view, int resId, String url) {
+    public void setImageByUrl(View view, String url, int resId) {
         ImageView imageView = (ImageView) view.findViewById(resId);
         ImageUtils.getInstance().setImageByUrl(url, imageView);
     }

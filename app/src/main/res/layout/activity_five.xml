@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
-
-    <com.example.snoy.myapplication.custemview.BounceScrollView
-        android:background="#fff"
+    <com.example.snoy.myapplication.lib.custemview.BounceScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#fff">
 
         <TextView
-            android:text="拉我看一下"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="拉我看一下" />
 
 
-    </com.example.snoy.myapplication.custemview.BounceScrollView>
+
+    </com.example.snoy.myapplication.lib.custemview.BounceScrollView>
 </LinearLayout>

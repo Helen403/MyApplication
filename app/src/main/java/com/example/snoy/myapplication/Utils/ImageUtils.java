@@ -8,8 +8,9 @@ import android.os.Handler;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;
 
-import com.example.snoy.myapplication.base.BaseApplication;
+
 import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.base.BaseApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -155,36 +156,35 @@ public final class ImageUtils {
      */
     private static Handler handler = new Handler();
 
-    private Bitmap downloadImage(final String url) {
-        Bitmap bitmap = getBitmapByCache(url);
-        if (bitmap != null) {
-            return bitmap;
-        } else {
-            getThreadPool().execute(new Runnable() {
-                @Override
-                public void run() {
-                    //从网络获取图片
-                    final Bitmap bitmap = getBitmapByUrl(url);
-                    if (bitmap != null) {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                setBitmap(bitmap);
-                            }
-                        });
-                        // 保存在SD卡或者手机目录
-                        saveBitmapToSDCardByUrl(url, bitmap);
-                        // 将Bitmap 加入内存缓存
-                        addBitmapToMemoryCache(url, bitmap);
-                    } else {
-                        //加载失败
-                        setfailingBitmap();
-                    }
-                }
-            });
-        }
+    private void downloadImage(final String url) {
+        getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                //从网络获取图片
+                final Bitmap bitmap = getBitmapByUrl(url);
+                if (bitmap != null) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setBitmap(bitmap);
+                        }
+                    });
+                    // 保存在SD卡或者手机目录
+                    saveBitmapToSDCardByUrl(url, bitmap);
+                    // 将Bitmap 加入内存缓存
+                    addBitmapToMemoryCache(url, bitmap);
+                } else {
+                    //加载失败
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setfailingBitmap();
+                        }
+                    });
 
-        return null;
+                }
+            }
+        });
     }
 
     /**
@@ -195,10 +195,10 @@ public final class ImageUtils {
         Bitmap bitmap = getBitmapFromMemCache(url);
         //从二级缓存中取
         if (bitmap == null) {
-            if(softCache.containsKey(url)){
+            if (softCache.containsKey(url)) {
                 SoftReference<Bitmap> soft = softCache.get(url);
                 bitmap = soft.get();
-                if(bitmap != null){
+                if (bitmap != null) {
                     //放回一级缓存
                     lruCache.put(url, bitmap);
                     softCache.remove(url);
@@ -206,16 +206,13 @@ public final class ImageUtils {
             }
         }
         // 从SD卡获取手机里面获取Bitmap
-        if (bitmap==null){
+        if (bitmap == null) {
             bitmap = getBitmapToSDCardByUrl(url);
             // 将Bitmap 加入内存缓存
             addBitmapToMemoryCache(url, bitmap);
         }
         return bitmap;
     }
-
-
-
 
 
     /**
@@ -244,10 +241,12 @@ public final class ImageUtils {
         this.imageView = imageView;
         //加载中显示的图片
         setLoadingBitmap();
-        Bitmap bitmap = downloadImage(url);
         //内存或者SD卡中有图片直接设置
+        Bitmap bitmap = getBitmapByCache(url);
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
+        } else {
+            downloadImage(url);
         }
     }
 

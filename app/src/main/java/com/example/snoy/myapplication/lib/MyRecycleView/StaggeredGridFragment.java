@@ -14,9 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.snoy.myapplication.lib.MyRecycleView.MyGridLayoutManager;
-import com.example.snoy.myapplication.lib.MyRecycleView.MyStaggeredGridLayoutManager;
-import com.example.snoy.myapplication.custemview.MyRecycleView;
+import com.example.snoy.myapplication.lib.custemview.MyRecycleView;
 
 import java.util.ArrayList;
 import java.util.List;

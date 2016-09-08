@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.custemview;
+package com.example.snoy.myapplication.lib.custemview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -30,7 +30,7 @@ public final class BufferCircleView extends RelativeLayout {
     }
 
     private void initView() {
-        View view = View.inflate(getContext(), R.layout.custemview_dialog_progress_custom, this);
+        View view = View.inflate(getContext(), R.layout.custermview_dialog_progress_custom, this);
         LinearLayout ll = (LinearLayout) findViewById(R.id.ll);
         //设置转圈圈
         LinearLayout.LayoutParams ImgLayoutParams = new LinearLayout.LayoutParams(dip2px(getContext(), ImgSize), dip2px(getContext(), ImgSize));
