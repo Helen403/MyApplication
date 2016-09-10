@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 
-import com.HyKj.UJiFen.R;
+import com.example.snoy.myapplication.R;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -122,7 +122,7 @@ public class AnimImageView extends ImageView {
 
             // 背景
             canvas.drawColor(colorBg);
-            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
+            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.custermview_arrow);
             // 定义矩阵对象
             Matrix matrix = new Matrix();
             // 缩放原图

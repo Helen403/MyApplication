@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication;
+package com.example.snoy.myapplication.activityMain;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.Utils.SystemBarUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.fragmentNav.test1Fragment;
@@ -56,8 +57,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
      */
     private Fragment[] fragments = {new test1Fragment(), new test2Fragment(), new test3Fragment(), new test4Fragment(), new test5Fragment()};
     private String titles[] = {"首页", "分类", "中心", "积分", "个人"};
-    private int[] bg_normal = {R.drawable.commodity_normal, R.drawable.commodity_normal, R.drawable.commodity_normal, R.drawable.commodity_normal, R.drawable.commodity_normal};
-    private int[] bg_pressed = {R.drawable.commodity_pressed, R.drawable.commodity_pressed, R.drawable.commodity_pressed, R.drawable.commodity_pressed, R.drawable.commodity_pressed};
+    private int[] bg_normal = {R.mipmap.custermview_commodity_normal, R.mipmap.custermview_commodity_normal, R.mipmap.custermview_commodity_normal, R.mipmap.custermview_commodity_normal, R.mipmap.custermview_commodity_normal};
+    private int[] bg_pressed = {R.mipmap.custermview_commodity_pressed, R.mipmap.custermview_commodity_pressed, R.mipmap.custermview_commodity_pressed, R.mipmap.custermview_commodity_pressed, R.mipmap.custermview_commodity_pressed};
 
     //导航栏的布局ID
     private static final int controlNavID = R.layout.custermview_control_nav;

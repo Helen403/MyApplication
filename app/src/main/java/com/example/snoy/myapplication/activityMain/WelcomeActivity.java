@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.activity;
+package com.example.snoy.myapplication.activityMain;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,7 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.example.snoy.myapplication.MainActivity;
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.Utils.DButils;
 import com.example.snoy.myapplication.Utils.HttpUtils;
@@ -135,10 +134,10 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
                         if (!TextUtils.isEmpty(DButils.getString("once"))) {
                             //不是第一次登录
                             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                            overridePendingTransition(R.anim.activity_in_from_rigth, R.anim.activity_out_to_scale);
+                            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
                             finish();
                         } else {
-                            Animation anim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.img_left_out);
+                            Animation anim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_left_out);
                             anim.setAnimationListener(new Animation.AnimationListener() {
                                 @Override
                                 public void onAnimationStart(Animation animation) {
@@ -158,7 +157,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
                             iv_logo.startAnimation(anim);
 
 
-                            Animation navanim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.img_right_in);
+                            Animation navanim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_right_in);
                             navanim.setAnimationListener(new Animation.AnimationListener() {
                                 @Override
                                 public void onAnimationStart(Animation animation) {
@@ -200,7 +199,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
         //单击，手指触碰到触摸屏时触发
         if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.activity_in_from_rigth, R.anim.activity_out_to_scale);
+            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
             finish();
             flagOnce = false;
         }
@@ -212,7 +211,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
         //短按，手指触碰到触摸屏后，停留一小段时间，触发，如果立刻抬起，不触发
         if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.activity_in_from_rigth, R.anim.activity_out_to_scale);
+            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
             finish();
             flagOnce = false;
         }
@@ -223,7 +222,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
         //当单击或者短按后，然后抬起触发，如果单击后执行了长按，滚动，滑动的方法，该方法就不执行了
         if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.activity_in_from_rigth, R.anim.activity_out_to_scale);
+            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
             finish();
             flagOnce = false;
         }
@@ -235,7 +234,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
         //滚动，触摸当屏幕以后滑动触发
         if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.activity_in_from_rigth, R.anim.activity_out_to_scale);
+            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
             finish();
             flagOnce = false;
         }
@@ -247,7 +246,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
         //长按，按住比较长的一段时间
         if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.activity_in_from_rigth, R.anim.activity_out_to_scale);
+            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
             finish();
             flagOnce = false;
         }

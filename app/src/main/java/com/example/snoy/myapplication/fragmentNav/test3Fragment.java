@@ -1,7 +1,6 @@
 package com.example.snoy.myapplication.fragmentNav;
 
 
-
 import com.example.snoy.myapplication.lib.MyRecycleView.MyLinearLayoutManager;
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.base.BaseFragment;
@@ -9,6 +8,8 @@ import com.example.snoy.myapplication.base.MyBaseRecycleAdapter;
 import com.example.snoy.myapplication.lib.custemview.MyRecycleView;
 
 import java.util.ArrayList;
+
+import android.content.Context;
 import android.os.Handler;
 
 /**
@@ -57,7 +58,7 @@ public class test3Fragment extends BaseFragment {
 //            mRecyclerView.addItemDecoration(new MyGridLayoutManager.DividerGridItemDecoration(this, true));
 
 
-        recycleAdapter = new RecycleAdapter(myRecycleView);
+        recycleAdapter = new RecycleAdapter(getActivity(), myRecycleView);
         // 设置适配器
         myRecycleView.setAdapter(recycleAdapter);
     }
@@ -69,9 +70,7 @@ public class test3Fragment extends BaseFragment {
     }
 
 
-
-
-   Handler handler = new Handler();
+    Handler handler = new Handler();
 
 
     @Override
@@ -93,7 +92,7 @@ public class test3Fragment extends BaseFragment {
                     public void run() {
                         recycleAdapter.setRefresh(datas);
                     }
-                },2000);
+                }, 2000);
 
             }
 
@@ -123,8 +122,9 @@ public class test3Fragment extends BaseFragment {
 
     class RecycleAdapter extends MyBaseRecycleAdapter<String> {
 
-        public RecycleAdapter(MyRecycleView mRecyclerView) {
-            super(mRecyclerView);
+
+        public RecycleAdapter(Context context, MyRecycleView mRecyclerView) {
+            super(context, mRecyclerView);
         }
 
         @Override

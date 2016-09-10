@@ -105,17 +105,17 @@ public final class ImageCycleView extends LinearLayout {
              *  图片轮播指示器-个图
              */
             ImageView mImageView = new ImageView(mContext);
-            int imageParams = (int) (mScale *  + 0.5f);// XP与DP转换，适应不同分辨率
-            int imagePadding = (int) (mScale * 2 + 0.5f);
+            int imageParams = (int) (mScale *  10+ 0.5f);// XP与DP转换，适应不同分辨率
+            int imagePadding = (int) (mScale * 20 + 0.5f);
             LayoutParams layoutParams = new LayoutParams(imageParams, imageParams);
             layoutParams.setMargins(dip2px(getContext(),1), dip2px(getContext(),1), dip2px(getContext(),1), dip2px(getContext(),1));
             mImageView.setLayoutParams(layoutParams);
             mImageView.setPadding(imagePadding, imagePadding, imagePadding, imagePadding);
             mImageViews[i] = mImageView;
             if (i == 0) {
-                mImageViews[i].setBackgroundResource(R.drawable.home_img_ratio_selected);
+                mImageViews[i].setBackgroundResource(R.mipmap.custermview_home_img_ratio_selected);
             } else {
-                mImageViews[i].setBackgroundResource(R.drawable.home_img_ratio);
+                mImageViews[i].setBackgroundResource(R.mipmap.custermview_home_img_ratio);
             }
             mGroup.addView(mImageViews[i]);
         }
@@ -199,10 +199,10 @@ public final class ImageCycleView extends LinearLayout {
             // 设置当前显示的图片下标
             mImageIndex = index;
             // 设置图片滚动指示器背景
-            mImageViews[index].setBackgroundResource(R.drawable.home_img_ratio_selected);
+            mImageViews[index].setBackgroundResource(R.mipmap.custermview_home_img_ratio_selected);
             for (int i = 0; i < mImageViews.length; i++) {
                 if (index != i) {
-                    mImageViews[i].setBackgroundResource(R.drawable.home_img_ratio);
+                    mImageViews[i].setBackgroundResource(R.mipmap.custermview_home_img_ratio);
                 }
             }
 

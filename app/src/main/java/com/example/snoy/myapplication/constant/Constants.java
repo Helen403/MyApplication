@@ -6,14 +6,7 @@ package com.example.snoy.myapplication.constant;
 public interface Constants {
 
 
-    /**
-     * 啊叶
-     */
-    interface JSON {
-        final String jsonApartment = "http://www.ahjmall.com/cloud/get_apartment_list.json";
-    }
 
-    /******************************************************************************************/
 
     /**
      * 聪

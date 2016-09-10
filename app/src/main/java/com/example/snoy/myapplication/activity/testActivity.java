@@ -6,9 +6,13 @@ import android.widget.TextView;
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.Utils.ControlUtils;
 import com.example.snoy.myapplication.base.BaseActivity;
-import com.example.snoy.myapplication.bean.Result;
+import com.example.snoy.myapplication.bean.BusinessBean;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -37,6 +41,22 @@ public class testActivity extends BaseActivity {
     public void initData() {
         click.setText("这是测试Activity");
 
+        HashMap<String,String> map = new HashMap<>();
+        map.put("keyWord","天");
+        map.put("page",1+"");
+        map.put("rows",10+"");
+
+        ControlUtils.postsEveryTime("http://test.51ujf.cn/businessStore!search.do", map, BusinessBean.class, new ControlUtils.OnControlUtils<BusinessBean>() {
+            @Override
+            public void onSuccess(String url, BusinessBean obj, ArrayList<BusinessBean> list, String result, JSONObject jsonObject, JSONArray jsonArray) {
+
+            }
+
+            @Override
+            public void onFailure(String url) {
+
+            }
+        });
 
 
         tv[0].setText("成功");
@@ -51,7 +71,6 @@ public class testActivity extends BaseActivity {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //不要声明mContext  因为回收内存的时候因为mContext回收不了
                 goToActivityByClass(testActivity.this, StartActivityActivity.class);
             }
         });

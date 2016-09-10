@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.snoy.myapplication.MainActivity;
+import com.example.snoy.myapplication.activityMain.MainActivity;
 import com.example.snoy.myapplication.Utils.ImageUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
@@ -36,6 +36,8 @@ public abstract class BaseFragment extends Fragment {
     protected MyNetFailView myNetFailView;
     //总布局
     protected RelativeLayout content;
+    //填充器
+    LayoutInflater inflater;
     /**
      * TextView  ImageView
      * 提供自动查找ID的数组  布局命名规范符合
@@ -48,6 +50,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.inflater = inflater;
         dealLogicBeforeFindView();
         //总布局
         content = new RelativeLayout(getActivity());

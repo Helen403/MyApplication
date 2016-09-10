@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/icon_logo" />
+        android:src="@mipmap/custermview_icon_logo" />
 
 
 
@@ -25,10 +25,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         app:datas="@array/content_group"
-        app:linanim="@anim/img_left_in"
-        app:loutanim="@anim/img_left_out"
-        app:rinanim="@anim/img_right_in"
-        app:routanim="@anim/img_rigth_out" />
+        app:linanim="@anim/custermview_img_left_in"
+        app:loutanim="@anim/custermview_img_left_out"
+        app:rinanim="@anim/custermview_img_right_in"
+        app:routanim="@anim/custermview_img_rigth_out" />
 
     <com.example.snoy.myapplication.lib.NavView.AnimImageGroup
         android:id="@+id/animtitleid"
@@ -38,10 +38,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="70dp"
         app:datas="@array/title_group"
-        app:linanim="@anim/img_left_in"
-        app:loutanim="@anim/img_left_out"
-        app:rinanim="@anim/img_right_in"
-        app:routanim="@anim/img_rigth_out" />
+        app:linanim="@anim/custermview_img_left_in"
+        app:loutanim="@anim/custermview_img_left_out"
+        app:rinanim="@anim/custermview_img_right_in"
+        app:routanim="@anim/custermview_img_rigth_out" />
 
 
     <com.example.snoy.myapplication.lib.NavView.NavImgLayout
@@ -52,9 +52,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
         android:visibility="invisible"
-        app:checkedimg="@drawable/img_dot_white"
+        app:checkedimg="@mipmap/custermview_img_dot_white"
         app:count="4"
-        app:uncheckedimg="@drawable/img_dot_gray" />
+        app:uncheckedimg="@mipmap/custermview_img_dot_gray" />
 
 
     <com.example.snoy.myapplication.lib.NavView.AnimImageGroup
@@ -64,10 +64,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:datas="@array/pic_group"
-        app:linanim="@anim/img_left_in"
-        app:loutanim="@anim/img_left_out"
-        app:rinanim="@anim/img_right_in"
-        app:routanim="@anim/img_rigth_out" />
+        app:linanim="@anim/custermview_img_left_in"
+        app:loutanim="@anim/custermview_img_left_out"
+        app:rinanim="@anim/custermview_img_right_in"
+        app:routanim="@anim/custermview_img_rigth_out" />
 
 
 </RelativeLayout>

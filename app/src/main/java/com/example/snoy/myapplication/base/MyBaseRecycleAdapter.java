@@ -28,6 +28,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
     private Context contextApplication = BaseApplication.context;
     private ArrayList<T> data;
     private MyRecycleView mRecyclerView;
+    private Context context;
 
 
     private OnItemClickListener<T> mListener;
@@ -36,7 +37,8 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         mListener = li;
     }
 
-    public MyBaseRecycleAdapter(MyRecycleView mRecyclerView) {
+    public MyBaseRecycleAdapter(Context context, MyRecycleView mRecyclerView) {
+        this.context = context;
         this.data = new ArrayList<>();
         this.mRecyclerView = mRecyclerView;
         init();
@@ -106,16 +108,11 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         protected TextView[] tv;
         protected ImageView[] iv;
 
-
-        /**
-         * 如果用到了，比如我们用glide加载图片的时候，还有其他的需要用到上下文的时候
-         */
-        private Context mContext;
-
         public RecycleViewHolder(View itemView) {
             super(itemView);
             views = new SparseArray<>();
             convertView = itemView;
+            fillLayout();
         }
 
         /**
@@ -141,7 +138,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
          * 获取当前的上下文
          */
         public Context getContext() {
-            return convertView.getContext();
+            return context;
         }
 
         /**
@@ -367,6 +364,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
 
     public interface OnRefresh {
         void onRefresh();
+
         void onAddData();
     }
 

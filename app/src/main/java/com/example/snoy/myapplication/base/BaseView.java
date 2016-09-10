@@ -11,14 +11,16 @@ public abstract class BaseView extends RelativeLayout {
 
     public BaseView(Context context) {
         super(context);
-        view = View.inflate(context, initView(), this);
+        view = View.inflate(context, getContentView(), this);
         view.setDrawingCacheEnabled(true);
         initData();
     }
 
+    public abstract int getContentView();
 
-    public abstract int initView();
-
+    /**
+     * 初始化数据
+     */
     public abstract void initData();
 
 }

@@ -246,8 +246,8 @@ public final class MyRecycleView extends RecyclerView implements Runnable {
             ProgressBar progressBar = new ProgressBar(mContext, null, android.R.attr.progressBarStyleSmall);
             progressBar.setBackgroundColor(Color.WHITE);
             progressBar.setLayoutParams(new LinearLayout.LayoutParams(
-                    90, 130));
-            progressBar.setPadding(0, 0, 5, 0);
+                    dip2px(getContext(),90),dip2px(getContext(),130)));
+            progressBar.setPadding(0, 0, dip2px(getContext(),5), 0);
 
             footerLayout.addView(progressBar);
 
@@ -260,7 +260,7 @@ public final class MyRecycleView extends RecyclerView implements Runnable {
             text.setText("正在加载...");
             text.setGravity(Gravity.CENTER);
             text.setTextColor(Color.rgb(149, 156, 166));
-            text.setTextSize(16);
+            text.setTextSize(sp2px(getContext(),14));
             footerLayout.addView(text);
         }
         // 使用包装了头部和脚部的适配器
@@ -660,6 +660,22 @@ public final class MyRecycleView extends RecyclerView implements Runnable {
                 super(itemView);
             }
         }
+    }
+
+    /**
+     * 将dip或dp值转换为px值，保证尺寸大小不变
+     */
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    /**
+     * 将sp值转换为px值，保证文字大小不变
+     */
+    public int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 
     /**
