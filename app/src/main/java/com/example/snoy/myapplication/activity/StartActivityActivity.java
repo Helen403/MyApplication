@@ -29,34 +29,7 @@ public class StartActivityActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        String str = DButils.queryStringForeverBySql("http://www.ahjmall.com/cloud/get_product_group_v3.json");
-        L(str);
 
-
-
-//        ControlUtils.postsEveryTime(bufferCircleView,
-//            @Override
-//            public void onSuccess(String url, TestBean obj, ArrayList<TestBean> list, String result) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(String url) {
-//
-//            }
-//        });
-
-        ControlUtils.postsEveryTime("http://www.ahjmall.com/cloud/get_product_group_v3.json",null,TestBean.class, new ControlUtils.OnControlUtils<TestBean>() {
-            @Override
-            public void onSuccess(String url, TestBean obj, ArrayList<TestBean> list, String result) {
-
-            }
-
-            @Override
-            public void onFailure(String url) {
-
-            }
-        });
     }
 
     @Override

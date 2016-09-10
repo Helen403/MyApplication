@@ -1,6 +1,8 @@
 package com.example.snoy.myapplication.base;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -14,6 +16,9 @@ import android.widget.Toast;
 import com.example.snoy.myapplication.Utils.ImageUtils;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 因为经过超简的优化后  就不要新建一个类 放在Adapter包  直接使用内部类的形式（加快维修的速度和阅读的速度）
@@ -31,7 +36,9 @@ import java.util.ArrayList;
  */
 public abstract class MyBaseAdapter<T> extends BaseAdapter {
     //需要配置一下Context
-    protected Context context = BaseApplication.context;
+    protected Context contextApplication = BaseApplication.context;
+    //用于跳转的Context
+    protected Context context;
     protected ArrayList<T> data;
     protected View view;
 
@@ -46,18 +53,33 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     protected ImageView[] iv;
 
 
-    public MyBaseAdapter(ArrayList<T> data) {
-        this.data = data;
+    public MyBaseAdapter(Context context) {
+        this.data = new ArrayList<>();
+        this.context = context;
     }
 
     /**
      * 设置数据
      */
-    public void setData(ArrayList<T> data) {
-        this.data = data;
-        notifyDataSetChanged();
+    public void setData(List<T> data) {
+        if (data!=null){
+            this.data.clear();
+            this.data.addAll(data);
+            notifyDataSetChanged();
+        }
     }
 
+
+    /**
+     * 在原有数据的基础上再添加数据
+     */
+    public void addMoreByData(List<T> data) {
+        if (data != null) {
+            this.data.addAll(data);
+            notifyDataSetChanged();
+        }
+    }
+    
     /**
      * 清除数据
      */
@@ -66,15 +88,6 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    /**
-     * 在原有数据的基础上再添加数据
-     */
-    public void addMoreByData(ArrayList<T> data) {
-        if (data != null) {
-            this.data.addAll(data);
-            notifyDataSetChanged();
-        }
-    }
 
     @Override
     public int getCount() {
@@ -105,7 +118,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
      * 加载布局
      */
     private View inflate(int layoutResID) {
-        LayoutInflater layoutInflater = (LayoutInflater) context
+        LayoutInflater layoutInflater = (LayoutInflater) contextApplication
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = layoutInflater.inflate(layoutResID, null);
         fillLayout();
@@ -178,23 +191,23 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
 
     /*********************************************************************/
     public void T(String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg, Toast.LENGTH_SHORT).show();
     }
 
     public void T(float msg) {
-        Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg + "", Toast.LENGTH_SHORT).show();
     }
 
     public void T(double msg) {
-        Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg + "", Toast.LENGTH_SHORT).show();
     }
 
     public void T(int msg) {
-        Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg + "", Toast.LENGTH_SHORT).show();
     }
 
     public void T(boolean msg) {
-        Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg + "", Toast.LENGTH_SHORT).show();
     }
 
     public void L(String msg) {
@@ -217,6 +230,41 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
         Log.d("Helen", msg + "");
     }
     /*********************************************************************/
+    /**
+     * 跳转到另一个Activity，不携带数据，不设置flag
+     */
+    public void goToActivityByClass( Class<?> cls) {
+        Intent intent = new Intent();
+        intent.setClass(context, cls);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转到另一个Activity，携带数据
+     */
+    public void goToActivityByClass( Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(context, cls);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * 延迟去往新的Activity
+     */
+    public void delayToActivity( final Class<?> cls, long delay) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                context.startActivity(new Intent(context, cls));
+            }
+        }, delay);
+    }
+
+
+
 
     /*************************************************************************/
     /**
@@ -224,7 +272,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
      */
 
     private void fillLayout() {
-        String packageName = context.getPackageName();
+        String packageName = contextApplication.getPackageName();
         ArrayList<TextView> textViews = new ArrayList<>();
         TextView tvTmp;
         ArrayList<ImageView> imageViews = new ArrayList<>();
@@ -234,7 +282,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
         int i = 0;
         int resId;
         do {
-            resId = context.getResources().getIdentifier("tv_" + i, "id", packageName);
+            resId = contextApplication.getResources().getIdentifier("tv_" + i, "id", packageName);
             if (resId != 0) {
                 tvTmp = getViewById(resId);
                 textViews.add(tvTmp);
@@ -250,7 +298,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
         //填充ImageView  i归零
         i = 0;
         do {
-            resId = context.getResources().getIdentifier("iv_" + i, "id", packageName);
+            resId = contextApplication.getResources().getIdentifier("iv_" + i, "id", packageName);
             if (resId != 0) {
                 ivTmp = getViewById(resId);
                 imageViews.add(ivTmp);

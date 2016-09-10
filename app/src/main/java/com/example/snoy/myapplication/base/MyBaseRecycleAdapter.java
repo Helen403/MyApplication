@@ -25,7 +25,7 @@ import java.util.List;
  */
 public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBaseRecycleAdapter<T>.RecycleViewHolder> {
 
-    private Context context = BaseApplication.context;
+    private Context contextApplication = BaseApplication.context;
     private ArrayList<T> data;
     private MyRecycleView mRecyclerView;
 
@@ -189,7 +189,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
          * 根据名字填充tv数组  iv数组
          */
         private void fillLayout() {
-            String packageName = context.getPackageName();
+            String packageName = contextApplication.getPackageName();
             ArrayList<TextView> textViews = new ArrayList<>();
             TextView tvTmp;
             ArrayList<ImageView> imageViews = new ArrayList<>();
@@ -199,7 +199,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
             int i = 0;
             int resId;
             do {
-                resId = context.getResources().getIdentifier("tv_" + i, "id", packageName);
+                resId = contextApplication.getResources().getIdentifier("tv_" + i, "id", packageName);
                 if (resId != 0) {
                     tvTmp = (TextView) convertView.findViewById(resId);
                     textViews.add(tvTmp);
@@ -215,7 +215,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
             //填充ImageView  i归零
             i = 0;
             do {
-                resId = context.getResources().getIdentifier("iv_" + i, "id", packageName);
+                resId = contextApplication.getResources().getIdentifier("iv_" + i, "id", packageName);
                 if (resId != 0) {
                     ivTmp = (ImageView) convertView.findViewById(resId);
                     imageViews.add(ivTmp);
@@ -316,23 +316,23 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
 
     /*********************************************************************/
     public void T(String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg, Toast.LENGTH_SHORT).show();
     }
 
     public void T(float msg) {
-        Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg + "", Toast.LENGTH_SHORT).show();
     }
 
     public void T(double msg) {
-        Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg + "", Toast.LENGTH_SHORT).show();
     }
 
     public void T(int msg) {
-        Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg + "", Toast.LENGTH_SHORT).show();
     }
 
     public void T(boolean msg) {
-        Toast.makeText(context, msg + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(contextApplication, msg + "", Toast.LENGTH_SHORT).show();
     }
 
     public void L(String msg) {

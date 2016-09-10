@@ -209,14 +209,14 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         //添加左边的按钮
         tv_left = new TextView(this);
-        LinearLayout.LayoutParams btnLeftLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams btnLeftLayoutParams = new LinearLayout.LayoutParams(dip2px(this, 44), LinearLayout.LayoutParams.MATCH_PARENT);
         tv_left.setLayoutParams(btnLeftLayoutParams);
         tv_left.setBackgroundColor(color);
         tv_left.setGravity(Gravity.CENTER);
         tv_left.setPadding(dip2px(this, 10), dip2px(this, 10), dip2px(this, 10), dip2px(this, 10));
         Drawable drawableLeft = ContextCompat.getDrawable(this, leftDrawable);
         assert drawableLeft != null;
-        drawableLeft.setBounds(0, 0, 80, 80);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        drawableLeft.setBounds(0, 0, dip2px(this, 30), dip2px(this, 30));//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         tv_left.setCompoundDrawables(null, drawableLeft, null, null);//只放上边
         head_view.addView(tv_left);
 
@@ -229,19 +229,19 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         tv_title.setGravity(Gravity.CENTER);
         tv_title.setSingleLine();
         tv_title.setText("中间的标题");
-        tv_title.setTextSize(sp2px(this, 8));
+        tv_title.setTextSize(sp2px(this, 16));
         head_view.addView(tv_title);
 
         //添加右边的按钮
         tv_right = new TextView(this);
-        LinearLayout.LayoutParams btnRightLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams btnRightLayoutParams = new LinearLayout.LayoutParams(dip2px(this, 44), LinearLayout.LayoutParams.MATCH_PARENT);
         tv_right.setLayoutParams(btnRightLayoutParams);
         tv_right.setBackgroundColor(color);
         tv_right.setGravity(Gravity.CENTER);
         tv_right.setPadding(dip2px(this, 10), dip2px(this, 10), dip2px(this, 10), dip2px(this, 10));
         Drawable drawableRight = ContextCompat.getDrawable(this, RightDrawable);
         assert drawableRight != null;
-        drawableRight.setBounds(0, 0, 80, 80);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        drawableRight.setBounds(0, 0, dip2px(this, 30), dip2px(this, 30));//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         tv_right.setCompoundDrawables(null, drawableRight, null, null);//只放上边
         head_view.addView(tv_right);
 
@@ -510,7 +510,5 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         super.onPause();
         bufferCircleView.stopAnimation();
     }
-
-
 }
 
