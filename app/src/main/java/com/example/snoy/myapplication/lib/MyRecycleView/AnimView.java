@@ -17,6 +17,7 @@ public class AnimView extends View {
 
     private Canvas mCanvas;
     private Paint paint;
+    private Paint paintTmp;
     private Paint hollowPaint; // 空心画笔
     private int paintWidth = 3;
     private int paintWidthPx;
@@ -39,6 +40,11 @@ public class AnimView extends View {
     private boolean isShow;
     private boolean isFirst = true;
 
+    private int colorBg = Color.WHITE; // 背景
+
+
+    private int screenWidth; // 屏幕宽度
+
     public AnimView(Context context) {
         this(context, null);
     }
@@ -55,7 +61,8 @@ public class AnimView extends View {
         dp2 = dip2px(context, 2);
         paintWidthPx = dip2px(context, paintWidth);
 
-        centerPointX = centerPointY = radius + margin + paintWidthPx * 2;
+        centerPointX =  radius + margin + paintWidthPx * 2;
+        centerPointY = radius + margin + paintWidthPx * 2;
         oval = new RectF(paintWidthPx, paintWidthPx, centerPointX * 2 - paintWidthPx,
                 centerPointY * 2 - paintWidthPx);
 
@@ -69,6 +76,13 @@ public class AnimView extends View {
 
         isShow = getVisibility() == VISIBLE;
 
+
+
+
+
+        paintTmp = new Paint();
+        paintTmp.setColor(colorBg);// 设置灰色
+        paintTmp.setStyle(Paint.Style.FILL);//设置填满
     }
 
     /**
@@ -84,6 +98,9 @@ public class AnimView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+
+
         mCanvas = canvas;
         if (isShow) {
             // 画圆

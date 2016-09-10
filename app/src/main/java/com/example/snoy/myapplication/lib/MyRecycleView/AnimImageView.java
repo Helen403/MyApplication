@@ -1,7 +1,7 @@
 package com.example.snoy.myapplication.lib.MyRecycleView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,7 +12,8 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.example.snoy.myapplication.R;
+
+import com.HyKj.UJiFen.R;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -82,7 +83,7 @@ public class AnimImageView extends ImageView {
         mPaintText = new Paint();
         mPaintText.setColor(Color.WHITE);
         mPaintText.setAntiAlias(true);
-        mPaintText.setTextSize(38);
+        mPaintText.setTextSize(sp2px(getContext(),15));
         mPath = new Path();
         textWidth = mPaint.measureText(text);
         mPaintBitmap = new Paint();
@@ -110,6 +111,7 @@ public class AnimImageView extends ImageView {
         invalidate();
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void draw(Canvas canvas) {
 
@@ -120,7 +122,7 @@ public class AnimImageView extends ImageView {
 
             // 背景
             canvas.drawColor(colorBg);
-            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.pull_icon_big);
+            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.arrow);
             // 定义矩阵对象
             Matrix matrix = new Matrix();
             // 缩放原图
@@ -140,20 +142,34 @@ public class AnimImageView extends ImageView {
                 matrix.postRotate(-180);
                 Bitmap dstbmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
                         matrix, true);
-                canvas.drawBitmap(dstbmp, centerX - 4 * textWidth + 20, height - textWidth - 10, null);
-                canvas.drawText("松手刷新", centerX, height - 22, mPaintText);
-                canvas.drawText("松手刷新", centerX, height - 22, mPaintText);
-                canvas.drawText("最后更新：今天 " + time, centerX - 90, height + 22, mPaintText);
+                canvas.drawBitmap(dstbmp, centerX - dip2px(getContext(), 60), height - dip2px(getContext(), 20), null);
+                canvas.drawText("松手刷新", centerX- dip2px(getContext(),20), height - dip2px(getContext(),0), mPaintText);
+                canvas.drawText("最后更新：今天 " + time, centerX - dip2px(getContext(),20), height+dip2px(getContext(),20), mPaintText);
             } else {
                 matrix.postRotate(0);
                 Bitmap dstbmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),
                         matrix, true);
-                canvas.drawBitmap(dstbmp, centerX - 4 * textWidth + 20, height - textWidth - 10, null);
-                canvas.drawText("下拉刷新", centerX, height - 22, mPaintText);
-                canvas.drawText("下拉刷新", centerX, height - 22, mPaintText);
-                canvas.drawText("最后更新：今天 " + time, centerX - 90, height + 22, mPaintText);
+                canvas.drawBitmap(dstbmp, centerX - dip2px(getContext(), 60), height - dip2px(getContext(),20), null);
+                canvas.drawText("下拉刷新", centerX- dip2px(getContext(),20), height - dip2px(getContext(),0), mPaintText);
+                canvas.drawText("最后更新：今天 " + time, centerX - dip2px(getContext(),20), height+dip2px(getContext(),20), mPaintText);
             }
         }
+    }
+
+    /**
+     * 将dip或dp值转换为px值，保证尺寸大小不变
+     */
+    public int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    /**
+     * 将sp值转换为px值，保证文字大小不变
+     */
+    public int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 
 
