@@ -83,7 +83,7 @@ public class AnimImageView extends ImageView {
         mPaintText = new Paint();
         mPaintText.setColor(Color.WHITE);
         mPaintText.setAntiAlias(true);
-        mPaintText.setTextSize(sp2px(getContext(),15));
+        mPaintText.setTextSize(sp2px(getContext(), 15));
         mPath = new Path();
         textWidth = mPaint.measureText(text);
         mPaintBitmap = new Paint();

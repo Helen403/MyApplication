@@ -35,6 +35,7 @@ public class StartActivityActivity extends BaseActivity {
     @Override
     public void setListeners() {
 
+
     }
 
 }

@@ -244,7 +244,7 @@ public final class DButils {
     static class MyDBHelper extends SQLiteOpenHelper {
 
         public MyDBHelper(Context context) {
-            super(context, DB_PATH_LOCATION + DB_NAME, null, 1);
+            super(context, DB_NAME, null, 1);
         }
 
         @Override

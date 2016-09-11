@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.lib.MyRecycleView.MyGridLayoutManager;
 import com.example.snoy.myapplication.lib.MyRecycleView.MyLinearLayoutManager;
 import com.example.snoy.myapplication.lib.MyRecycleView.MyStaggeredGridLayoutManager;
@@ -235,33 +237,12 @@ public final class MyRecycleView extends RecyclerView implements Runnable {
             mHeaderViews.add(0, headerLayout);
         }
         if (mFootViews.isEmpty()) {
-            // 新建脚部
-            LinearLayout footerLayout = new LinearLayout(mContext);
-            footerLayout.setBackgroundColor(Color.WHITE);
-            footerLayout.setGravity(Gravity.CENTER);
-            footerLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            View view  = LayoutInflater.from(getContext()).inflate(R.layout.custermview_loading_more, null);
+           TextView tv= (TextView) view.findViewById(R.id.tv_text);
+            tv.setText("正在加载...");
+            tv.setTextColor(Color.rgb(149, 156, 166));
+            mFootViews.add(view);
 
-            mFootViews.add(footerLayout);
-            ProgressBar progressBar = new ProgressBar(mContext, null, android.R.attr.progressBarStyleSmall);
-            progressBar.setBackgroundColor(Color.WHITE);
-            progressBar.setLayoutParams(new LinearLayout.LayoutParams(
-                    dip2px(getContext(),90),dip2px(getContext(),130)));
-            progressBar.setPadding(0, 0, dip2px(getContext(),5), 0);
-
-            footerLayout.addView(progressBar);
-
-            TextView text = new TextView(mContext);
-            text.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 130));
-            text.setBackgroundColor(Color.WHITE);
-            text.setSingleLine();
-            text.setPadding(5, 0, 0, 0);
-            text.setText("正在加载...");
-            text.setGravity(Gravity.CENTER);
-            text.setTextColor(Color.rgb(149, 156, 166));
-            text.setTextSize(sp2px(getContext(),14));
-            footerLayout.addView(text);
         }
         // 使用包装了头部和脚部的适配器
         adapter = new WrapAdapter(mHeaderViews, mFootViews, adapter);

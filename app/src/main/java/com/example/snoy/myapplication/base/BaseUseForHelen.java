@@ -11,8 +11,8 @@ public class BaseUseForHelen {
 
 //*********************************************************************************
       //布局填充
-     LayoutInflater inflater = LayoutInflater.from(context).inflate(R.layout, null);
-
+     LayoutInflater inflater = LayoutInflater.from(context);
+     View view = inflater.inflate(R.layout, null);
 //*********************************************************************************
      //相对布局
        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
