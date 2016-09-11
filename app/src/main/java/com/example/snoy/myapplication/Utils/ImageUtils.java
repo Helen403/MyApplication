@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.util.LruCache;
+import android.view.View;
 import android.widget.ImageView;
 
 
@@ -446,6 +447,32 @@ public final class ImageUtils {
                 }
             }
         });
+    }
+
+    /**
+     * 根据view来生成bitmap图片，可用于截图功能
+     */
+    public Bitmap getBitmapByView(View view) {
+        view.clearFocus(); //
+        view.setPressed(false); //
+        // 能画缓存就返回false
+        boolean willNotCache = view.willNotCacheDrawing();
+        view.setWillNotCacheDrawing(false);
+        int color = view.getDrawingCacheBackgroundColor();
+        view.setDrawingCacheBackgroundColor(0);
+        if (color != 0) {
+            view.destroyDrawingCache();
+        }
+        view.buildDrawingCache();
+        Bitmap cacheBitmap = view.getDrawingCache();
+        if (cacheBitmap == null) {
+            return null;
+        }
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+        view.destroyDrawingCache();
+        view.setWillNotCacheDrawing(willNotCache);
+        view.setDrawingCacheBackgroundColor(color);
+        return bitmap;
     }
 
     /**
