@@ -97,7 +97,6 @@ public class AnimImageView extends ImageView {
     public void setColor(int color1, int color2) {
         mPaint.setColor(Color.WHITE);
         mPaintText.setColor(Color.rgb(149, 156, 166));
-//        colorBg = color1;
     }
 
     @Override

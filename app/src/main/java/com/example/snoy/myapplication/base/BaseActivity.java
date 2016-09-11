@@ -10,6 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -81,8 +84,13 @@ public abstract class BaseActivity extends Activity {
     protected MyNetFailView myNetFailView;
 
     /******************************************/
-    LayoutInflater inflater;
-
+    protected LayoutInflater inflater;
+    /*****************************************/
+    protected FragmentManager fm;
+    protected FragmentTransaction ft;
+    protected int FragmentId;
+    protected ArrayList<BaseFragment> fragmentList;
+    protected int indexFragment = 0;
 
     /**
      * 关闭Activity的广播，放在自定义的基类中，让其他的Activity继承这个Activity就行
@@ -113,7 +121,7 @@ public abstract class BaseActivity extends Activity {
      * 添加自定义的遮盖提示
      * 特殊提供
      */
-    protected void showMessage(RelativeLayout relativeLayout){
+    protected void showMessage(RelativeLayout relativeLayout) {
 
     }
 
@@ -200,7 +208,7 @@ public abstract class BaseActivity extends Activity {
         head_view.addView(tv_right);
 
         //从外面传来的View添加进入
-         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout.LayoutParams viewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
         contentView = (ViewGroup) inflater.inflate(setContentLayout(), null);
         contentView.setLayoutParams(viewLayoutParams);
@@ -630,5 +638,36 @@ public abstract class BaseActivity extends Activity {
         int sizeIv = imageViews.size();
         if (sizeIv > 0)
             iv = imageViews.toArray(new ImageView[sizeIv]);
+    }
+
+    /****************************************************************************************/
+    /**
+     * 初始化内部Fragment数据
+     */
+    public void initFragmentData(int resId) {
+        FragmentId = resId;
+        fragmentList = new ArrayList<>();
+    }
+
+    /**
+     * 内部嵌入Fragment 转换  隐藏当前Fragment
+     */
+    public void switchFragment(int checkIndex) {
+        ft = fm.beginTransaction();
+        Fragment currentFragment = fragmentList.get(indexFragment);
+        Fragment targetFragment = fragmentList.get(checkIndex);
+        if (currentFragment != targetFragment) {
+            if (!targetFragment.isAdded()) {
+                ft.hide(currentFragment).add(FragmentId, targetFragment);
+            } else {
+                ft.hide(currentFragment).show(targetFragment);
+            }
+        } else {
+            if (!targetFragment.isAdded()) {
+                ft.add(FragmentId, targetFragment).show(targetFragment);
+            }
+        }
+        ft.commit();
+        indexFragment = checkIndex;
     }
 }
