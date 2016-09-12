@@ -26,11 +26,13 @@ public class testActivity extends BaseActivity {
     public void dealLogicBeforeFindView() {
     }
 
-
     @Override
-    public int setContentLayout() {
+    public int getContentView() {
         return R.layout.fragment_test_1;
     }
+
+
+
 
     @Override
     public void findViews() {

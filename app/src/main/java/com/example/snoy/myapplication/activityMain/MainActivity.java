@@ -230,7 +230,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         tv_title.setGravity(Gravity.CENTER);
         tv_title.setSingleLine();
         tv_title.setText("中间的标题");
-        tv_title.setTextSize(sp2px(this, 16));
+        tv_title.setTextSize(16);
         head_view.addView(tv_title);
 
         //添加右边的按钮
@@ -345,7 +345,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     /**
      * 获取加载的View
      */
-    public BufferCircleView getLoding() {
+    public BufferCircleView getLoading() {
         return bufferCircleView;
     }
 

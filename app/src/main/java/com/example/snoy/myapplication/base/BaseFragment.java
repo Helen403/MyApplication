@@ -150,10 +150,10 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 获取加载的图片
      */
-    protected BufferCircleView getLoding() {
+    protected BufferCircleView getLoading() {
         BufferCircleView bufferCircleView = null;
         if (getActivity() instanceof MainActivity) {
-            bufferCircleView = (BufferCircleView) ((MainActivity) getActivity()).getLoding();
+            bufferCircleView = (BufferCircleView) ((MainActivity) getActivity()).getLoading();
         }
         return bufferCircleView;
     }

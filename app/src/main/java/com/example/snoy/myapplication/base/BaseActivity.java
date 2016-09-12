@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -34,6 +35,7 @@ import com.example.snoy.myapplication.Utils.SystemBarUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,7 +44,7 @@ import java.util.TimerTask;
 /**
  * Created by SNOY on 2016/8/20.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends FragmentActivity {
 
     //配置一下
     protected Context contextAppliction = BaseApplication.context;
@@ -88,8 +90,8 @@ public abstract class BaseActivity extends Activity {
     /*****************************************/
     protected FragmentManager fm;
     protected FragmentTransaction ft;
-    protected int FragmentId;
-    protected ArrayList<BaseFragment> fragmentList;
+    protected int fragmentId;
+    protected ArrayList<BaseFragment> fragmentList = new ArrayList<>();
     protected int indexFragment = 0;
 
     /**
@@ -105,6 +107,7 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fm = this.getSupportFragmentManager();
         dealLogicBeforeFindView();
         setFullScreen(isAllowFullScreen);
         SystemBarUtils.initSystemBarElse(this, color);
@@ -191,7 +194,7 @@ public abstract class BaseActivity extends Activity {
         tv_title.setBackgroundColor(color);
         tv_title.setGravity(Gravity.CENTER);
         tv_title.setText("中间的标题");
-        tv_title.setTextSize(sp2px(this, 16));
+        tv_title.setTextSize(16);
         head_view.addView(tv_title);
 
         //添加右边的按钮
@@ -210,7 +213,7 @@ public abstract class BaseActivity extends Activity {
         //从外面传来的View添加进入
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout.LayoutParams viewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
-        contentView = (ViewGroup) inflater.inflate(setContentLayout(), null);
+        contentView = (ViewGroup) inflater.inflate(getContentView(), content, false);
         contentView.setLayoutParams(viewLayoutParams);
         ly_content.addView(contentView);
 
@@ -234,7 +237,7 @@ public abstract class BaseActivity extends Activity {
     /***
      * 设置内容区域
      */
-    public abstract int setContentLayout();
+    public abstract int getContentView();
 
     public abstract void findViews();
 
@@ -610,9 +613,12 @@ public abstract class BaseActivity extends Activity {
         int i = 0;
         int resId;
         do {
+
+
+
             resId = getResources().getIdentifier("tv_" + i, "id", packageName);
             if (resId != 0) {
-                tvTmp = (TextView) findViewById(resId);
+                tvTmp = (TextView) content.findViewById(resId);
                 textViews.add(tvTmp);
             } else {
                 break;
@@ -628,7 +634,7 @@ public abstract class BaseActivity extends Activity {
         do {
             resId = getResources().getIdentifier("iv_" + i, "id", packageName);
             if (resId != 0) {
-                ivTmp = (ImageView) findViewById(resId);
+                ivTmp = (ImageView) content.findViewById(resId);
                 imageViews.add(ivTmp);
             } else {
                 break;
@@ -641,13 +647,6 @@ public abstract class BaseActivity extends Activity {
     }
 
     /****************************************************************************************/
-    /**
-     * 初始化内部Fragment数据
-     */
-    public void initFragmentData(int resId) {
-        FragmentId = resId;
-        fragmentList = new ArrayList<>();
-    }
 
     /**
      * 内部嵌入Fragment 转换  隐藏当前Fragment
@@ -658,13 +657,13 @@ public abstract class BaseActivity extends Activity {
         Fragment targetFragment = fragmentList.get(checkIndex);
         if (currentFragment != targetFragment) {
             if (!targetFragment.isAdded()) {
-                ft.hide(currentFragment).add(FragmentId, targetFragment);
+                ft.hide(currentFragment).add(fragmentId, targetFragment);
             } else {
                 ft.hide(currentFragment).show(targetFragment);
             }
         } else {
             if (!targetFragment.isAdded()) {
-                ft.add(FragmentId, targetFragment).show(targetFragment);
+                ft.add(fragmentId, targetFragment).show(targetFragment);
             }
         }
         ft.commit();

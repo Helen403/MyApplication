@@ -64,7 +64,7 @@ public class test4Fragment extends BaseFragment {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLoding().hide();
+                getLoading().hide();
             }
         });
     }

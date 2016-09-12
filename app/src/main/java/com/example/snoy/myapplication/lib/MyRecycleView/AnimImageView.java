@@ -117,7 +117,7 @@ public class AnimImageView extends ImageView {
         if (getLayoutParams().height > dp1) {
 
 
-            height = getLayoutParams().height - 60;
+            height = getLayoutParams().height - dip2px(getContext(),30);
 
             // 背景
             canvas.drawColor(colorBg);
@@ -136,7 +136,7 @@ public class AnimImageView extends ImageView {
                 time = timeTmp;
             }
             // 文本
-            if (height >= 130) {
+            if (height >= dip2px(getContext(),60)) {
                 // 向左旋转45度，参数为正则向右旋转
                 matrix.postRotate(-180);
                 Bitmap dstbmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),

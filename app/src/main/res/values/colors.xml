@@ -7,4 +7,14 @@
     <color name="color_ff">#F0F0F0</color>
 
     <color name="background_tab_pressed">#6633B5E5</color>
+    <!--二维码-->
+    <color name="top_color">#20AEE5</color>
+    <color name="backgroud">#ffffffff</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <color name="viewfinder_mask">#cb000000</color>
+    <color name="viewfinder_frame">#ff4EEE94</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <color name="textColor_sameAs_Title">#1FAEE6</color>
+    <!-- 状态栏颜色 -->
+    <color name="status_color">#20AEE5</color>
 </resources>
