@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -44,19 +45,10 @@ import java.util.TimerTask;
 /**
  * Created by SNOY on 2016/8/20.
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener {
 
     //配置一下
     protected Context contextAppliction = BaseApplication.context;
-    /******************************************/
-    /**
-     * TextView  ImageView
-     * 提供自动查找ID的数组  布局命名规范符合  一定是从零开始
-     * TextView tv_0 ,tv_1....
-     * ImageView iv_0,iv_1.....
-     */
-    protected TextView[] tv;
-    protected ImageView[] iv;
     /******************************************/
     //沉侵的颜色  和导航栏颜色
     private static final int color = Color.rgb(228, 238, 249);
@@ -90,8 +82,11 @@ public abstract class BaseActivity extends FragmentActivity {
     /*****************************************/
     protected FragmentManager fm;
     protected FragmentTransaction ft;
+    //跳转的id
     protected int fragmentId;
+    //存放子Fragment跳转的集合
     protected ArrayList<BaseFragment> fragmentList = new ArrayList<>();
+    //跳转的记录
     protected int indexFragment = 0;
 
     /**
@@ -112,20 +107,21 @@ public abstract class BaseActivity extends FragmentActivity {
         setFullScreen(isAllowFullScreen);
         SystemBarUtils.initSystemBarElse(this, color);
         getBuildContentView();
-        showMessage(content);
+        onShowMessage(content);
         setContentView(content);
-        attachMyRecycleViewAdapter();
+        onAttachMyRecycleViewAdapter();
         setBack();
         //检测网络状态
         checkNet();
     }
 
+
+
     /**
      * 添加自定义的遮盖提示
      * 特殊提供
      */
-    protected void showMessage(RelativeLayout relativeLayout) {
-
+    protected void onShowMessage(RelativeLayout relativeLayout) {
     }
 
 
@@ -134,7 +130,7 @@ public abstract class BaseActivity extends FragmentActivity {
      * findViewById  也是在这里操作
      * 特殊提供
      */
-    protected void attachMyRecycleViewAdapter() {
+    protected void onAttachMyRecycleViewAdapter() {
     }
 
     /**
@@ -143,8 +139,6 @@ public abstract class BaseActivity extends FragmentActivity {
     private void checkNet() {
         if (isConnected()) {
             myNetFailView.setVisibility(View.GONE);
-            //填充数组
-            fillLayout();
             findViews();
             initData();
             setListeners();
@@ -598,52 +592,15 @@ public abstract class BaseActivity extends FragmentActivity {
 
 
     /*************************************************************************/
-    /**
-     * 根据名字填充tv数组  iv数组
-     */
 
-    private void fillLayout() {
-        String packageName = getPackageName();
-        ArrayList<TextView> textViews = new ArrayList<>();
-        TextView tvTmp;
-        ArrayList<ImageView> imageViews = new ArrayList<>();
-        ImageView ivTmp;
+    protected <T extends View> T getViewById(int id) {
+        return (T) findViewById(id);
+    }
 
-        //填充TextView
-        int i = 0;
-        int resId;
-        do {
-
-
-
-            resId = getResources().getIdentifier("tv_" + i, "id", packageName);
-            if (resId != 0) {
-                tvTmp = (TextView) content.findViewById(resId);
-                textViews.add(tvTmp);
-            } else {
-                break;
-            }
-            ++i;
-        } while (tvTmp != null);
-        int sizeTv = textViews.size();
-        if (sizeTv > 0)
-            tv = textViews.toArray(new TextView[sizeTv]);
-
-        //填充ImageView  i归零
-        i = 0;
-        do {
-            resId = getResources().getIdentifier("iv_" + i, "id", packageName);
-            if (resId != 0) {
-                ivTmp = (ImageView) content.findViewById(resId);
-                imageViews.add(ivTmp);
-            } else {
-                break;
-            }
-            ++i;
-        } while (ivTmp != null);
-        int sizeIv = imageViews.size();
-        if (sizeIv > 0)
-            iv = imageViews.toArray(new ImageView[sizeIv]);
+    protected void setOnListeners(View ...views){
+        for(View view:views){
+            view.setOnClickListener(this);
+        }
     }
 
     /****************************************************************************************/
@@ -668,5 +625,10 @@ public abstract class BaseActivity extends FragmentActivity {
         }
         ft.commit();
         indexFragment = checkIndex;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

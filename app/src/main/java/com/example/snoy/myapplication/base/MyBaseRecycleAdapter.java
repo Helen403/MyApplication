@@ -98,21 +98,11 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         private final SparseArray<View> views;
         private View convertView;
 
-        /******************************************/
-        /**
-         * TextView  ImageView
-         * 提供自动查找ID的数组  布局命名规范符合
-         * TextView tv_0 ,tv_1....
-         * ImageView iv_0,iv_1.....
-         */
-        protected TextView[] tv;
-        protected ImageView[] iv;
 
         public RecycleViewHolder(View itemView) {
             super(itemView);
             views = new SparseArray<>();
             convertView = itemView;
-            fillLayout();
         }
 
         /**
@@ -181,50 +171,6 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         }
 
 
-        /*************************************************************************/
-        /**
-         * 根据名字填充tv数组  iv数组
-         */
-        private void fillLayout() {
-            String packageName = contextApplication.getPackageName();
-            ArrayList<TextView> textViews = new ArrayList<>();
-            TextView tvTmp;
-            ArrayList<ImageView> imageViews = new ArrayList<>();
-            ImageView ivTmp;
-
-            //填充TextView
-            int i = 0;
-            int resId;
-            do {
-                resId = contextApplication.getResources().getIdentifier("tv_" + i, "id", packageName);
-                if (resId != 0) {
-                    tvTmp = (TextView) convertView.findViewById(resId);
-                    textViews.add(tvTmp);
-                } else {
-                    break;
-                }
-                ++i;
-            } while (tvTmp != null);
-            int sizeTv = textViews.size();
-            if (sizeTv > 0)
-                tv = textViews.toArray(new TextView[sizeTv]);
-
-            //填充ImageView  i归零
-            i = 0;
-            do {
-                resId = contextApplication.getResources().getIdentifier("iv_" + i, "id", packageName);
-                if (resId != 0) {
-                    ivTmp = (ImageView) convertView.findViewById(resId);
-                    imageViews.add(ivTmp);
-                } else {
-                    break;
-                }
-                ++i;
-            } while (ivTmp != null);
-            int sizeIv = imageViews.size();
-            if (sizeIv > 0)
-                iv = imageViews.toArray(new ImageView[sizeIv]);
-        }
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.snoy.myapplication.activity;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.Utils.ControlUtils;
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 
 
 public class StartActivityActivity extends BaseActivity {
+
+    private TextView tv1;
+    private TextView tv2;
 
 
     @Override
@@ -29,7 +33,8 @@ public class StartActivityActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-
+        tv1 = (TextView) findViewById(R.id.tv_1);
+        tv2 = (TextView) findViewById(R.id.tv_2);
     }
 
     @Override
@@ -40,23 +45,27 @@ public class StartActivityActivity extends BaseActivity {
         fragmentList.add(test_1_fragment);
         fragmentList.add(test_2_fragment);
         switchFragment(0);
-
     }
+
 
     @Override
     public void setListeners() {
-        tv[0].setOnClickListener(new View.OnClickListener() {
+
+        tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchFragment(0);
             }
         });
-        tv[1].setOnClickListener(new View.OnClickListener() {
+        tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchFragment(1);
             }
         });
+        setOnListeners(tv1, tv2);
     }
+
+
 
 }

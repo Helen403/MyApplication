@@ -38,14 +38,6 @@ public abstract class BaseFragment extends Fragment {
     protected RelativeLayout content;
     //填充器
     LayoutInflater inflater;
-    /**
-     * TextView  ImageView
-     * 提供自动查找ID的数组  布局命名规范符合
-     * TextView tv_0 ,tv_1....
-     * ImageView iv_0,iv_1.....
-     */
-    protected TextView[] tv;
-    protected ImageView[] iv;
 
     @Nullable
     @Override
@@ -67,7 +59,7 @@ public abstract class BaseFragment extends Fragment {
         LinearLayout.LayoutParams llNet = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         myNetFailView.setLayoutParams(llNet);
         content.addView(myNetFailView);
-        showMessage(content);
+        onShowMessage(content);
         return content;
     }
 
@@ -76,7 +68,7 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setClick();
-        attachMyRecycleViewAdapter();
+        onAttachMyRecycleViewAdapter();
         //检测网络状态
         checkNet();
     }
@@ -86,7 +78,7 @@ public abstract class BaseFragment extends Fragment {
      * 添加自定义的遮盖提示
      * 特殊提供
      */
-    protected void showMessage(RelativeLayout relativeLayout){
+    protected void onShowMessage(RelativeLayout relativeLayout){
     }
 
 
@@ -95,7 +87,7 @@ public abstract class BaseFragment extends Fragment {
      * findViewById  也是在这里操作
      * 特殊提供
      */
-    protected void attachMyRecycleViewAdapter() {
+    protected void onAttachMyRecycleViewAdapter() {
     }
 
     /**
@@ -496,49 +488,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /*************************************************************************/
-    /**
-     * 根据名字填充tv数组  iv数组
-     */
-    private void fillLayout() {
-        String packageName = getActivity().getPackageName();
-        ArrayList<TextView> textViews = new ArrayList<>();
-        TextView tvTmp;
-        ArrayList<ImageView> imageViews = new ArrayList<>();
-        ImageView ivTmp;
-
-        //填充TextView
-        int i = 0;
-        int resId;
-        do {
-            resId = getResources().getIdentifier("tv_" + i, "id", packageName);
-            if (resId != 0) {
-                tvTmp = (TextView) view.findViewById(resId);
-                textViews.add(tvTmp);
-            } else {
-                break;
-            }
-            ++i;
-        } while (tvTmp != null);
-        int sizeTv = textViews.size();
-        if (sizeTv > 0)
-            tv = textViews.toArray(new TextView[sizeTv]);
-
-        //填充ImageView  i归零
-        i = 0;
-        do {
-            resId = getResources().getIdentifier("iv_" + i, "id", packageName);
-            if (resId != 0) {
-                ivTmp = (ImageView) view.findViewById(resId);
-                imageViews.add(ivTmp);
-            } else {
-                break;
-            }
-            ++i;
-        } while (ivTmp != null);
-        int sizeIv = imageViews.size();
-        if (sizeIv > 0)
-            iv = imageViews.toArray(new ImageView[sizeIv]);
-    }
 
 
 }

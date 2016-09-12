@@ -42,17 +42,6 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
     protected ArrayList<T> data;
     protected View view;
 
-    /******************************************/
-    /**
-     * TextView  ImageView
-     * 提供自动查找ID的数组  布局命名规范符合
-     * TextView tv_0 ,tv_1....
-     * ImageView iv_0,iv_1.....
-     */
-    protected TextView[] tv;
-    protected ImageView[] iv;
-
-
     public MyBaseAdapter(Context context) {
         this.data = new ArrayList<>();
         this.context = context;
@@ -121,7 +110,6 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
         LayoutInflater layoutInflater = (LayoutInflater) contextApplication
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = layoutInflater.inflate(layoutResID, null);
-        fillLayout();
         return view;
     }
 
@@ -266,51 +254,6 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
 
 
 
-    /*************************************************************************/
-    /**
-     * 根据名字填充tv数组  iv数组
-     */
-
-    private void fillLayout() {
-        String packageName = contextApplication.getPackageName();
-        ArrayList<TextView> textViews = new ArrayList<>();
-        TextView tvTmp;
-        ArrayList<ImageView> imageViews = new ArrayList<>();
-        ImageView ivTmp;
-
-        //填充TextView
-        int i = 0;
-        int resId;
-        do {
-            resId = contextApplication.getResources().getIdentifier("tv_" + i, "id", packageName);
-            if (resId != 0) {
-                tvTmp = getViewById(resId);
-                textViews.add(tvTmp);
-            } else {
-                break;
-            }
-            ++i;
-        } while (tvTmp != null);
-        int sizeTv = textViews.size();
-        if (sizeTv > 0)
-            tv = textViews.toArray(new TextView[sizeTv]);
-
-        //填充ImageView  i归零
-        i = 0;
-        do {
-            resId = contextApplication.getResources().getIdentifier("iv_" + i, "id", packageName);
-            if (resId != 0) {
-                ivTmp = getViewById(resId);
-                imageViews.add(ivTmp);
-            } else {
-                break;
-            }
-            ++i;
-        } while (ivTmp != null);
-        int sizeIv = imageViews.size();
-        if (sizeIv > 0)
-            iv = imageViews.toArray(new ImageView[sizeIv]);
-    }
 
 
 }

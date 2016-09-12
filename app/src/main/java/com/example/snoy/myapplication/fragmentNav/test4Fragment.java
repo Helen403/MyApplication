@@ -22,8 +22,6 @@ public class test4Fragment extends BaseFragment {
 
     private TextView click;
 
-
-
     @Override
     public void dealLogicBeforeFindView() {
 
@@ -35,8 +33,8 @@ public class test4Fragment extends BaseFragment {
     }
 
     @Override
-    protected void showMessage(RelativeLayout relativeLayout) {
-        super.showMessage(relativeLayout);
+    protected void onShowMessage(RelativeLayout relativeLayout) {
+        super.onShowMessage(relativeLayout);
 
     }
 
