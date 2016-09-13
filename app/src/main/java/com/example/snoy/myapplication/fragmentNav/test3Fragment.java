@@ -33,7 +33,7 @@ public class test3Fragment extends BaseFragment {
     @Override
     protected void onAttachMyRecycleViewAdapter() {
         super.onAttachMyRecycleViewAdapter();
-        myRecycleView = (MyRecycleView) view.findViewById(R.id.myrecycleview);
+        myRecycleView = (MyRecycleView) contentView.findViewById(R.id.myrecycleview);
         datas = new ArrayList<>();
         // 使用重写后的线性布局管理器
         MyLinearLayoutManager manager = new MyLinearLayoutManager(getActivity());

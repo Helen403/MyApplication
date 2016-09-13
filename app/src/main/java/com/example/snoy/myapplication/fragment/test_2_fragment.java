@@ -23,7 +23,8 @@ public class test_2_fragment extends BaseFragment {
 
     @Override
     public void findViews() {
-        tv0= (TextView) view.findViewById(R.id.tv_0);
+        tv0= (TextView) contentView.findViewById(R.id.tv_0);
+
     }
 
     @Override

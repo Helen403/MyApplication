@@ -15,14 +15,12 @@ import com.example.snoy.myapplication.base.BaseApplication;
 public class LocationUtils {
     //配置一下
     private static Context context = BaseApplication.context;
-    //是否只定位一次
-    private static Boolean flag = true;
-
+ 
     /***
      * 初始化百度地图定位；
      */
     public static void getBDLocation(final OnLocationUtils onLocationUtils) {
-        LocationClient mLocClient = new LocationClient(context);
+        final LocationClient mLocClient = new LocationClient(context);
         LocationClientOption option = new LocationClientOption();
         option.setCoorType("bd09ll");// 设置坐标类型
         option.setOpenGps(true);// 设置开启gps
@@ -35,10 +33,11 @@ public class LocationUtils {
                 if (location == null) {
                     return;
                 }
-                if (flag) {
-                    onLocationUtils.onSuccess(location);
-                    flag = false;
-                }
+				 onLocationUtils.onSuccess(location);
+                 //定位完就去关闭定位
+                 mLocClient.stop();
+                  
+              
                 // L.d(location.getCountry() + "-->" + location.getProvince()
                 // + "-->" + location.getCity() + "-->");
                 // L.d(location.getAddrStr());

@@ -1,6 +1,9 @@
 package com.example.snoy.myapplication.activity;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
@@ -22,6 +25,7 @@ public class testActivity extends BaseActivity {
 
     private TextView click;
 
+
     @Override
     public void dealLogicBeforeFindView() {
     }
@@ -32,11 +36,11 @@ public class testActivity extends BaseActivity {
     }
 
 
-
-
     @Override
     public void findViews() {
         click = (TextView) findViewById(R.id.click);
+        tvId = new int[]{R.id.tv_0, R.id.tv_1};
+        ivId = new int[]{};
     }
 
     @Override
@@ -44,9 +48,9 @@ public class testActivity extends BaseActivity {
         click.setText("这是测试Activity");
 
         Param param = new Param();
-        param.put("keyWord","天");
-        param.put("page",1);
-        param.put("rows",10);
+        param.put("keyWord", "天");
+        param.put("page", 1);
+        param.put("rows", 10);
 
         ControlUtils.posts("http://test.51ujf.cn/businessStore!search.do", param, BusinessBean.class, new ControlUtils.OnControlUtils<BusinessBean>() {
             @Override
@@ -61,11 +65,18 @@ public class testActivity extends BaseActivity {
         });
 
 
-        tv[0].setText("成功");
-        L(tv.length);
-        L(iv.length);
-        tv[1].setText("测试成功");
-        setImageByUrl("http://mmbiz.qpic.cn/mmbiz_jpg/X2Vhfqvibrba9EAlvv5ZMwlgnA5diaGQE6kPgVwpltLQDrdxnYtuXbJvJovQErq9CQC94vFaF4Q2MPR3ib7aiagZ1g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1", iv[0]);
+//        tv[0].setText("成功");
+//        L(tv.length);
+//        L(iv.length);
+//        tv[1].setText("测试成功");
+//        setImageByUrl("http://mmbiz.qpic.cn/mmbiz_jpg/X2Vhfqvibrba9EAlvv5ZMwlgnA5diaGQE6kPgVwpltLQDrdxnYtuXbJvJovQErq9CQC94vFaF4Q2MPR3ib7aiagZ1g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1", iv[0]);
+//        fillLayout();
+
+
+//      int i=  getFieldValue("id","tv_1",testActivity.this);
+//        L(i);
+
+
     }
 
     @Override
@@ -78,6 +89,8 @@ public class testActivity extends BaseActivity {
         });
 
     }
+
+
 
 
 }

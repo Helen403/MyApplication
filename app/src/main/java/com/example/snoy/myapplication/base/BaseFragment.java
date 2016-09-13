@@ -29,15 +29,24 @@ import java.util.ArrayList;
 /**
  * Created by mcs on 2015/11/3.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements View.OnClickListener {
     //外面传入的View
-    protected View view;
+    protected View contentView;
     //网络失败的View
     protected MyNetFailView myNetFailView;
     //总布局
     protected RelativeLayout content;
     //填充器
     LayoutInflater inflater;
+
+    /*****************************************/
+    protected TextView tv[];
+    protected ImageView iv[];
+
+    protected int tvId[];
+    protected int ivId[];
+
+    /*****************************************/
 
     @Nullable
     @Override
@@ -49,11 +58,11 @@ public abstract class BaseFragment extends Fragment {
         LinearLayout.LayoutParams rl = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         content.setLayoutParams(rl);
         //外面传入的View
-        view = inflater.inflate(getContentView(), content, false);
+        contentView = inflater.inflate(getContentView(), content, false);
         if (getArguments() != null)
             onGetBundle(getArguments());
-        view.setClickable(true);
-        content.addView(view);
+        contentView.setClickable(true);
+        content.addView(contentView);
         //加载无网络的View
         myNetFailView = new MyNetFailView(getActivity());
         LinearLayout.LayoutParams llNet = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -78,7 +87,7 @@ public abstract class BaseFragment extends Fragment {
      * 添加自定义的遮盖提示
      * 特殊提供
      */
-    protected void onShowMessage(RelativeLayout relativeLayout){
+    protected void onShowMessage(RelativeLayout relativeLayout) {
     }
 
 
@@ -97,6 +106,7 @@ public abstract class BaseFragment extends Fragment {
         if (isConnected()) {
             myNetFailView.setVisibility(View.GONE);
             findViews();
+            fillView();
             initData();
             setListeners();
         } else {
@@ -379,7 +389,7 @@ public abstract class BaseFragment extends Fragment {
      * 设置文本数据
      */
     public void setText(String text, int resId) {
-        TextView textView = (TextView) view.findViewById(resId);
+        TextView textView = (TextView) contentView.findViewById(resId);
         textView.setText(text);
     }
 
@@ -387,7 +397,7 @@ public abstract class BaseFragment extends Fragment {
      * 设置图片数据  使用自己定义的图片加载器
      */
     public void setImageByUrl(String url, int resId) {
-        ImageView imageView = (ImageView) view.findViewById(resId);
+        ImageView imageView = (ImageView) contentView.findViewById(resId);
         ImageUtils.getInstance().setImageByUrl(url, imageView);
     }
 
@@ -489,5 +499,82 @@ public abstract class BaseFragment extends Fragment {
 
     /*************************************************************************/
 
+    /**
+     * 寻找特定规则的ImageView，TextView 填充数组
+     */
+    private void fillView() {
+        ArrayList<TextView> textViews = new ArrayList<>();
+        ArrayList<ImageView> imageViews = new ArrayList<>();
+        if (tvId != null) {
+            int countTv = tvId.length;
+            for (int i = 0; i < countTv; i++) {
+                TextView tvTmp = (TextView) contentView.findViewById(tvId[i]);
+                textViews.add(tvTmp);
+            }
+            tv = textViews.toArray(new TextView[countTv]);
+        }
+        if (ivId != null) {
+            int countIv = ivId.length;
+            for (int i = 0; i < countIv; i++) {
+                ImageView ivTmp = (ImageView) contentView.findViewById(ivId[i]);
+                imageViews.add(ivTmp);
+            }
+            iv = imageViews.toArray(new ImageView[countIv]);
+        }
+    }
 
+
+
+    /*************************************************************************/
+    /**
+     * 提供特殊寻找的方法
+     */
+    protected <T extends View> T getViewById(int id) {
+        return (T) contentView.findViewById(id);
+    }
+
+
+    /**
+     * 添加点击事件
+     */
+    protected void setOnListeners(View... views) {
+        for (View view : views) {
+            view.setOnClickListener(this);
+        }
+    }
+
+    onClick click;
+
+    public void setOnClick(onClick click) {
+        this.click = click;
+    }
+
+    public interface onClick {
+        void onClick(View v, int id);
+    }
+
+    @Override
+    public void onClick(View v) {
+        click.onClick(v, v.getId());
+    }
+
+    /******************************************************************************/
+    /**
+     * 通过反射获取资源 R.id
+     * 根据给定的类型名和字段名，返回R文件中的字段的值
+     *
+     * @param typeName  属于哪个类别的属性 （id,layout,drawable,string,color,attr......）
+     * @param fieldName 字段名
+     * @return 字段的值
+     */
+    public int getFieldValue(String typeName, String fieldName, Context context) {
+        int i;
+        try {
+            Class<?> clazz = Class.forName(context.getPackageName() + ".R$" + typeName);
+            i = clazz.getField(fieldName).getInt(null);
+        } catch (Exception e) {
+            return -1;
+        }
+        return i;
+    }
 }

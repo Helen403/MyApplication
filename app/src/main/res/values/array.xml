@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="content_group">
-        <item>@mipmap/custermview_guide_content_new_0</item>
-        <item>@mipmap/custermview_guide_content_new_1</item>
-        <item>@mipmap/custermview_guide_content_new_2</item>
-        <item>@mipmap/custermview_guide_content_new_3</item>
-    </integer-array>
-
-    <integer-array name="title_group">
-        <item>@mipmap/custermview_guide_title_new_0</item>
-        <item>@mipmap/custermview_guide_title_new_1</item>
-        <item>@mipmap/custermview_guide_title_new_2</item>
-        <item>@mipmap/custermview_guide_title_new_3</item>
-    </integer-array>
 
    <integer-array name="pic_group">
         <item>@mipmap/custermview_ic_guide_picture_new_0</item>

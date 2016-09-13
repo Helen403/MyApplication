@@ -34,9 +34,9 @@ public class test1Fragment extends BaseFragment {
 
     @Override
     public void findViews() {
-        viewpager = (ImageCycleView) view.findViewById(R.id.viewpager);
-        click = (TextView) view.findViewById(R.id.click);
-        imageView = (ImageView) view.findViewById(R.id.iv);
+        viewpager = (ImageCycleView) contentView.findViewById(R.id.viewpager);
+        click = (TextView) contentView.findViewById(R.id.click);
+        imageView = (ImageView) contentView.findViewById(R.id.iv);
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.example.snoy.myapplication.Utils;
 import java.util.HashMap;
 
 /**
- * Created by SNOY on 2016/9/11.
+ * 用于网络请求的HashMap<String, String>
  */
 public class Param extends HashMap<String, String> {
 

@@ -40,7 +40,7 @@ public class test4Fragment extends BaseFragment {
 
     @Override
     public void findViews() {
-        click = (TextView) view.findViewById(R.id.click);
+        click = (TextView) contentView.findViewById(R.id.click);
     }
 
     @Override

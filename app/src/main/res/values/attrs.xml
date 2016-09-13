@@ -2,16 +2,16 @@
 <resources>
 
     <declare-styleable name="ToolBar">
-        <attr name="text" format="reference"></attr>
-        <attr name="textColor" format="reference"></attr>
-        <attr name="textSize" format="dimension"></attr>
+        <attr name="text" format="reference"/>
+        <attr name="textColor" format="reference"/>
+        <attr name="textSize" format="dimension"/>
         <attr name="width" format="dimension" />
     </declare-styleable>
     <declare-styleable name="Customer">
         <attr name="src" format="reference" />
-        <attr name="label" format="reference"></attr>
-        <attr name="checked" format="boolean"></attr>
-        <attr name="value" format="integer"></attr>
+        <attr name="label" format="reference"/>
+        <attr name="checked" format="boolean"/>
+        <attr name="value" format="integer"/>
         <attr name="style">
             <enum name="rectangle" value="1" />
             <enum name="circle" value="2" />

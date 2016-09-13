@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -27,12 +28,15 @@ import com.example.snoy.myapplication.lib.NavView.NavImgLayout;
 
 public class WelcomeActivity extends Activity implements GestureDetector.OnGestureListener {
 
-    private AnimImageGroup aigpic, aigcontent, aigtitle;
+    private AnimImageGroup aigpic;
     private NavImgLayout navImag;
     private ImageView iv_logo;
     private boolean flag = true;
     private Handler handler = new Handler();
     private boolean flagOnce = true;
+
+    //左滑 右滑的灵敏度  数值越小 越灵敏
+    private int sensitive = 25;
     /**
      * 声明一个手势的检测器对象
      * 1、初始化一个手势检测器的对象
@@ -44,16 +48,25 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_welcome);
         initView();
         initDetector();
         gotoTimer();
     }
 
+    /**
+     * 配置需要跳转的Activity
+     */
+    private void goToMainActivity() {
+        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+        overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
+        finish();
+    }
+
     private void initView() {
         aigpic = (AnimImageGroup) findViewById(R.id.animpicid);
-        aigcontent = (AnimImageGroup) findViewById(R.id.animcontentid);
-        aigtitle = (AnimImageGroup) findViewById(R.id.animtitleid);
         iv_logo = (ImageView) findViewById(R.id.iv_logo);
         navImag = (NavImgLayout) findViewById(R.id.navImag);
     }
@@ -105,7 +118,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
     }
 
     /**
-     *
+     * 从网络请求大图片数据插入SD卡中
      */
     private void InsertSDCardByUrl(final String url) {
         HttpUtils.getBitmapByUrl(url, new HttpUtils.OnHttpUtilsBitmapListener() {
@@ -133,9 +146,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
                     public void run() {
                         if (!TextUtils.isEmpty(DButils.getString("once"))) {
                             //不是第一次登录
-                            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
-                            finish();
+                            goToMainActivity();
                         } else {
                             Animation anim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_left_out);
                             anim.setAnimationListener(new Animation.AnimationListener() {
@@ -174,10 +185,8 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
                                 }
                             });
                             navImag.startAnimation(navanim);
-
                             aigpic.nextContent();
-                            aigcontent.nextContent();
-                            aigtitle.nextContent();
+
                             flag = true;
 
                             //标记为第一次登录
@@ -185,93 +194,84 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
                             //加载一次网络数据
                             loadDatas();
                         }
+                        }
                     }
-                });
+
+                    );
+                }
             }
-        }, 2000);
-    }
 
-    /**
-     * 手势检测器的监听方法
-     */
-    @Override
-    public boolean onDown(MotionEvent e) {
-        //单击，手指触碰到触摸屏时触发
-        if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
-            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
-            finish();
-            flagOnce = false;
+            ,2000);
         }
-        return false;
-    }
 
-    @Override
-    public void onShowPress(MotionEvent e) {
-        //短按，手指触碰到触摸屏后，停留一小段时间，触发，如果立刻抬起，不触发
-        if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
-            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
-            finish();
-            flagOnce = false;
-        }
-    }
 
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        //当单击或者短按后，然后抬起触发，如果单击后执行了长按，滚动，滑动的方法，该方法就不执行了
-        if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
-            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
-            finish();
-            flagOnce = false;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        //滚动，触摸当屏幕以后滑动触发
-        if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
-            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
-            finish();
-            flagOnce = false;
-        }
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-        //长按，按住比较长的一段时间
-        if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
-            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            overridePendingTransition(R.anim.custermview_activity_in_from_rigth, R.anim.custermview_activity_out_to_scale);
-            finish();
-            flagOnce = false;
-        }
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        //滑动，在屏幕上有一个快速滚动的操作
-        if (e2.getX() - e1.getX() > 50) {
-            if (flag) {
-                //左滑
-                aigpic.aboveContent();
-                aigcontent.aboveContent();
-                aigtitle.aboveContent();
-                navImag.above();
+      /**
+       * 手势检测器的监听方法
+       */
+        @Override
+        public boolean onDown (MotionEvent e){
+            //单击，手指触碰到触摸屏时触发
+            if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
+                goToMainActivity();
+                flagOnce = false;
             }
-        } else if (e1.getX() - e2.getX() > 50) {
-            if (flag) {
-                //右滑
-                aigpic.nextContent();
-                aigcontent.nextContent();
-                aigtitle.nextContent();
-                navImag.next();
+            return false;
+        }
+
+        @Override
+        public void onShowPress (MotionEvent e){
+            //短按，手指触碰到触摸屏后，停留一小段时间，触发，如果立刻抬起，不触发
+            if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
+                goToMainActivity();
+                flagOnce = false;
             }
         }
-        return false;
+
+        @Override
+        public boolean onSingleTapUp (MotionEvent e){
+            //当单击或者短按后，然后抬起触发，如果单击后执行了长按，滚动，滑动的方法，该方法就不执行了
+            if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
+                goToMainActivity();
+                flagOnce = false;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onScroll (MotionEvent e1, MotionEvent e2,float distanceX, float distanceY){
+            //滚动，触摸当屏幕以后滑动触发
+            if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
+                goToMainActivity();
+                flagOnce = false;
+            }
+            return false;
+        }
+
+        @Override
+        public void onLongPress (MotionEvent e){
+            //长按，按住比较长的一段时间
+            if (navImag.getChildCount() - 1 == navImag.getIndex() && flagOnce) {
+                goToMainActivity();
+                flagOnce = false;
+            }
+        }
+
+        @Override
+        public boolean onFling (MotionEvent e1, MotionEvent e2,float velocityX, float velocityY){
+            //滑动，在屏幕上有一个快速滚动的操作
+            if (e2.getX() - e1.getX() > sensitive) {
+                if (flag) {
+                    //左滑
+                    aigpic.aboveContent();
+                    navImag.above();
+                }
+            } else if (e1.getX() - e2.getX() > sensitive) {
+                if (flag) {
+                    //右滑
+                    aigpic.nextContent();
+                    navImag.next();
+                }
+            }
+            return false;
+        }
     }
-}
