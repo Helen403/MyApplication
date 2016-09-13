@@ -15,48 +15,6 @@
         android:src="@mipmap/custermview_icon_logo" />
 
 
-
-
-    <com.example.snoy.myapplication.lib.NavView.AnimImageGroup
-        android:id="@+id/animcontentid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/animtitleid"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        app:datas="@array/content_group"
-        app:linanim="@anim/custermview_img_left_in"
-        app:loutanim="@anim/custermview_img_left_out"
-        app:rinanim="@anim/custermview_img_right_in"
-        app:routanim="@anim/custermview_img_rigth_out" />
-
-    <com.example.snoy.myapplication.lib.NavView.AnimImageGroup
-        android:id="@+id/animtitleid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/animpicid"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
-        app:datas="@array/title_group"
-        app:linanim="@anim/custermview_img_left_in"
-        app:loutanim="@anim/custermview_img_left_out"
-        app:rinanim="@anim/custermview_img_right_in"
-        app:routanim="@anim/custermview_img_rigth_out" />
-
-
-    <com.example.snoy.myapplication.lib.NavView.NavImgLayout
-        android:id="@+id/navImag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/animpicid"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:visibility="invisible"
-        app:checkedimg="@mipmap/custermview_img_dot_white"
-        app:count="4"
-        app:uncheckedimg="@mipmap/custermview_img_dot_gray" />
-
-
     <com.example.snoy.myapplication.lib.NavView.AnimImageGroup
         android:id="@+id/animpicid"
         android:layout_width="match_parent"
@@ -68,6 +26,17 @@
         app:loutanim="@anim/custermview_img_left_out"
         app:rinanim="@anim/custermview_img_right_in"
         app:routanim="@anim/custermview_img_rigth_out" />
+
+    <com.example.snoy.myapplication.lib.NavView.NavImgLayout
+        android:id="@+id/navImag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:visibility="invisible"
+        app:checkedimg="@mipmap/custermview_img_dot_white"
+        app:count="4"
+        app:uncheckedimg="@mipmap/custermview_img_dot_gray" />
 
 
 </RelativeLayout>
