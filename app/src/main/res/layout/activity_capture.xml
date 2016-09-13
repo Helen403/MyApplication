@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+     >
+
+    <SurfaceView
+        android:id="@+id/preview_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+         />
+
+    <com.HyKj.UJiFen.two_dimensioncode.ViewfinderView
+        android:id="@+id/viewfinder_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#00000000" />
+
+    <RelativeLayout
+        android:id="@+id/topbar"
+        style="@style/fill_wrap"
+        android:background="#20AEE5" >
+
+        <LinearLayout
+            android:id="@+id/twc_left"
+            style="@style/top_left" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                 />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/top_tv"
+            android:padding="10dp"
+            android:text="扫一扫"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+</FrameLayout>
