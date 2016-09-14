@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.base;
+package com.example.snoy.myapplication.lib.base;
 
 
 import android.content.Context;
@@ -18,8 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.snoy.myapplication.activityMain.MainActivity;
-import com.example.snoy.myapplication.Utils.ImageUtils;
+import com.example.snoy.myapplication.lib.activityMain.MainActivity;
+import com.example.snoy.myapplication.lib.Utils.ImageUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 

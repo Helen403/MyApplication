@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 
-import com.example.snoy.myapplication.base.BaseApplication;
+import com.example.snoy.myapplication.lib.base.BaseApplication;
 
 
 /**

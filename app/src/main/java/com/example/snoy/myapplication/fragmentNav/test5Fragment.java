@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.base.BaseFragment;
+import com.example.snoy.myapplication.lib.base.BaseFragment;
 
 
 

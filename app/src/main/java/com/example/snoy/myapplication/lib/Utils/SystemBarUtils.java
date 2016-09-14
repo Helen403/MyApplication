@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

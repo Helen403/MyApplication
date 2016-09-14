@@ -1,11 +1,9 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.snoy.myapplication.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

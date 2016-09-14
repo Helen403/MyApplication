@@ -1,17 +1,11 @@
 package com.example.snoy.myapplication.activity;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.base.BaseActivity;
+import com.example.snoy.myapplication.lib.base.BaseActivity;
 import com.example.snoy.myapplication.fragment.test_1_fragment;
 import com.example.snoy.myapplication.fragment.test_2_fragment;
-
-import java.util.ArrayList;
 
 
 public class StartActivityActivity extends BaseActivity {
@@ -42,7 +36,15 @@ public class StartActivityActivity extends BaseActivity {
         fragmentList.add(test_1_fragment);
         fragmentList.add(test_2_fragment);
         switchFragment(0);
+
+
+
+
+
     }
+
+
+
 
 
     @Override

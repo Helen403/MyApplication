@@ -34,15 +34,16 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+
     <application
-        android:name=".base.BaseApplication"
+        android:name=".lib.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Helen"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activityMain.WelcomeActivity"
+            android:name=".lib.activityMain.WelcomeActivity"
             android:label="Helen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -53,7 +54,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activityMain.MainActivity"/>
+        <activity android:name=".lib.activityMain.MainActivity"/>
         <service android:name=".service.CoreService"/>
         <activity android:name=".activity.testActivity"/>
         <activity android:name=".activity.StartActivityActivity"/>
@@ -105,6 +106,19 @@
        <!-- 二维码-->
         <activity android:name=".lib.TwoDimensionCode.CaptureActivity"/>
 
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+        </activity>
 
     </application>
     <!--android:configChanges="keyboardHidden|orientation|screenSize"-->

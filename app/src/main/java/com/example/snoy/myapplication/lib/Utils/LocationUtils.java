@@ -1,13 +1,12 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.example.snoy.myapplication.base.BaseApplication;
+import com.example.snoy.myapplication.lib.base.BaseApplication;
 
 /**
  * 用于定位

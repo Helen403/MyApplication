@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.Utils.DButils;
-import com.example.snoy.myapplication.base.BaseFragment;
+import com.example.snoy.myapplication.lib.Utils.DButils;
+import com.example.snoy.myapplication.lib.base.BaseFragment;
 import com.example.snoy.myapplication.lib.custemview.ImageCycleView;
 import com.example.snoy.myapplication.activity.testActivity;
 

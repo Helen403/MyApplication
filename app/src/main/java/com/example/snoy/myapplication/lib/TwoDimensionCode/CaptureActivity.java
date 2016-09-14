@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.Utils.SystemBarUtils;
+import com.example.snoy.myapplication.lib.Utils.SystemBarUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 

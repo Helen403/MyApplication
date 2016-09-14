@@ -1,15 +1,15 @@
 package com.example.snoy.myapplication.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.Utils.ControlUtils;
-import com.example.snoy.myapplication.Utils.Param;
-import com.example.snoy.myapplication.base.BaseActivity;
+import com.example.snoy.myapplication.lib.Utils.ControlUtils;
+import com.example.snoy.myapplication.lib.Utils.Param;
+import com.example.snoy.myapplication.lib.base.BaseActivity;
 import com.example.snoy.myapplication.bean.BusinessBean;
 
 import org.json.JSONArray;
@@ -75,6 +75,10 @@ public class testActivity extends BaseActivity {
 
 //      int i=  getFieldValue("id","tv_1",testActivity.this);
 //        L(i);
+
+
+
+
 
 
     }

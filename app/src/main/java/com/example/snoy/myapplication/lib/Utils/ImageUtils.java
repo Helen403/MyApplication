@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.base.BaseApplication;
+import com.example.snoy.myapplication.lib.base.BaseApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -295,7 +295,7 @@ public final class ImageUtils {
     }
 
     /**
-     * 获取图片从扩展开
+     * 获取图片从扩展卡
      */
     public Bitmap getBitmapToSDCardByUrl(String url) {
         if (!isMounted())
@@ -329,7 +329,9 @@ public final class ImageUtils {
         return 0;
     }
 
-    // 得到文件的大小
+    /**
+     * 得到文件的大小
+     */
     private long getFolderSize(File file) {
         long size = 0;
         try {

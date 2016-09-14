@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.base;
+package com.example.snoy.myapplication.lib.base;
 
 import android.content.Context;
 import android.view.View;

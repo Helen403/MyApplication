@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.base;
+package com.example.snoy.myapplication.lib.base;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.snoy.myapplication.Utils.ImageUtils;
+import com.example.snoy.myapplication.lib.Utils.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;

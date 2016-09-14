@@ -3,8 +3,8 @@ package com.example.snoy.myapplication.fragmentNav;
 
 import com.example.snoy.myapplication.lib.MyRecycleView.MyLinearLayoutManager;
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.base.BaseFragment;
-import com.example.snoy.myapplication.base.MyBaseRecycleAdapter;
+import com.example.snoy.myapplication.lib.base.BaseFragment;
+import com.example.snoy.myapplication.lib.base.MyBaseRecycleAdapter;
 import com.example.snoy.myapplication.lib.custemview.MyRecycleView;
 
 import java.util.ArrayList;

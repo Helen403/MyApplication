@@ -1,6 +1,5 @@
-package com.example.snoy.myapplication.base;
+package com.example.snoy.myapplication.lib.base;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,12 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.Utils.ImageUtils;
-import com.example.snoy.myapplication.Utils.SystemBarUtils;
+import com.example.snoy.myapplication.lib.Utils.ImageUtils;
+import com.example.snoy.myapplication.lib.Utils.SystemBarUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -94,6 +91,9 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     protected ArrayList<BaseFragment> fragmentList = new ArrayList<>();
     //跳转的记录
     protected int indexFragment = 0;
+    /*********************************************/
+    //广播注册
+    protected IntentFilter filter = new IntentFilter();
 
     /**
      * 关闭Activity的广播，放在自定义的基类中，让其他的Activity继承这个Activity就行
@@ -101,9 +101,30 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     protected BroadcastReceiver finishAppReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            finish();
+            String action = intent.getAction();
+            if (action.equals("net.loonggg.exitapp")) {
+                finish();
+            } else {
+                onReceiveByBroadcast(context, intent);
+            }
         }
     };
+
+    /**
+     * 广播注册类名的方法
+     * 使用要响应的Activity类名为Action
+     */
+    protected void setIntentFilter(Class<?> cls) {
+        String actionTmp = cls.getCanonicalName();
+        filter.addAction(actionTmp);
+    }
+
+    /**
+     * 广播回来的数据
+     */
+    protected void onReceiveByBroadcast(Context context, Intent intent) {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +140,18 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         setBack();
         //检测网络状态
         checkNet();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    private void setBroadCast(){
+        // 在当前的activity中注册广播
+        filter.addAction("net.loonggg.exitapp");
+        this.registerReceiver(this.finishAppReceiver, filter);
     }
 
 
@@ -148,6 +181,9 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             fillView();
             initData();
             setListeners();
+
+            //注册广播
+            setBroadCast();
         } else {
             myNetFailView.setVisibility(View.VISIBLE);
         }
@@ -506,10 +542,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     public void onResume() {
         super.onResume();
-        // 在当前的activity中注册广播
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("net.loonggg.exitapp");
-        this.registerReceiver(this.finishAppReceiver, filter);
+
         bufferCircleView.startAnimation();
     }
 
@@ -595,8 +628,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         }
         return false;
     }
-
-
 
 
     /****************************************************************************************/
@@ -700,8 +731,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         }
         return i;
     }
-
-
 
 
 }

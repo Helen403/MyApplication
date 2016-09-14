@@ -3,16 +3,12 @@ package com.example.snoy.myapplication.fragmentNav;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.Utils.LocationUtils;
-import com.example.snoy.myapplication.base.BaseFragment;
+import com.example.snoy.myapplication.lib.Utils.LocationUtils;
+import com.example.snoy.myapplication.lib.base.BaseFragment;
 
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 
 
 /**

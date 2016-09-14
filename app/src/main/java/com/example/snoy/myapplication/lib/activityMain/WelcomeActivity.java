@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.activityMain;
+package com.example.snoy.myapplication.lib.activityMain;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,15 +18,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.Utils.DButils;
-import com.example.snoy.myapplication.Utils.HttpUtils;
-import com.example.snoy.myapplication.Utils.ImageUtils;
+import com.example.snoy.myapplication.lib.Utils.DButils;
+import com.example.snoy.myapplication.lib.Utils.HttpUtils;
+import com.example.snoy.myapplication.lib.Utils.ImageUtils;
 import com.example.snoy.myapplication.constant.Constants;
 import com.example.snoy.myapplication.lib.NavView.AnimImageGroup;
 import com.example.snoy.myapplication.lib.NavView.NavImgLayout;
 
 
 public class WelcomeActivity extends Activity implements GestureDetector.OnGestureListener {
+
+    //左滑 右滑的灵敏度  数值越小 越灵敏
+    private int sensitive = 25;
 
     private AnimImageGroup aigpic;
     private NavImgLayout navImag;
@@ -35,8 +38,7 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
     private Handler handler = new Handler();
     private boolean flagOnce = true;
 
-    //左滑 右滑的灵敏度  数值越小 越灵敏
-    private int sensitive = 25;
+
     /**
      * 声明一个手势的检测器对象
      * 1、初始化一个手势检测器的对象

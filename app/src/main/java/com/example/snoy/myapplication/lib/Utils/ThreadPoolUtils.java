@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 import com.example.snoy.myapplication.lib.ThreadPool.ThreadPoolFactory;
 
 /**

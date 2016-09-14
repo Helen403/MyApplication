@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.base;
+package com.example.snoy.myapplication.lib.base;
 
 /**
  * 装载经常使用的代码

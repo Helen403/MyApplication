@@ -1,10 +1,10 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.example.snoy.myapplication.base.BaseApplication;
+import com.example.snoy.myapplication.lib.base.BaseApplication;
 
 
 /**

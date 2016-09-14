@@ -1,12 +1,11 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.example.snoy.myapplication.base.BaseApplication;
+import com.example.snoy.myapplication.lib.base.BaseApplication;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

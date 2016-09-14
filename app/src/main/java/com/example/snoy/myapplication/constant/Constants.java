@@ -5,9 +5,6 @@ package com.example.snoy.myapplication.constant;
  */
 public interface Constants {
 
-
-
-
     /**
      * 聪
      */

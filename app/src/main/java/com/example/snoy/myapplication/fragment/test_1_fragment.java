@@ -1,7 +1,7 @@
 package com.example.snoy.myapplication.fragment;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.base.BaseFragment;
+import com.example.snoy.myapplication.lib.base.BaseFragment;
 
 /**
  * Created by Administrator on 2016/8/31.

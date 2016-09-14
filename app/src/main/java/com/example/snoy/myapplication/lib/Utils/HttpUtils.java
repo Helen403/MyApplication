@@ -1,4 +1,4 @@
-package com.example.snoy.myapplication.Utils;
+package com.example.snoy.myapplication.lib.Utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
