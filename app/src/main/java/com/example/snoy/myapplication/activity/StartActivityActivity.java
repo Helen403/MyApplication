@@ -39,6 +39,7 @@ public class StartActivityActivity extends BaseActivity {
 
 
 
+        setBroadCast(testActivity.class);
 
 
     }
@@ -64,5 +65,7 @@ public class StartActivityActivity extends BaseActivity {
             }
         });
     }
+
+
 
 }

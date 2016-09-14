@@ -114,7 +114,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
      * 广播注册类名的方法
      * 使用要响应的Activity类名为Action
      */
-    protected void setIntentFilter(Class<?> cls) {
+    protected void setBroadCast(Class<?> cls) {
         String actionTmp = cls.getCanonicalName();
         filter.addAction(actionTmp);
     }
@@ -148,10 +148,16 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
     }
 
-    private void setBroadCast(){
+    private void setBroadCastFinish() {
         // 在当前的activity中注册广播
         filter.addAction("net.loonggg.exitapp");
         this.registerReceiver(this.finishAppReceiver, filter);
+    }
+
+    protected void sendBroadCast(Class<?> cls) {
+        Intent intent = new Intent();
+        intent.setAction(cls.getCanonicalName());
+        this.sendBroadcast(intent);
     }
 
 
@@ -183,7 +189,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             setListeners();
 
             //注册广播
-            setBroadCast();
+            setBroadCastFinish();
         } else {
             myNetFailView.setVisibility(View.VISIBLE);
         }

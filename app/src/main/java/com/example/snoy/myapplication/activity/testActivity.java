@@ -1,6 +1,5 @@
 package com.example.snoy.myapplication.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -25,6 +24,16 @@ public class testActivity extends BaseActivity {
 
     private TextView click;
 
+    @Override
+    protected void onReceiveByBroadcast(Context context, Intent intent) {
+        super.onReceiveByBroadcast(context, intent);
+        String tmp = intent.getAction();
+        if (tmp.equals(testActivity.class.getCanonicalName())){
+            L("广播成功");
+        }
+        L("广播");
+
+    }
 
     @Override
     public void dealLogicBeforeFindView() {
