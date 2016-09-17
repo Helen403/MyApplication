@@ -1,5 +1,6 @@
 package com.example.snoy.myapplication.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -23,17 +24,6 @@ import java.util.ArrayList;
 public class testActivity extends BaseActivity {
 
     private TextView click;
-
-    @Override
-    protected void onReceiveByBroadcast(Context context, Intent intent) {
-        super.onReceiveByBroadcast(context, intent);
-        String tmp = intent.getAction();
-        if (tmp.equals(testActivity.class.getCanonicalName())){
-            L("广播成功");
-        }
-        L("广播");
-
-    }
 
     @Override
     public void dealLogicBeforeFindView() {
@@ -73,23 +63,14 @@ public class testActivity extends BaseActivity {
             }
         });
 
-
-//        tv[0].setText("成功");
-//        L(tv.length);
-//        L(iv.length);
-//        tv[1].setText("测试成功");
-//        setImageByUrl("http://mmbiz.qpic.cn/mmbiz_jpg/X2Vhfqvibrba9EAlvv5ZMwlgnA5diaGQE6kPgVwpltLQDrdxnYtuXbJvJovQErq9CQC94vFaF4Q2MPR3ib7aiagZ1g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1", iv[0]);
-//        fillLayout();
-
-
-//      int i=  getFieldValue("id","tv_1",testActivity.this);
-//        L(i);
-
-
-
-
-
-
+        setBroadCast(testActivity.class, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(testActivity.class.getCanonicalName())) {
+                    L("广播成功");
+                }
+            }
+        });
     }
 
     @Override
@@ -102,8 +83,6 @@ public class testActivity extends BaseActivity {
         });
 
     }
-
-
 
 
 }

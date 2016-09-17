@@ -3,6 +3,7 @@ package com.example.snoy.myapplication.lib.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ import java.util.TimerTask;
  * 设置图片数据  使用自己定义的图片加载器
  * public void setImageByUrl(int resId, String url)
  */
-public abstract class MyBaseAdapter<T> extends BaseAdapter {
+public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnClickListener {
     //需要配置一下Context
     protected Context contextApplication = BaseApplication.context;
     //用于跳转的Context
@@ -251,9 +252,61 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
         }, delay);
     }
 
+    /********************************************************************************************/
+    /**
+     * 发送广播信号 自己选择类方法或者字符方法
+     */
+    private void sendBroadCast(Class<?> cls, String action, Bundle bundle) {
+        Intent intent = new Intent();
+        if (bundle != null)
+            intent.putExtras(bundle);
+        if (cls != null) {
+            intent.setAction(cls.getCanonicalName());
+        }
+        if (!TextUtils.isEmpty(action)) {
+            intent.setAction(action);
+        }
+        context.sendBroadcast(intent);
+    }
 
 
+    /**
+     * 发送广播特定的类方法
+     */
+    protected void sendBroadCast(Class<?> cls, Bundle bundle) {
+        sendBroadCast(cls, "", bundle);
+    }
 
+    /**
+     * 发送广播特定的字符方法
+     */
+    protected void sendBroadCast(String action, Bundle bundle) {
+        sendBroadCast(null, action, bundle);
+    }
 
+    /****************************************************************************************************/
+    /**
+     * 添加点击事件
+     */
+    protected void setOnListeners(View... views) {
+        for (View view : views) {
+            view.setOnClickListener(this);
+        }
+    }
+
+    onClick click;
+
+    public void setOnClick(onClick click) {
+        this.click = click;
+    }
+
+    public interface onClick {
+        void onClick(View v, int id);
+    }
+
+    @Override
+    public void onClick(View v) {
+        click.onClick(v, v.getId());
+    }
 
 }

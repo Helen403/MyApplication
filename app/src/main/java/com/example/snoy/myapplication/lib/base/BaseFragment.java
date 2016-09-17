@@ -1,13 +1,16 @@
 package com.example.snoy.myapplication.lib.base;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +43,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     LayoutInflater inflater;
 
     /*****************************************/
+    //用于特殊节约空间的
     protected TextView tv[];
     protected ImageView iv[];
 
@@ -47,6 +51,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected int ivId[];
 
     /*****************************************/
+    //从外界传入的广播
+    private BroadcastReceiver broadcastReceiver;
 
     @Nullable
     @Override
@@ -577,4 +583,68 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         }
         return i;
     }
+
+    /**
+     * 广播注册类名的方法
+     * 使用要响应的Activity类名为Action
+     */
+    private void setBroadCast(Class<?> cls, String action, BroadcastReceiver broadcastReceiver) {
+        this.broadcastReceiver = broadcastReceiver;
+        IntentFilter filter = new IntentFilter();
+        if (cls != null) {
+            filter.addAction(cls.getCanonicalName());
+        }
+        if (!TextUtils.isEmpty(action)) {
+            filter.addAction(action);
+        }
+        getActivity().registerReceiver(broadcastReceiver, filter);
+    }
+
+    /**
+     * 广播特定类方法
+     */
+    protected void setBroadCast(Class<?> cls, BroadcastReceiver broadcastReceiver) {
+        setBroadCast(cls, "", broadcastReceiver);
+    }
+
+    /**
+     * 广播特定字符方法
+     */
+    protected void setBroadCast(String action, BroadcastReceiver broadcastReceiver) {
+        setBroadCast(null, action, broadcastReceiver);
+    }
+
+    /**
+     * 发送广播信号 自己选择类方法或者字符方法
+     */
+    private void sendBroadCast(Class<?> cls, String action, Bundle bundle) {
+        Intent intent = new Intent();
+        if (bundle != null)
+            intent.putExtras(bundle);
+        if (cls != null) {
+            intent.setAction(cls.getCanonicalName());
+        }
+        if (!TextUtils.isEmpty(action)) {
+            intent.setAction(action);
+        }
+        getActivity().sendBroadcast(intent);
+    }
+
+
+    /**
+     * 发送广播特定的类方法
+     */
+    protected void sendBroadCast(Class<?> cls, Bundle bundle) {
+        sendBroadCast(cls, "", bundle);
+    }
+
+    /**
+     * 发送广播特定的字符方法
+     */
+    protected void sendBroadCast(String action, Bundle bundle) {
+        sendBroadCast(null, action, bundle);
+    }
+
+    /****************************************************************************************************/
+
 }

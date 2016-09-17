@@ -1,5 +1,6 @@
 package com.example.snoy.myapplication.activity;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.example.snoy.myapplication.R;
@@ -9,8 +10,6 @@ import com.example.snoy.myapplication.fragment.test_2_fragment;
 
 
 public class StartActivityActivity extends BaseActivity {
-
-
 
     @Override
     public void dealLogicBeforeFindView() {
@@ -22,31 +21,24 @@ public class StartActivityActivity extends BaseActivity {
         return R.layout.activity_start;
     }
 
-
     @Override
     public void findViews() {
         tvId = new int[]{R.id.tv_1, R.id.tv_2};
     }
 
     @Override
-    public void initData() {
-        fragmentId = R.id.frame_id;
+    protected void onFragmentChange(int fragmentId) {
+        super.onFragmentChange(R.id.frame_id);
         test_1_fragment test_1_fragment = new test_1_fragment();
         test_2_fragment test_2_fragment = new test_2_fragment();
         fragmentList.add(test_1_fragment);
         fragmentList.add(test_2_fragment);
         switchFragment(0);
-
-
-
-        setBroadCast(testActivity.class);
-
-
     }
 
-
-
-
+    @Override
+    public void initData() {
+    }
 
     @Override
     public void setListeners() {
@@ -54,7 +46,7 @@ public class StartActivityActivity extends BaseActivity {
         setOnClick(new onClick() {
             @Override
             public void onClick(View v, int id) {
-                switch (id){
+                switch (id) {
                     case R.id.tv_1:
                         switchFragment(0);
                         break;
@@ -66,6 +58,8 @@ public class StartActivityActivity extends BaseActivity {
         });
     }
 
-
-
+    @Override
+    protected void onSendBroadCast(Class<?> cls, String action, Bundle bundle) {
+        super.onSendBroadCast(testActivity.class, action, bundle);
+    }
 }

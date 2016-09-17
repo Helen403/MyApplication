@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -70,13 +71,12 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /*******************************************/
     //加载中的View
     protected BufferCircleView bufferCircleView;
-
     //网络失败的View
     protected MyNetFailView myNetFailView;
-
     /******************************************/
     protected LayoutInflater inflater;
     /*****************************************/
+    //特殊提供节约空间的方法
     protected TextView tv[];
     protected ImageView iv[];
 
@@ -89,11 +89,11 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     protected int fragmentId;
     //存放子Fragment跳转的集合
     protected ArrayList<BaseFragment> fragmentList = new ArrayList<>();
-    //跳转的记录
+    //跳转的记录标记
     protected int indexFragment = 0;
     /*********************************************/
-    //广播注册
-    protected IntentFilter filter = new IntentFilter();
+    //从外界传入的广播
+    private BroadcastReceiver broadcastReceiver;
 
     /**
      * 关闭Activity的广播，放在自定义的基类中，让其他的Activity继承这个Activity就行
@@ -104,27 +104,74 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             String action = intent.getAction();
             if (action.equals("net.loonggg.exitapp")) {
                 finish();
-            } else {
-                onReceiveByBroadcast(context, intent);
             }
         }
     };
+
+    /****************************************************************************************************/
 
     /**
      * 广播注册类名的方法
      * 使用要响应的Activity类名为Action
      */
-    protected void setBroadCast(Class<?> cls) {
-        String actionTmp = cls.getCanonicalName();
-        filter.addAction(actionTmp);
+    private void setBroadCast(Class<?> cls, String action, BroadcastReceiver broadcastReceiver) {
+        this.broadcastReceiver = broadcastReceiver;
+        IntentFilter filter = new IntentFilter();
+        if (cls != null) {
+            filter.addAction(cls.getCanonicalName());
+        }
+        if (!TextUtils.isEmpty(action)) {
+            filter.addAction(action);
+        }
+        this.registerReceiver(broadcastReceiver, filter);
     }
 
     /**
-     * 广播回来的数据
+     * 广播特定类方法
      */
-    protected void onReceiveByBroadcast(Context context, Intent intent) {
-
+    protected void setBroadCast(Class<?> cls, BroadcastReceiver broadcastReceiver) {
+        setBroadCast(cls, "", broadcastReceiver);
     }
+
+    /**
+     * 广播特定字符方法
+     */
+    protected void setBroadCast(String action, BroadcastReceiver broadcastReceiver) {
+        setBroadCast(null, action, broadcastReceiver);
+    }
+
+    /**
+     * 发送广播信号 自己选择类方法或者字符方法
+     */
+    private void sendBroadCast(Class<?> cls, String action, Bundle bundle) {
+        Intent intent = new Intent();
+        if (bundle != null)
+            intent.putExtras(bundle);
+        if (cls != null) {
+            intent.setAction(cls.getCanonicalName());
+        }
+        if (!TextUtils.isEmpty(action)) {
+            intent.setAction(action);
+        }
+        this.sendBroadcast(intent);
+    }
+
+
+    /**
+     * 发送广播特定的类方法
+     */
+    protected void sendBroadCast(Class<?> cls, Bundle bundle) {
+        sendBroadCast(cls, "", bundle);
+    }
+
+    /**
+     * 发送广播特定的字符方法
+     */
+    protected void sendBroadCast(String action, Bundle bundle) {
+        sendBroadCast(null, action, bundle);
+    }
+
+    /****************************************************************************************************/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,26 +185,21 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         setContentView(content);
         onAttachMyRecycleViewAdapter();
         setBack();
+        //注册广播
+        setBroadCastFinish();
         //检测网络状态
         checkNet();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-    }
-
+    /**
+     * 设置结束当前Activity广播
+     */
     private void setBroadCastFinish() {
         // 在当前的activity中注册广播
+        IntentFilter filter = new IntentFilter();
         filter.addAction("net.loonggg.exitapp");
         this.registerReceiver(this.finishAppReceiver, filter);
-    }
-
-    protected void sendBroadCast(Class<?> cls) {
-        Intent intent = new Intent();
-        intent.setAction(cls.getCanonicalName());
-        this.sendBroadcast(intent);
     }
 
 
@@ -178,6 +220,14 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     }
 
     /**
+     * 特殊提供用于切换子Fragment的方法
+     */
+    protected void onFragmentChange(int fragmentId) {
+        this.fragmentId = fragmentId;
+    }
+
+
+    /**
      * 检测网络状态
      */
     private void checkNet() {
@@ -185,15 +235,14 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             myNetFailView.setVisibility(View.GONE);
             findViews();
             fillView();
+            onFragmentChange(0);
             initData();
             setListeners();
-
-            //注册广播
-            setBroadCastFinish();
         } else {
             myNetFailView.setVisibility(View.VISIBLE);
         }
     }
+
 
     private void getBuildContentView() {
         //总布局
@@ -548,7 +597,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     public void onResume() {
         super.onResume();
-
         bufferCircleView.startAnimation();
     }
 
@@ -570,6 +618,9 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (this.broadcastReceiver != null) {
+            this.unregisterReceiver(this.broadcastReceiver);
+        }
         this.unregisterReceiver(this.finishAppReceiver);
         //感觉不靠谱加多一句
         System.gc();
