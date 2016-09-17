@@ -24,9 +24,12 @@ import java.util.ArrayList;
 public class testActivity extends BaseActivity {
 
     private TextView click;
+    Context context;
+
 
     @Override
     public void dealLogicBeforeFindView() {
+
     }
 
     @Override
@@ -78,9 +81,30 @@ public class testActivity extends BaseActivity {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToActivityByClass(testActivity.this, StartActivityActivity.class);
+//                goToActivityByClass(testActivity.this, StartActivityActivity.class);
+
+
             }
         });
+
+
+        goActivityForResult(testActivity.this, StartActivityActivity.class, null, new ActivityResultAction() {
+            @Override
+            public void onSuccess(Intent data) {
+
+            }
+
+            @Override
+            protected void onCancel() {
+
+            }
+        });
+
+        L(testActivity.this.hashCode());
+//        L();
+
+
+
 
     }
 

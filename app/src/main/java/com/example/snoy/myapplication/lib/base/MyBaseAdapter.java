@@ -256,7 +256,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnCli
     /**
      * 发送广播信号 自己选择类方法或者字符方法
      */
-    private void sendBroadCast(Class<?> cls, String action, Bundle bundle) {
+    private void onSendBroadCast(Class<?> cls, String action, Bundle bundle) {
         Intent intent = new Intent();
         if (bundle != null)
             intent.putExtras(bundle);
@@ -273,15 +273,15 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnCli
     /**
      * 发送广播特定的类方法
      */
-    protected void sendBroadCast(Class<?> cls, Bundle bundle) {
-        sendBroadCast(cls, "", bundle);
+    protected void onSendBroadCast(Class<?> cls, Bundle bundle) {
+        onSendBroadCast(cls, "", bundle);
     }
 
     /**
      * 发送广播特定的字符方法
      */
-    protected void sendBroadCast(String action, Bundle bundle) {
-        sendBroadCast(null, action, bundle);
+    protected void onSendBroadCast(String action, Bundle bundle) {
+        onSendBroadCast(null, action, bundle);
     }
 
     /****************************************************************************************************/

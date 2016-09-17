@@ -1,6 +1,5 @@
 package com.example.snoy.myapplication.activity;
 
-import android.os.Bundle;
 import android.view.View;
 
 import com.example.snoy.myapplication.R;
@@ -13,7 +12,6 @@ public class StartActivityActivity extends BaseActivity {
 
     @Override
     public void dealLogicBeforeFindView() {
-
     }
 
     @Override
@@ -36,8 +34,12 @@ public class StartActivityActivity extends BaseActivity {
         switchFragment(0);
     }
 
+
     @Override
     public void initData() {
+        onSendBroadCast(testActivity.class, null);
+
+
     }
 
     @Override
@@ -58,8 +60,4 @@ public class StartActivityActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onSendBroadCast(Class<?> cls, String action, Bundle bundle) {
-        super.onSendBroadCast(testActivity.class, action, bundle);
-    }
 }

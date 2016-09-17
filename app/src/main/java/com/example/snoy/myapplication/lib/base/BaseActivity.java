@@ -1,5 +1,6 @@
 package com.example.snoy.myapplication.lib.base;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -143,7 +145,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /**
      * 发送广播信号 自己选择类方法或者字符方法
      */
-    private void sendBroadCast(Class<?> cls, String action, Bundle bundle) {
+    private void onSendBroadCast(Class<?> cls, String action, Bundle bundle) {
         Intent intent = new Intent();
         if (bundle != null)
             intent.putExtras(bundle);
@@ -160,15 +162,15 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /**
      * 发送广播特定的类方法
      */
-    protected void sendBroadCast(Class<?> cls, Bundle bundle) {
-        sendBroadCast(cls, "", bundle);
+    protected void onSendBroadCast(Class<?> cls, Bundle bundle) {
+        onSendBroadCast(cls, "", bundle);
     }
 
     /**
      * 发送广播特定的字符方法
      */
-    protected void sendBroadCast(String action, Bundle bundle) {
-        sendBroadCast(null, action, bundle);
+    protected void onSendBroadCast(String action, Bundle bundle) {
+        onSendBroadCast(null, action, bundle);
     }
 
     /****************************************************************************************************/
@@ -787,6 +789,57 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             return -1;
         }
         return i;
+    }
+
+    /*********************************************************************************************/
+
+    protected SparseArray<ActivityResultAction> mResultHandlers;
+
+    public void goActivityForResult(Context context, Class<?> cls, Bundle bundle, ActivityResultAction action) {
+        Intent intent = new Intent(context, cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        int rc;
+        if (action != null) {
+            if (mResultHandlers == null) {
+                mResultHandlers = new SparseArray<ActivityResultAction>();
+            }
+            rc = action.hashCode();
+            rc &= 0x0000ffff;
+            mResultHandlers.append(rc, action);
+            startActivityForResult(intent, rc);
+        } else {
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ActivityResultAction activityResultAction = mResultHandlers.get(requestCode);
+        if (null != activityResultAction) {
+            activityResultAction.invoke(resultCode, data);
+        }
+    }
+
+    public abstract class ActivityResultAction {
+        private void invoke(Integer resultCode, Intent data) {
+            switch (resultCode.intValue()) {
+                case Activity.RESULT_OK:
+                    onSuccess(data);
+                    break;
+                case Activity.RESULT_CANCELED:
+                    onCancel();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public abstract void onSuccess(Intent data);
+
+        protected abstract void onCancel();
     }
 
 
