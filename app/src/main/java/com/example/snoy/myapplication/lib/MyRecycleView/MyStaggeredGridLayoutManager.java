@@ -6,7 +6,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 
 
-public class MyStaggeredGridLayoutManager extends StaggeredGridLayoutManager {
+public final class MyStaggeredGridLayoutManager extends StaggeredGridLayoutManager {
 
     private OverScrollListener mListener;
 

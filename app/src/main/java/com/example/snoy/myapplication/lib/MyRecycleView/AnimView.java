@@ -13,7 +13,7 @@ import android.view.View;
  * <br/>
  * 自定义刷新的动画
  */
-public class AnimView extends View {
+public final class AnimView extends View {
 
     private Canvas mCanvas;
     private Paint paint;

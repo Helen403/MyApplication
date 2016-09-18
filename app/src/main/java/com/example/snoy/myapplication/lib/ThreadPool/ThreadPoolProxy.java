@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by mcs on 2015/11/3.
  */
-public class ThreadPoolProxy {
+public final class ThreadPoolProxy {
 
     private ThreadPoolExecutor mExecutor;
 

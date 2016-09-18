@@ -140,7 +140,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         this.setRetainInstance(true);
     }
 
-    public abstract void dealLogicBeforeFindView();
+    protected void dealLogicBeforeFindView() {
+    }
 
     /***
      * 给调用者
@@ -528,7 +529,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             iv = imageViews.toArray(new ImageView[countIv]);
         }
     }
-
 
 
     /*************************************************************************/

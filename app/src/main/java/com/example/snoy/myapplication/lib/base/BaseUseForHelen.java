@@ -3,7 +3,7 @@ package com.example.snoy.myapplication.lib.base;
 /**
  * 装载经常使用的代码
  */
-public class BaseUseForHelen {
+public final class BaseUseForHelen {
     /*
       //布局调整
       LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -78,13 +78,13 @@ public class BaseUseForHelen {
         android:layout_height="match_parent"/>
 
 //**********************************************************************************
-  <EditText
+ <EditText
         android:id="@+id/edittext"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_weight="0.6"
-        android:background="@drawable/round_edittext"
+        android:background="@drawable/custermview_edittext"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:hint="请输入商家/商品名称"

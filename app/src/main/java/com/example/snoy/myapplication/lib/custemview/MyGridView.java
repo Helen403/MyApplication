@@ -6,7 +6,7 @@ import android.widget.GridView;
 /***
  * 解决只显示一行数据，scrollview嵌套GridView
  */
-public class MyGridView extends GridView {
+public final class MyGridView extends GridView {
 
     public MyGridView(Context context) {
         super(context);

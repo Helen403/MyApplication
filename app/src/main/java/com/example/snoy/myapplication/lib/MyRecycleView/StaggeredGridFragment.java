@@ -23,7 +23,7 @@ import java.util.List;
  * 若使用瀑布流  请参考这里
  * Created by shichaohui on 2015/8/4 0004.
  */
-public class StaggeredGridFragment extends Fragment {
+public final class StaggeredGridFragment extends Fragment {
 
     private MyRecycleView mRecyclerView;
     private View headerView;

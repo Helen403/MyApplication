@@ -23,7 +23,7 @@ import com.example.snoy.myapplication.lib.NavView.AnimImageGroup;
 import com.example.snoy.myapplication.lib.NavView.NavImgLayout;
 
 
-public class WelcomeActivity extends Activity implements GestureDetector.OnGestureListener {
+public final class WelcomeActivity extends Activity implements GestureDetector.OnGestureListener {
 
     //左滑 右滑的灵敏度  数值越小 越灵敏
     private int sensitive = 25;

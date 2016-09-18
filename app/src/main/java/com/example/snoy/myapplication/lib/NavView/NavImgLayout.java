@@ -13,7 +13,7 @@ import com.example.snoy.myapplication.R;
 /**
  * 导航小图标控件
  */
-public class NavImgLayout extends LinearLayout{
+public final class NavImgLayout extends LinearLayout{
 
     private int checkedimg, uncheckedimg, imgcount;
     private LayoutParams layoutParams;

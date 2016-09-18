@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
  * <br/>
  * 自定义动画ImageView
  */
-public class AnimImageView extends ImageView {
+public final class AnimImageView extends ImageView {
 
     private int dp1; // 1dp
     private int screenWidth; // 屏幕宽度

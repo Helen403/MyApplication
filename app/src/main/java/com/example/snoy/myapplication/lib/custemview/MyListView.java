@@ -6,7 +6,7 @@ import android.widget.ListView;
 /***
  * 解决只显示一行数据，scrollview 嵌套listview 或者 listview 嵌套 listview
  */
-public class MyListView extends ListView {
+public final class MyListView extends ListView {
 
     public MyListView(Context context) {
         super(context);

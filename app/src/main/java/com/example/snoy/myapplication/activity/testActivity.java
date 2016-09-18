@@ -76,23 +76,23 @@ public class testActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 //                goToActivityByClass(testActivity.this, StartActivityActivity.class);
+                goActivityForResult(testActivity.this, StartActivityActivity.class, null, new ActivityResultAction() {
+                    @Override
+                    public void onSuccess(Intent data) {
 
+                    }
 
-            }
-        });
+                    @Override
+                    protected void onCancel() {
 
-
-        goActivityForResult(testActivity.this, StartActivityActivity.class, null, new ActivityResultAction() {
-            @Override
-            public void onSuccess(Intent data) {
-
-            }
-
-            @Override
-            protected void onCancel() {
+                    }
+                });
 
             }
         });
+
+
+
 
         L(testActivity.this.hashCode());
 //        L();

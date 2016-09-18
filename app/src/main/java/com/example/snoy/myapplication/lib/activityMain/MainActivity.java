@@ -43,7 +43,7 @@ import java.util.TimerTask;
 /**
  * Created by Administrator on 2016/8/23.
  */
-public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener {
+public final class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener {
 
     private FragmentManager fm;
 

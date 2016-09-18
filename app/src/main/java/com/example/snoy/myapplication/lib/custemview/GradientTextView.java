@@ -10,7 +10,7 @@ import android.widget.TextView;
  * @author Administrator
  *
  */
-public class GradientTextView extends TextView {
+public final class GradientTextView extends TextView {
 
 	public GradientTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);

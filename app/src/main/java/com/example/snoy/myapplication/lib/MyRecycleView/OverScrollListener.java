@@ -5,7 +5,7 @@ package com.example.snoy.myapplication.lib.MyRecycleView;
  * <br/>
  * 滑动过度的监听接口
  */
-public interface OverScrollListener {
+public  interface OverScrollListener {
 
     /**
      * 滑动过度时调用的方法

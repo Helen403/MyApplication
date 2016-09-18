@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class MyLinearLayoutManager extends LinearLayoutManager {
+public final class MyLinearLayoutManager extends LinearLayoutManager {
 
     private OverScrollListener mListener;
 

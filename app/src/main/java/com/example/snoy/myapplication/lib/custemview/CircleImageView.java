@@ -16,7 +16,7 @@ import android.widget.ImageView;
 /**
  * 圆形 ImageView
  */
-public class CircleImageView extends ImageView {
+public final class CircleImageView extends ImageView {
 	private Paint paint = new Paint();
 
 	public CircleImageView(Context context) {

@@ -3,7 +3,7 @@ package com.example.snoy.myapplication.lib.ThreadPool;
 /**
  * Created by mcs on 2015/11/3.
  */
-public class ThreadPoolFactory {
+public final class ThreadPoolFactory {
 
     private static ThreadPoolProxy commonThreadPool;
     public static final int Common_CORE_POOL_SIZE = 3;

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Ken on 2015/10/20.
  */
-public class AnimImageGroup extends FrameLayout implements Animation.AnimationListener {
+public final class AnimImageGroup extends FrameLayout implements Animation.AnimationListener {
 
     private List<Integer> datasIds;
     private Animation loutAnim, rinAnim, linAnim, routAnim;

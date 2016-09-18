@@ -471,9 +471,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
     /***********************************************************************/
 
-    public BaseActivity() {
-    }
-
     /**
      * 将dip或dp值转换为px值，保证尺寸大小不变
      */

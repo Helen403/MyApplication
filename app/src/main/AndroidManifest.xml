@@ -36,6 +36,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
 
+
     <application
         android:name=".lib.base.BaseApplication"
         android:allowBackup="true"

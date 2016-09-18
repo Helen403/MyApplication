@@ -27,7 +27,7 @@ import com.example.snoy.myapplication.R;
 
 import java.util.Locale;
 
-public class PagerSlidingTabStrip extends HorizontalScrollView {
+public final class PagerSlidingTabStrip extends HorizontalScrollView {
 
     public interface IconTabProvider {
         public int getPageIconResId(int position);
