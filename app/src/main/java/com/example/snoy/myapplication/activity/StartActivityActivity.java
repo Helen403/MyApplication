@@ -10,9 +10,6 @@ import com.example.snoy.myapplication.fragment.test_2_fragment;
 
 public class StartActivityActivity extends BaseActivity {
 
-    @Override
-    public void dealLogicBeforeFindView() {
-    }
 
     @Override
     public int getContentView() {
@@ -38,8 +35,6 @@ public class StartActivityActivity extends BaseActivity {
     @Override
     public void initData() {
         onSendBroadCast(testActivity.class, null);
-
-
     }
 
     @Override

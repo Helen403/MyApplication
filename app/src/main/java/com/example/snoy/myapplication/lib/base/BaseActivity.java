@@ -69,7 +69,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /*******************************************/
     //判断是否铺满全屏
     protected boolean isAllowFullScreen;
-
     /*******************************************/
     //加载中的View
     protected BufferCircleView bufferCircleView;
@@ -81,7 +80,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     //特殊提供节约空间的方法
     protected TextView tv[];
     protected ImageView iv[];
-
+    //特定的
     protected int tvId[];
     protected int ivId[];
     /*****************************************/
@@ -325,7 +324,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     }
 
 
-    public abstract void dealLogicBeforeFindView();
+    protected void dealLogicBeforeFindView() {
+    }
 
     /***
      * 设置内容区域
@@ -537,6 +537,60 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
                 context.startActivity(new Intent(context, cls));
             }
         }, delay);
+    }
+
+    /*********************************************************************************************/
+
+    /**
+     * 带返回结果的跳转
+     */
+    protected SparseArray<ActivityResultAction> mResultHandlers;
+
+    public void goActivityForResult(Context context, Class<?> cls, Bundle bundle, ActivityResultAction action) {
+        Intent intent = new Intent(context, cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        int rc;
+        if (action != null) {
+            if (mResultHandlers == null) {
+                mResultHandlers = new SparseArray<ActivityResultAction>();
+            }
+            rc = action.hashCode();
+            rc &= 0x0000ffff;
+            mResultHandlers.append(rc, action);
+            startActivityForResult(intent, rc);
+        } else {
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ActivityResultAction activityResultAction = mResultHandlers.get(requestCode);
+        if (null != activityResultAction) {
+            activityResultAction.invoke(resultCode, data);
+        }
+    }
+
+    public abstract class ActivityResultAction {
+        private void invoke(Integer resultCode, Intent data) {
+            switch (resultCode.intValue()) {
+                case Activity.RESULT_OK:
+                    onSuccess(data);
+                    break;
+                case Activity.RESULT_CANCELED:
+                    onCancel();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public abstract void onSuccess(Intent data);
+
+        protected abstract void onCancel();
     }
 
 
@@ -791,56 +845,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         return i;
     }
 
-    /*********************************************************************************************/
 
-    protected SparseArray<ActivityResultAction> mResultHandlers;
-
-    public void goActivityForResult(Context context, Class<?> cls, Bundle bundle, ActivityResultAction action) {
-        Intent intent = new Intent(context, cls);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        int rc;
-        if (action != null) {
-            if (mResultHandlers == null) {
-                mResultHandlers = new SparseArray<ActivityResultAction>();
-            }
-            rc = action.hashCode();
-            rc &= 0x0000ffff;
-            mResultHandlers.append(rc, action);
-            startActivityForResult(intent, rc);
-        } else {
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        ActivityResultAction activityResultAction = mResultHandlers.get(requestCode);
-        if (null != activityResultAction) {
-            activityResultAction.invoke(resultCode, data);
-        }
-    }
-
-    public abstract class ActivityResultAction {
-        private void invoke(Integer resultCode, Intent data) {
-            switch (resultCode.intValue()) {
-                case Activity.RESULT_OK:
-                    onSuccess(data);
-                    break;
-                case Activity.RESULT_CANCELED:
-                    onCancel();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public abstract void onSuccess(Intent data);
-
-        protected abstract void onCancel();
-    }
 
 
 }

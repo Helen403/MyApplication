@@ -6,8 +6,27 @@
 
 
     <TextView
-        android:text="第二个Activity"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="第二个Activity" />
+
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.6"
+        android:background="@drawable/custermview_edittext"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="请输入商家/商品名称"
+        android:textColor="#D2D2D2"
+        android:textSize="12sp" />
 
 </LinearLayout>

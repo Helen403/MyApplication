@@ -24,13 +24,7 @@ import java.util.ArrayList;
 public class testActivity extends BaseActivity {
 
     private TextView click;
-    Context context;
 
-
-    @Override
-    public void dealLogicBeforeFindView() {
-
-    }
 
     @Override
     public int getContentView() {

@@ -136,8 +136,13 @@ public final class ControlUtils {
     private static <T> T getEntityFromJson(String gsonString, Class<T> cls) {
         T t = null;
         try {
-            if (gson != null) {
-                t = gson.fromJson(gsonString.trim(), cls);
+            if (gson != null && !TextUtils.isEmpty(gsonString)) {
+                //过滤gson
+                gsonString = gsonString.trim();
+                if (gsonString.startsWith("ufeff")) {
+                    gsonString = gsonString.substring(1);
+                }
+                t = gson.fromJson(gsonString, cls);
             }
             return t;
         } catch (Exception e) {
@@ -153,9 +158,14 @@ public final class ControlUtils {
         ArrayList<T> list;
         try {
             if (gson != null && !TextUtils.isEmpty(gsonString)) {
+                //过滤gson
+                gsonString = gsonString.trim();
+                if (gsonString.startsWith("ufeff")) {
+                    gsonString = gsonString.substring(1);
+                }
                 TypeToken<ArrayList<T>> tt = new TypeToken<ArrayList<T>>() {
                 };
-                list = gson.fromJson(gsonString.trim(), tt.getType());
+                list = gson.fromJson(gsonString, tt.getType());
                 return list;
             }
         } catch (Exception e) {

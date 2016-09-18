@@ -17,7 +17,7 @@ import java.util.Hashtable;
  * 生成二维码
  */
 
-public class TwoCodeUtil {
+public final class TwoCodeUtil {
     /**
      * @param url 要转换的地址或字符串,可以是中文
      */

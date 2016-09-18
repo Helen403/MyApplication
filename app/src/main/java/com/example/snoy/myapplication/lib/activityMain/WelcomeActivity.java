@@ -1,8 +1,5 @@
 package com.example.snoy.myapplication.lib.activityMain;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -140,70 +137,61 @@ public class WelcomeActivity extends Activity implements GestureDetector.OnGestu
      * 跳转定时器
      */
     private void gotoTimer() {
-        new Timer().schedule(new TimerTask() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!TextUtils.isEmpty(DButils.getString("once"))) {
-                            //不是第一次登录
-                            goToMainActivity();
-                        } else {
-                            Animation anim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_left_out);
-                            anim.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
+                if (!TextUtils.isEmpty(DButils.getString("once"))) {
+                    //不是第一次登录
+                    goToMainActivity();
+                } else {
+                    Animation anim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_left_out);
+                    anim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
 
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    iv_logo.setVisibility(View.INVISIBLE);
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-
-                                }
-                            });
-                            iv_logo.startAnimation(anim);
-
-
-                            Animation navanim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_right_in);
-                            navanim.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                    navImag.setVisibility(View.VISIBLE);
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-
-                                }
-                            });
-                            navImag.startAnimation(navanim);
-                            aigpic.nextContent();
-
-                            flag = true;
-
-                            //标记为第一次登录
-                            DButils.putString("once", "Helen");
-                            //加载一次网络数据
-                            loadDatas();
                         }
-                        }
-                    }
 
-                    );
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            iv_logo.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    iv_logo.startAnimation(anim);
+
+
+                    Animation navanim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_right_in);
+                    navanim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            navImag.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    navImag.startAnimation(navanim);
+                    aigpic.nextContent();
+
+                    flag = true;
+
+                    //标记为第一次登录
+                    DButils.putString("once", "Helen");
+                    //加载一次网络数据
+                    loadDatas();
                 }
             }
-
-            ,2000);
+        },2000);
         }
 
 

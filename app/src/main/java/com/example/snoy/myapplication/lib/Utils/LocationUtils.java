@@ -11,7 +11,7 @@ import com.example.snoy.myapplication.lib.base.BaseApplication;
 /**
  * 用于定位
  */
-public class LocationUtils {
+public final class LocationUtils {
     //配置一下
     private static Context context = BaseApplication.context;
  

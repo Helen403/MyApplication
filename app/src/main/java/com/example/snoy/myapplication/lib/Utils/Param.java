@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * 用于网络请求的HashMap<String, String>
  */
-public class Param extends HashMap<String, String> {
+public final class Param extends HashMap<String, String> {
 
     @Override
     public String put(String key, String value) {

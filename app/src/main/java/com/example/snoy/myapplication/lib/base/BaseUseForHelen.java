@@ -13,6 +13,7 @@ public class BaseUseForHelen {
       //布局填充
      LayoutInflater inflater = LayoutInflater.from(context);
      View view = inflater.inflate(R.layout, null);
+
 //*********************************************************************************
      //相对布局
        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -70,11 +71,25 @@ public class BaseUseForHelen {
          android:layout_height="1dp"
          android:background="#D3D3D3" />
 
-
 //*********************************************************************************
-    //
+        <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-
+//**********************************************************************************
+  <EditText
+        android:id="@+id/edittext"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.6"
+        android:background="@drawable/round_edittext"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="请输入商家/商品名称"
+        android:textColor="#D2D2D2"
+        android:textSize="12sp" />
 
 //*********************************************************************************
 
