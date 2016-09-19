@@ -50,6 +50,9 @@ import java.util.regex.Pattern;
  */
 public final class AppUtils {
 
+    private AppUtils() {
+    }
+
     /**
      * getAppName 获取应用名称
      */

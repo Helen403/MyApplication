@@ -60,6 +60,9 @@ import java.util.zip.GZIPOutputStream;
  */
 public final class FileUtils {
 
+    private FileUtils() {
+    }
+
     /**
      * closeIO 关闭IO流
      */

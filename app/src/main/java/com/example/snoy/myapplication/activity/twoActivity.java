@@ -8,7 +8,7 @@ import com.example.snoy.myapplication.fragment.test_1_fragment;
 import com.example.snoy.myapplication.fragment.test_2_fragment;
 
 
-public class StartActivityActivity extends BaseActivity {
+public class twoActivity extends BaseActivity {
 
 
     @Override
@@ -34,7 +34,7 @@ public class StartActivityActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        onSendBroadCast(testActivity.class, null);
+        onSendBroadCast(oneActivity.class, null);
     }
 
     @Override

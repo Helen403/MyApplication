@@ -48,6 +48,10 @@ import java.util.regex.Pattern;
  * Wi 7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2 1
  */
 public final class VerificationUtils {
+
+    private VerificationUtils() {
+    }
+
     /**
      * matcherRealName 判断姓名格式
      * 真实姓名可以是汉字,也可以是字母,但是不能两者都有,也不能包含任何符号和数字

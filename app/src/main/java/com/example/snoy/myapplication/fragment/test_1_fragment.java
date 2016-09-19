@@ -77,7 +77,9 @@ public class test_1_fragment extends BaseFragment {
             @Override
             public void onClick(View v, int id) {
                 L("点击成功");
-              //  throw new RuntimeException("自定义异常");
+                //  throw new RuntimeException("自定义异常");
+
+
             }
         });
 

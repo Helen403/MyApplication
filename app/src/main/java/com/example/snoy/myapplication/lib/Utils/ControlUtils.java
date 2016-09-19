@@ -48,6 +48,7 @@ public final class ControlUtils {
     //配置
     private static Context contextApplication = BaseApplication.context;
 
+
     /**
      * 单位是秒  60 * 60 * 12 半日  测试为30秒         --------根据项目需求来自己修改
      * 时间超过规定的时间就删除数据库的数据  图片的数据就不删除  就删除json数据

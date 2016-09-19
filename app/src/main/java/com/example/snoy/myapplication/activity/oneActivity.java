@@ -21,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/8/23.
  */
-public class testActivity extends BaseActivity {
+public class oneActivity extends BaseActivity {
 
     private TextView click;
 
@@ -60,10 +60,10 @@ public class testActivity extends BaseActivity {
             }
         });
 
-        setBroadCast(testActivity.class, new BroadcastReceiver() {
+        setBroadCast(oneActivity.class, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(testActivity.class.getCanonicalName())) {
+                if (intent.getAction().equals(oneActivity.class.getCanonicalName())) {
                     L("广播成功");
                 }
             }
@@ -75,18 +75,18 @@ public class testActivity extends BaseActivity {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                goToActivityByClass(testActivity.this, StartActivityActivity.class);
-                goActivityForResult(testActivity.this, StartActivityActivity.class, null, new ActivityResultAction() {
-                    @Override
-                    public void onSuccess(Intent data) {
-
-                    }
-
-                    @Override
-                    protected void onCancel() {
-
-                    }
-                });
+//                goActivityForResult(oneActivity.this, twoActivity.class, null, new ActivityResultAction() {
+//                    @Override
+//                    public void onSuccess(Intent data) {
+//
+//                    }
+//
+//                    @Override
+//                    protected void onCancel() {
+//
+//                    }
+//                });
+                goToActivityByClass(oneActivity.this,twoActivity.class);
 
             }
         });
@@ -94,7 +94,7 @@ public class testActivity extends BaseActivity {
 
 
 
-        L(testActivity.this.hashCode());
+        L(oneActivity.this.hashCode());
 //        L();
 
 

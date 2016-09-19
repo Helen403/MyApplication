@@ -18,6 +18,10 @@ public final class KeyBoardUtils {
     //需要配置一下Context
     private static Context context = BaseApplication.context;
 
+    private KeyBoardUtils() {
+    }
+
+
     /**
      * 打开软键盘
      */

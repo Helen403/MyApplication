@@ -58,8 +58,9 @@
         </activity>
         <activity android:name=".lib.activityMain.MainActivity"/>
         <service android:name=".service.CoreService"/>
-        <activity android:name=".activity.testActivity"/>
-        <activity android:name=".activity.StartActivityActivity"/>
+        <activity android:name=".activity.oneActivity"/>
+        <activity android:name=".activity.twoActivity"/>
+        <activity android:name=".activity.MainActivity"/>
 
 
 
@@ -98,18 +99,18 @@
 
 
         <!--微信分享回调 -->
-        <activity
+<!--        <activity
             android:name=".lib.share.demo.wxapi.WXEntryActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" />-->
 
        <!-- 二维码-->
         <activity android:name=".lib.TwoDimensionCode.CaptureActivity"/>
 
 
-        <activity
+       <!-- <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
@@ -121,7 +122,7 @@
             android:exported="false"
             android:screenOrientation="behind">
         </activity>
-
+-->
     </application>
     <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
 </manifest>

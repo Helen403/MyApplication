@@ -25,6 +25,10 @@ import java.security.NoSuchAlgorithmException;
  */
 public final class CipherUtils {
 
+
+    private CipherUtils() {
+    }
+
     /**
      * md5(String input) 字符串md5
      */

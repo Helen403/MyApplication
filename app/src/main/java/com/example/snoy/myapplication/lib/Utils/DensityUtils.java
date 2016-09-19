@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
  * getStatusBarH 获取状态栏高度
  * getNavigationBarrH 获取导航栏高度
  */
-public final class DensityUtil {
+public final class DensityUtils {
 
     /**
      * dip2px dp转像素

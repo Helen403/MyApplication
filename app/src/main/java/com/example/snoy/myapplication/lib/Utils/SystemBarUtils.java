@@ -21,6 +21,10 @@ public final class SystemBarUtils {
     private static SystemBarTintManager tintManager;
     private static SystemBarTintManager tintManagers;
 
+
+    private SystemBarUtils() {
+    }
+
     public static void initSystemBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(activity, true);
@@ -47,7 +51,7 @@ public final class SystemBarUtils {
     /***
      * 设置状态栏为 蓝色 (大多数状态栏颜色)
      */
-    public static void initSystemBarElse(Activity activity,int color) {
+    public static void initSystemBarElse(Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(activity, true);
         }

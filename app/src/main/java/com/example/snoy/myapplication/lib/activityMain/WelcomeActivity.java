@@ -49,7 +49,7 @@ public final class WelcomeActivity extends Activity implements GestureDetector.O
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setBackgroundDrawable(null);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.custermview_activity_welcome);
         initView();
         initDetector();
         gotoTimer();

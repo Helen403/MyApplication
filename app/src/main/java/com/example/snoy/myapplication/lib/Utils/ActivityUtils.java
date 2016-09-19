@@ -12,9 +12,12 @@ import java.util.TimerTask;
  * @author http://blog.csdn.net/finddreams
  * @Description: Activity的工具类
  */
-public final class ActivityUtil {
+public final class ActivityUtils {
 
-    private static final String TAG = "ActivityUtil";
+
+    private ActivityUtils(){
+
+    }
 
     /**
      * 延迟去往新的Activity

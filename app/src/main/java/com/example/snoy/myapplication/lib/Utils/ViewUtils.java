@@ -43,6 +43,10 @@ import com.example.snoy.myapplication.R;
  */
 public final class ViewUtils {
 
+
+    private ViewUtils() {
+    }
+
     public static void removeSelfFromParent(View view) {
         if (view != null) {
             ViewParent parent = view.getParent();

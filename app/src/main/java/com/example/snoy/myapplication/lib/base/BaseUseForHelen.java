@@ -86,6 +86,7 @@ public final class BaseUseForHelen {
         android:layout_weight="0.6"
         android:background="@drawable/custermview_edittext"
         android:focusable="true"
+        android:singleLine="true"
         android:focusableInTouchMode="true"
         android:hint="请输入商家/商品名称"
         android:textColor="#D2D2D2"

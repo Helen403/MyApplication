@@ -70,6 +70,9 @@ import java.util.Locale;
 @SuppressLint("SimpleDateFormat")
 public final class SystemUtils {
 
+    private SystemUtils() {
+    }
+
     /**
      * sendSMS 调用系统发送短信
      */

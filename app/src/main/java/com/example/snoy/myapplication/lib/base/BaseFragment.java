@@ -27,6 +27,8 @@ import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -366,29 +368,31 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     /**
      * 跳转到另一个Activity，不携带数据，不设置flag
      */
-    public void goToActivityByClass(Class<?> cls) {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).goToActivityByClass(cls);
-        }
+    public void goToActivityByClass(Context context, Class<?> cls) {
+        Intent intent = new Intent(context, cls);
+        startActivity(intent);
     }
 
     /**
      * 跳转到另一个Activity，携带数据
      */
-    public void goToActivityByClass(Class<?> cls, Bundle bundle) {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).goToActivityByClass(cls, bundle);
-        }
+    public void goToActivityByClass(Context context, Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent(context, cls);
+        startActivity(intent);
     }
 
 
     /**
      * 延迟去往新的Activity
      */
-    public void delayToActivity(final Class<?> cls, long delay) {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).delayToActivity(cls, delay);
-        }
+    public void delayToActivity(final Context context, final Class<?> cls, long delay) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                context.startActivity(new Intent(context, cls));
+            }
+        }, delay);
     }
 
     /******************************************************************/

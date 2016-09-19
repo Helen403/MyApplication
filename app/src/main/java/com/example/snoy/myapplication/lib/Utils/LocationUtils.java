@@ -14,7 +14,10 @@ import com.example.snoy.myapplication.lib.base.BaseApplication;
 public final class LocationUtils {
     //配置一下
     private static Context context = BaseApplication.context;
- 
+
+    private LocationUtils() {
+    }
+
     /***
      * 初始化百度地图定位；
      */
@@ -32,11 +35,11 @@ public final class LocationUtils {
                 if (location == null) {
                     return;
                 }
-				 onLocationUtils.onSuccess(location);
-                 //定位完就去关闭定位
-                 mLocClient.stop();
-                  
-              
+                onLocationUtils.onSuccess(location);
+                //定位完就去关闭定位
+                mLocClient.stop();
+
+
                 // L.d(location.getCountry() + "-->" + location.getProvince()
                 // + "-->" + location.getCity() + "-->");
                 // L.d(location.getAddrStr());

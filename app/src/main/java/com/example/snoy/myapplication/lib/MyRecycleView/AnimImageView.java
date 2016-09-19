@@ -56,6 +56,10 @@ public final class AnimImageView extends ImageView {
     private ImageView arrow;
 
 
+    Bitmap bmp;
+
+    SimpleDateFormat formatter;
+
     public AnimImageView(Context context) {
         this(context, null);
         //获取当前时间
@@ -88,6 +92,10 @@ public final class AnimImageView extends ImageView {
         textWidth = mPaint.measureText(text);
         mPaintBitmap = new Paint();
         mPaintBitmap.setAntiAlias(true);
+
+
+         bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.custermview_arrow);
+         formatter = new SimpleDateFormat("HH:mm");
     }
 
     /**
@@ -121,13 +129,13 @@ public final class AnimImageView extends ImageView {
 
             // 背景
             canvas.drawColor(colorBg);
-            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.custermview_arrow);
+
             // 定义矩阵对象
             Matrix matrix = new Matrix();
             // 缩放原图
             matrix.postScale(1f, 1f);
             //获取当前时间
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+
             Date curDate = new Date(System.currentTimeMillis());
             timeTmp = formatter.format(curDate);
             mExitTime = System.currentTimeMillis();

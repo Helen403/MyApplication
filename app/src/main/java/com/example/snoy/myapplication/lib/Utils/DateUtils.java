@@ -26,6 +26,10 @@ public final class DateUtils {
     private static final SimpleDateFormat DATE_FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat DATE_FORMAT_TIME = new SimpleDateFormat("HH:mm:ss");
 
+
+    private DateUtils() {
+    }
+
     /**
      * formatDataTime 格式化日期时间
      */

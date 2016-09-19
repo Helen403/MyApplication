@@ -18,6 +18,10 @@ import java.text.DecimalFormat;
  * decimalFormat 指定小数输出
  */
 public final class StringUtils {
+
+    private StringUtils() {
+    }
+
     /**
      * The pyvalue.
      */
