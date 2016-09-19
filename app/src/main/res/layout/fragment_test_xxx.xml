@@ -16,18 +16,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
+        <com.example.snoy.myapplication.lib.custemview.EditTextWithDel
             android:id="@+id/edittext"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="34dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/custermview_edittext"
             android:focusable="true"
+            android:singleLine="true"
+            android:padding="10dp"
             android:focusableInTouchMode="true"
             android:hint="请输入商家/商品名称"
             android:textColor="#D2D2D2"
             android:textSize="12sp" />
+
+
+
+
+
 
     </LinearLayout>
 
