@@ -1010,6 +1010,7 @@ public final class ImageUtils {
         byte[] bytes = baos.toByteArray();
         if (recycle && !src.isRecycled()) src.recycle();
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
     }
 
     /**
