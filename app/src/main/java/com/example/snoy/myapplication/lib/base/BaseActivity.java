@@ -496,8 +496,10 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().setBackgroundDrawable(null);
         } else {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setBackgroundDrawable(null);
         }
     }
 

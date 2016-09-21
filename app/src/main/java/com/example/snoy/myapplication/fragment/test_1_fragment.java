@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.activity.threeActivity;
 import com.example.snoy.myapplication.lib.base.BaseFragment;
 
 
@@ -78,7 +79,7 @@ public class test_1_fragment extends BaseFragment {
             public void onClick(View v, int id) {
                 L("点击成功");
                 //  throw new RuntimeException("自定义异常");
-
+                goToActivityByClass(getActivity(), threeActivity.class);
 
             }
         });

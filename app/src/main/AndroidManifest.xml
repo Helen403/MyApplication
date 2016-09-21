@@ -60,7 +60,7 @@
         <service android:name=".service.CoreService"/>
         <activity android:name=".activity.oneActivity"/>
         <activity android:name=".activity.twoActivity"/>
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.threeActivity"/>
 
 
 

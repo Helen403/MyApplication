@@ -1,6 +1,7 @@
 package com.example.snoy.myapplication.lib.Utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,6 +11,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.os.Environment;
 import android.os.Handler;
@@ -617,6 +620,428 @@ public final class ImageUtils {
         matrix.postScale(scaleWidth, scaleHeight);
         return Bitmap.createBitmap(bitMap, 0, 0, width, height, matrix, true);
     }
+
+
+
+    /**
+     * drawable转bitmap
+     *
+     * @param drawable drawable对象
+     * @return bitmap对象
+     */
+    public static Bitmap drawable2Bitmap(Drawable drawable) {
+        return drawable == null ? null : ((BitmapDrawable) drawable).getBitmap();
+    }
+
+    /**
+     * bitmap转drawable
+     *
+     * @param res    resources对象
+     * @param bitmap bitmap对象
+     * @return drawable对象
+     */
+    public static Drawable bitmap2Drawable(Resources res, Bitmap bitmap) {
+        return bitmap == null ? null : new BitmapDrawable(res, bitmap);
+    }
+
+    /**
+     * drawable转byteArr
+     *
+     * @param drawable drawable对象
+     * @param format   格式
+     * @return 字节数组
+     */
+    public static byte[] drawable2Bytes(Drawable drawable, Bitmap.CompressFormat format) {
+        return bitmap2Bytes(drawable2Bitmap(drawable), format);
+    }
+
+    /**
+     * byteArr转drawable
+     *
+     * @param res   resources对象
+     * @param bytes 字节数组
+     * @return drawable对象
+     */
+    public static Drawable bytes2Drawable(Resources res, byte[] bytes) {
+        return bitmap2Drawable(res, bytes2Bitmap(bytes));
+    }
+
+
+    /**
+     * bitmap转byteArr
+     *
+     * @param bitmap bitmap对象
+     * @param format 格式
+     * @return 字节数组
+     */
+    public static byte[] bitmap2Bytes(Bitmap bitmap, Bitmap.CompressFormat format) {
+        if (bitmap == null) return null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(format, 100, baos);
+        return baos.toByteArray();
+    }
+
+    /**
+     * byteArr转bitmap
+     *
+     * @param bytes 字节数组
+     * @return bitmap对象
+     */
+    public static Bitmap bytes2Bitmap(byte[] bytes) {
+        return (bytes == null || bytes.length == 0) ? null : BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+
+    /**
+     * 获取bitmap
+     *
+     * @param context 上下文
+     * @param resId   资源id
+     * @return bitmap
+     */
+    public static Bitmap getBitmap(Context context, int resId) {
+        if (context == null) return null;
+        InputStream is = context.getResources().openRawResource(resId);
+        return BitmapFactory.decodeStream(is);
+    }
+
+    /**
+     * 缩放图片
+     *
+     * @param src       源图片
+     * @param newWidth  新宽度
+     * @param newHeight 新高度
+     * @return 缩放后的图片
+     */
+    public static Bitmap scale(Bitmap src, int newWidth, int newHeight) {
+        return scale(src, newWidth, newHeight, false);
+    }
+
+    /**
+     * 缩放图片
+     *
+     * @param src       源图片
+     * @param newWidth  新宽度
+     * @param newHeight 新高度
+     * @param recycle   是否回收
+     * @return 缩放后的图片
+     */
+    public static Bitmap scale(Bitmap src, int newWidth, int newHeight, boolean recycle) {
+        if (isEmptyBitmap(src)) return null;
+        Bitmap ret = Bitmap.createScaledBitmap(src, newWidth, newHeight, true);
+        if (recycle && !src.isRecycled()) src.recycle();
+        return ret;
+    }
+
+    /**
+     * 缩放图片
+     *
+     * @param src         源图片
+     * @param scaleWidth  缩放宽度倍数
+     * @param scaleHeight 缩放高度倍数
+     * @return 缩放后的图片
+     */
+    public static Bitmap scale(Bitmap src, float scaleWidth, float scaleHeight) {
+        return scale(src, scaleWidth, scaleHeight, false);
+    }
+
+    /**
+     * 缩放图片
+     *
+     * @param src         源图片
+     * @param scaleWidth  缩放宽度倍数
+     * @param scaleHeight 缩放高度倍数
+     * @param recycle     是否回收
+     * @return 缩放后的图片
+     */
+    public static Bitmap scale(Bitmap src, float scaleWidth, float scaleHeight, boolean recycle) {
+        if (isEmptyBitmap(src)) return null;
+        Matrix matrix = new Matrix();
+        matrix.setScale(scaleWidth, scaleHeight);
+        Bitmap ret = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+        if (recycle && !src.isRecycled()) src.recycle();
+        return ret;
+    }
+
+    /**
+     * 裁剪图片
+     *
+     * @param src    源图片
+     * @param x      开始坐标x
+     * @param y      开始坐标y
+     * @param width  裁剪宽度
+     * @param height 裁剪高度
+     * @return 裁剪后的图片
+     */
+    public static Bitmap clip(Bitmap src, int x, int y, int width, int height) {
+        return clip(src, x, y, width, height, false);
+    }
+
+    /**
+     * 裁剪图片
+     *
+     * @param src     源图片
+     * @param x       开始坐标x
+     * @param y       开始坐标y
+     * @param width   裁剪宽度
+     * @param height  裁剪高度
+     * @param recycle 是否回收
+     * @return 裁剪后的图片
+     */
+    public static Bitmap clip(Bitmap src, int x, int y, int width, int height, boolean recycle) {
+        if (isEmptyBitmap(src)) return null;
+        Bitmap ret = Bitmap.createBitmap(src, x, y, width, height);
+        if (recycle && !src.isRecycled()) src.recycle();
+        return ret;
+    }
+
+    /**
+     * 倾斜图片
+     *
+     * @param src 源图片
+     * @param kx  倾斜因子x
+     * @param ky  倾斜因子y
+     * @return 倾斜后的图片
+     */
+    public static Bitmap skew(Bitmap src, float kx, float ky) {
+        return skew(src, kx, ky, 0, 0, false);
+    }
+
+    /**
+     * 倾斜图片
+     *
+     * @param src     源图片
+     * @param kx      倾斜因子x
+     * @param ky      倾斜因子y
+     * @param recycle 是否回收
+     * @return 倾斜后的图片
+     */
+    public static Bitmap skew(Bitmap src, float kx, float ky, boolean recycle) {
+        return skew(src, kx, ky, 0, 0, recycle);
+    }
+
+    /**
+     * 倾斜图片
+     *
+     * @param src 源图片
+     * @param kx  倾斜因子x
+     * @param ky  倾斜因子y
+     * @param px  平移因子x
+     * @param py  平移因子y
+     * @return 倾斜后的图片
+     */
+    public static Bitmap skew(Bitmap src, float kx, float ky, float px, float py) {
+        return skew(src, kx, ky, 0, 0, false);
+    }
+
+    /**
+     * 倾斜图片
+     *
+     * @param src     源图片
+     * @param kx      倾斜因子x
+     * @param ky      倾斜因子y
+     * @param px      平移因子x
+     * @param py      平移因子y
+     * @param recycle 是否回收
+     * @return 倾斜后的图片
+     */
+    public static Bitmap skew(Bitmap src, float kx, float ky, float px, float py, boolean recycle) {
+        if (isEmptyBitmap(src)) return null;
+        Matrix matrix = new Matrix();
+        matrix.setSkew(kx, ky, px, py);
+        Bitmap ret = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+        if (recycle && !src.isRecycled()) src.recycle();
+        return ret;
+    }
+
+    /**
+     * 旋转图片
+     *
+     * @param src     源图片
+     * @param degrees 旋转角度
+     * @param px      旋转点横坐标
+     * @param py      旋转点纵坐标
+     * @return 旋转后的图片
+     */
+    public static Bitmap rotate(Bitmap src, int degrees, float px, float py) {
+        return rotate(src, degrees, px, py, false);
+    }
+
+    /**
+     * 旋转图片
+     *
+     * @param src     源图片
+     * @param degrees 旋转角度
+     * @param px      旋转点横坐标
+     * @param py      旋转点纵坐标
+     * @param recycle 是否回收
+     * @return 旋转后的图片
+     */
+    public static Bitmap rotate(Bitmap src, int degrees, float px, float py, boolean recycle) {
+        if (isEmptyBitmap(src)) return null;
+        if (degrees == 0) return src;
+        Matrix matrix = new Matrix();
+        matrix.setRotate(degrees, px, py);
+        Bitmap ret = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+        if (recycle && !src.isRecycled()) src.recycle();
+        return ret;
+    }
+
+    /**
+     * 判断bitmap对象是否为空
+     *
+     * @param src 源图片
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    private static boolean isEmptyBitmap(Bitmap src) {
+        return src == null || src.getWidth() == 0 || src.getHeight() == 0;
+    }
+
+
+    /******************************~~~~~~~~~ 下方和压缩有关 ~~~~~~~~~******************************/
+
+    /**
+     * 按缩放压缩
+     *
+     * @param src       源图片
+     * @param newWidth  新宽度
+     * @param newHeight 新高度
+     * @return 缩放压缩后的图片
+     */
+    public static Bitmap compressByScale(Bitmap src, int newWidth, int newHeight) {
+        return scale(src, newWidth, newHeight, false);
+    }
+
+    /**
+     * 按缩放压缩
+     *
+     * @param src       源图片
+     * @param newWidth  新宽度
+     * @param newHeight 新高度
+     * @param recycle   是否回收
+     * @return 缩放压缩后的图片
+     */
+    public static Bitmap compressByScale(Bitmap src, int newWidth, int newHeight, boolean recycle) {
+        return scale(src, newWidth, newHeight, recycle);
+    }
+
+    /**
+     * 按缩放压缩
+     *
+     * @param src         源图片
+     * @param scaleWidth  缩放宽度倍数
+     * @param scaleHeight 缩放高度倍数
+     * @return 缩放压缩后的图片
+     */
+    public static Bitmap compressByScale(Bitmap src, float scaleWidth, float scaleHeight) {
+        return scale(src, scaleWidth, scaleHeight, false);
+    }
+
+    /**
+     * 按缩放压缩
+     *
+     * @param src         源图片
+     * @param scaleWidth  缩放宽度倍数
+     * @param scaleHeight 缩放高度倍数
+     * @param recycle     是否回收
+     * @return 缩放压缩后的图片
+     */
+    public static Bitmap compressByScale(Bitmap src, float scaleWidth, float scaleHeight, boolean recycle) {
+        return scale(src, scaleWidth, scaleHeight, recycle);
+    }
+
+    /**
+     * 按质量压缩
+     *
+     * @param src     源图片
+     * @param quality 质量
+     * @return 质量压缩后的图片
+     */
+    public static Bitmap compressByQuality(Bitmap src, int quality) {
+        return compressByQuality(src, quality, false);
+    }
+
+    /**
+     * 按质量压缩
+     *
+     * @param src     源图片
+     * @param quality 质量
+     * @param recycle 是否回收
+     * @return 质量压缩后的图片
+     */
+    public static Bitmap compressByQuality(Bitmap src, int quality, boolean recycle) {
+        if (isEmptyBitmap(src) || quality < 0 || quality > 100) return null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        src.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+        byte[] bytes = baos.toByteArray();
+        if (recycle && !src.isRecycled()) src.recycle();
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    /**
+     * 按质量压缩
+     *
+     * @param src         源图片
+     * @param maxByteSize 允许最大值字节数
+     * @return 质量压缩压缩过的图片
+     */
+    public static Bitmap compressByQuality(Bitmap src, long maxByteSize) {
+        return compressByQuality(src, maxByteSize, false);
+    }
+
+    /**
+     * 按质量压缩
+     *
+     * @param src         源图片
+     * @param maxByteSize 允许最大值字节数
+     * @param recycle     是否回收
+     * @return 质量压缩压缩过的图片
+     */
+    public static Bitmap compressByQuality(Bitmap src, long maxByteSize, boolean recycle) {
+        if (isEmptyBitmap(src) || maxByteSize <= 0) return null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int quality = 100;
+        src.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+        while (baos.toByteArray().length > maxByteSize && quality >= 0) {
+            baos.reset();
+            src.compress(Bitmap.CompressFormat.JPEG, quality -= 5, baos);
+        }
+        if (quality < 0) return null;
+        byte[] bytes = baos.toByteArray();
+        if (recycle && !src.isRecycled()) src.recycle();
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    /**
+     * 按采样大小压缩
+     *
+     * @param src        源图片
+     * @param sampleSize 采样率大小
+     * @return 按采样率压缩后的图片
+     */
+    public static Bitmap compressBySampleSize(Bitmap src, int sampleSize) {
+        return compressBySampleSize(src, sampleSize, false);
+    }
+
+    /**
+     * 按采样大小压缩
+     *
+     * @param src        源图片
+     * @param sampleSize 采样率大小
+     * @param recycle    是否回收
+     * @return 按采样率压缩后的图片
+     */
+    public static Bitmap compressBySampleSize(Bitmap src, int sampleSize, boolean recycle) {
+        if (isEmptyBitmap(src)) return null;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = sampleSize;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        src.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] bytes = baos.toByteArray();
+        if (recycle && !src.isRecycled()) src.recycle();
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+    }
+
 
 
     /**************************************************************************/
