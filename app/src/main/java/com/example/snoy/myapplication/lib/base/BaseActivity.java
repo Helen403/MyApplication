@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -28,6 +29,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,8 @@ import com.example.snoy.myapplication.lib.Utils.SystemBarUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -868,6 +872,117 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         params.width = tmpW;
         params.height = tmpH;
         view.setLayoutParams(params);
+    }
+
+
+    /**********************************************************************************/
+
+
+    /**
+     * 显示popupWindow
+     * parent    需要挂上的View
+     * showView  需要显示的View
+     */
+    public PopupWindow showPopupWindow(View parent, View showView) {
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int screenW = windowManager.getDefaultDisplay().getWidth();
+        int screenH = windowManager.getDefaultDisplay().getHeight();
+        PopupWindow popupWindow = new PopupWindow(showView, screenW, screenH);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.showAsDropDown(parent, 0, 0);
+        return popupWindow;
+    }
+
+
+    /*************************************************************************************/
+
+    /**
+     * 高德地图导航,坐标要转换
+     */
+    private void openGaodeNavi() {
+//    double[] lon = bdToGaoDe(storeInfo.latitude, storeInfo.longitude);
+//        try {
+//            String address = "androidamap://viewMap?sourceApplication="
+//                    + storeInfo.businessName + "&poiname=" + storeInfo.address
+//                    + "&lat=" + lon[1] + "&lon="
+//                    + lon[0] + "&dev=0";
+//            Intent intent = Intent.getIntent(address);
+//            if (isInstallByread("com.autonavi.minimap")) {
+//                startActivity(intent); // 启动调用
+//                navipopupWindow.dismiss();
+//            } else {
+//                T("未发现高德地图");
+//            }
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+
+    }
+
+    /**
+     * 打开百度地图导航
+     */
+    private void openBaiduNavi() {
+//        try {
+//            String address = "intent://map/marker?location="
+//                    + storeInfo.latitude + "," + storeInfo.longitude
+//                    + "&title=" + storeInfo.businessName + "&content="
+//                    + storeInfo.address
+//                    + "&src=yourCompanyName|yourAppName#Intent;"
+//                    + "scheme=bdapp;package=com.baidu.BaiduMap;end";
+//            Intent intent = Intent.getIntent(address);
+//            if (isInstallByread("com.baidu.BaiduMap")) {
+//                startActivity(intent); // 启动调用
+//                navipopupWindow.dismiss();
+//                // Log.v("GasStation", "百度地图客户端已经安装");
+//            } else {
+//                // Log.v("GasStation", "没有安装百度地图客户端");
+//                ToastUtils.ToastShowShort(mContext, "未发现百度地图");
+//            }
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+
+    }
+
+    /**
+     * bd09转成GCJ-02
+     *
+     */
+    private double[] bdToGaoDe(double bd_lat, double bd_lon) {
+        double[] gd_lat_lon = new double[2];
+        double PI = 3.14159265358979324 * 3000.0 / 180.0;
+        double x = bd_lon - 0.0065, y = bd_lat - 0.006;
+        double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * PI);
+        double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * PI);
+        gd_lat_lon[0] = z * Math.cos(theta);
+        gd_lat_lon[1] = z * Math.sin(theta);
+        return gd_lat_lon;
+    }
+
+    /**
+     * GCJ-02转成bd09
+     *
+     */
+    private double[] gaoDeToBaidu(double gd_lon, double gd_lat) {
+        double[] bd_lat_lon = new double[2];
+        double PI = 3.14159265358979324 * 3000.0 / 180.0;
+        double x = gd_lon, y = gd_lat;
+        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * PI);
+        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * PI);
+        bd_lat_lon[0] = z * Math.cos(theta) + 0.0065;
+        bd_lat_lon[1] = z * Math.sin(theta) + 0.006;
+        return bd_lat_lon;
+    }
+
+    /**
+     * 判断地图客户端是否安装
+     */
+    private boolean isInstallByread(String packageName) {
+        return new File("/data/data/" + packageName).exists();
     }
 
 
