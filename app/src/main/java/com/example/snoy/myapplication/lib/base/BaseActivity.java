@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -845,6 +846,29 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     }
 
 
+    /********************************************************************************/
+    /**
+     * sumScale  总的比例   以竖屏为参考  屏幕宽为比例总
+     * ScaleW    宽占总的比例多少
+     * ScaleH    高占总的比例多少
+     */
+    public void setScaleView(View view, int sumScale, int ScaleW, int ScaleH) {
+        //屏幕的宽
+        int screenW = 0;
+        //屏幕的高
+        int screenH = 0;
+        WindowManager wm = (WindowManager) contextAppliction.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        screenW = display.getWidth();
+        screenH = display.getHeight();
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) view.getLayoutParams();
+        /************************************************/
+        int tmpW = ScaleW / sumScale * screenW;
+        int tmpH = ScaleH / sumScale * screenW;
+        params.width = tmpW;
+        params.height = tmpH;
+        view.setLayoutParams(params);
+    }
 
 
 }
