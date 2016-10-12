@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.text.TextUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -225,8 +226,13 @@ public final class HttpUtils {
                         }
                     });
                 } else {
-                    //下载失败
-                    onHttpUtilsResultListener.onHttpFailure(url);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //下载失败
+                            onHttpUtilsResultListener.onHttpFailure(url);
+                        }
+                    });
                 }
             }
         });
@@ -250,8 +256,13 @@ public final class HttpUtils {
                         }
                     });
                 } else {
-                    //下载失败
-                    onHttpUtilsResultListener.onHttpFailure(url);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //下载失败
+                            onHttpUtilsResultListener.onHttpFailure(url);
+                        }
+                    });
                 }
             }
         });
@@ -274,8 +285,14 @@ public final class HttpUtils {
                         }
                     });
                 } else {
-                    //下载失败
-                    onHttpUtilsBitmapListener.onImageFailure(url);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //下载失败
+                            onHttpUtilsBitmapListener.onImageFailure(url);
+                        }
+                    });
+
                 }
             }
         });
@@ -300,4 +317,54 @@ public final class HttpUtils {
         void onHttpFailure(String url);
     }
 
+    /*********************************************************************************/
+
+    /*
+            //添加证书 https请求时
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, new TrustManager[]{new MyTrustManager()}, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new MyHostnameVerifier());
+
+
+
+    private static class MyHostnameVerifier implements HostnameVerifier {
+
+        @Override
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
+    }
+
+    private static class MyTrustManager implements X509TrustManager {
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType)
+                throws CertificateException {
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType)
+                throws CertificateException {
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+    }
+
+//********************************************************************************
+
+            //添加cooker
+            CookieManager manager = new java.net.CookieManager();
+            manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+            CookieHandler.setDefault(manager);
+
+             CookieStore store =  manager.getCookieStore();
+             List<HttpCookie> cookies = store.getCookies();
+
+
+
+     */
 }
