@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.lib.Utils.SystemBarUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.fragmentNav.test1Fragment;
 import com.example.snoy.myapplication.fragmentNav.test2Fragment;

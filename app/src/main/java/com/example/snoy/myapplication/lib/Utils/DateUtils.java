@@ -25,6 +25,8 @@ public final class DateUtils {
     private static final SimpleDateFormat DATE_FORMAT_DATETIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final SimpleDateFormat DATE_FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat DATE_FORMAT_TIME = new SimpleDateFormat("HH:mm:ss");
+    private static final SimpleDateFormat DATE_FORMAT_MONTH = new SimpleDateFormat("MM");
+    private static final SimpleDateFormat DATE_FORMAT_YEAR = new SimpleDateFormat("yyyy");
 
 
     private DateUtils() {
@@ -42,6 +44,19 @@ public final class DateUtils {
      */
     public static String formatDate(long date) {
         return DATE_FORMAT_DATE.format(new Date(date));
+    }
+
+    /**
+     * formatDataTime 格式化当前月
+     */
+    public static String formatDataMonth(long date) {
+        return DATE_FORMAT_MONTH.format(new Date(date));
+    }
+    /**
+     * formatDataTime 格式化当前年
+     */
+    public static String formatDataYear(long date) {
+        return DATE_FORMAT_YEAR.format(new Date(date));
     }
 
     /**

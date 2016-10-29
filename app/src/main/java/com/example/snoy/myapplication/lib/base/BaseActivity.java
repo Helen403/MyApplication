@@ -1,6 +1,5 @@
 package com.example.snoy.myapplication.lib.base;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +15,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -35,14 +34,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.lib.Utils.CipherUtils;
+import com.example.snoy.myapplication.lib.Utils.DateUtils;
 import com.example.snoy.myapplication.lib.Utils.ImageUtils;
-import com.example.snoy.myapplication.lib.Utils.SystemBarUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,6 +52,7 @@ import java.util.TimerTask;
  */
 public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener {
 
+    public static BaseActivity context;
     //配置一下
     protected Context contextAppliction = BaseApplication.context;
     /******************************************/
@@ -71,9 +72,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     protected static final int leftDrawable = R.mipmap.ic_launcher;
     //设置右边默认图片
     private static final int RightDrawable = R.mipmap.ic_launcher;
-    /*******************************************/
-    //判断是否铺满全屏
-    protected boolean isAllowFullScreen;
     /*******************************************/
     //加载中的View
     protected BufferCircleView bufferCircleView;
@@ -182,14 +180,13 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         fm = this.getSupportFragmentManager();
         dealLogicBeforeFindView();
-        setFullScreen(isAllowFullScreen);
-        SystemBarUtils.initSystemBarElse(this, color);
+        setFullScreen();
         getBuildContentView();
         onShowMessage(content);
         setContentView(content);
-        onAttachMyRecycleViewAdapter();
         setBack();
         //注册广播
         setBroadCastFinish();
@@ -244,6 +241,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             onFragmentChange(0);
             initData();
             setListeners();
+            onAttachMyRecycleViewAdapter();
         } else {
             myNetFailView.setVisibility(View.VISIBLE);
         }
@@ -428,23 +426,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         }
     }
 
-    /**
-     * 隐藏左边的按钮
-     */
-    public void hidebtn_left() {
-        if (null != tv_left) {
-            tv_left.setVisibility(View.GONE);
-        }
-    }
-
-    /***
-     * 隐藏右边的按钮
-     */
-    public void hidebtn_right() {
-        if (null != tv_right) {
-            tv_right.setVisibility(View.GONE);
-        }
-    }
 
 
     /**
@@ -456,23 +437,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         }
     }
 
-    /**
-     * 显示左边的按钮
-     */
-    public void showbtn_left() {
-        if (null != tv_left) {
-            tv_left.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /***
-     * 显示右边的按钮
-     */
-    public void showbtn_right() {
-        if (null != tv_right) {
-            tv_right.setVisibility(View.VISIBLE);
-        }
-    }
 
     /***********************************************************************/
 
@@ -496,16 +460,23 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /**
      * 判断是否铺满全屏
      */
-    public void setFullScreen(boolean fullScreen) {
-        if (fullScreen) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getWindow().setBackgroundDrawable(null);
-        } else {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            getWindow().setBackgroundDrawable(null);
+    public void setFullScreen() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Window window = this.getWindow();
+        //设置透明状态栏,这样才能让 ContentView 向上
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
+        View mChildView = mContentView.getChildAt(0);
+        if (mChildView != null) {
+            //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
+            ViewCompat.setFitsSystemWindows(mChildView, false);
         }
+
+
+        this.getWindow().setBackgroundDrawable(null);
     }
 
 
@@ -513,7 +484,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /**
      * 跳转到另一个Activity，不携带数据，不设置flag
      */
-    public void goToActivityByClass(Context context, Class<?> cls) {
+    public void goToActivityByClass(Class<?> cls) {
         Intent intent = new Intent();
         intent.setClass(context, cls);
         context.startActivity(intent);
@@ -522,7 +493,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /**
      * 跳转到另一个Activity，携带数据
      */
-    public void goToActivityByClass(Context context, Class<?> cls, Bundle bundle) {
+    public void goToActivityByClass(Class<?> cls, Bundle bundle) {
         Intent intent = new Intent();
         intent.setClass(context, cls);
         intent.putExtras(bundle);
@@ -533,7 +504,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /**
      * 延迟去往新的Activity
      */
-    public void delayToActivity(final Context context, final Class<?> cls, long delay) {
+    public void delayToActivity(final Class<?> cls, long delay) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -548,54 +519,54 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /**
      * 带返回结果的跳转
      */
-    protected SparseArray<ActivityResultAction> mResultHandlers;
-
-    public void goActivityForResult(Context context, Class<?> cls, Bundle bundle, ActivityResultAction action) {
-        Intent intent = new Intent(context, cls);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        int rc;
-        if (action != null) {
-            if (mResultHandlers == null) {
-                mResultHandlers = new SparseArray<ActivityResultAction>();
-            }
-            rc = action.hashCode();
-            rc &= 0x0000ffff;
-            mResultHandlers.append(rc, action);
-            startActivityForResult(intent, rc);
-        } else {
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        ActivityResultAction activityResultAction = mResultHandlers.get(requestCode);
-        if (null != activityResultAction) {
-            activityResultAction.invoke(resultCode, data);
-        }
-    }
-
-    public abstract class ActivityResultAction {
-        private void invoke(Integer resultCode, Intent data) {
-            switch (resultCode.intValue()) {
-                case Activity.RESULT_OK:
-                    onSuccess(data);
-                    break;
-                case Activity.RESULT_CANCELED:
-                    onCancel();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public abstract void onSuccess(Intent data);
-
-        protected abstract void onCancel();
-    }
+//    protected SparseArray<ActivityResultAction> mResultHandlers;
+//
+//    public void goActivityForResult(Context context, Class<?> cls, Bundle bundle, ActivityResultAction action) {
+//        Intent intent = new Intent(context, cls);
+//        if (bundle != null) {
+//            intent.putExtras(bundle);
+//        }
+//        int rc;
+//        if (action != null) {
+//            if (mResultHandlers == null) {
+//                mResultHandlers = new SparseArray<ActivityResultAction>();
+//            }
+//            rc = action.hashCode();
+//            rc &= 0x0000ffff;
+//            mResultHandlers.append(rc, action);
+//            startActivityForResult(intent, rc);
+//        } else {
+//            startActivity(intent);
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        ActivityResultAction activityResultAction = mResultHandlers.get(requestCode);
+//        if (null != activityResultAction) {
+//            activityResultAction.invoke(resultCode, data);
+//        }
+//    }
+//
+//    public abstract class ActivityResultAction {
+//        private void invoke(Integer resultCode, Intent data) {
+//            switch (resultCode.intValue()) {
+//                case Activity.RESULT_OK:
+//                    onSuccess(data);
+//                    break;
+//                case Activity.RESULT_CANCELED:
+//                    onCancel();
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//
+//        public abstract void onSuccess(Intent data);
+//
+//        protected abstract void onCancel();
+//    }
 
 
     /*******************************************************************/
@@ -849,7 +820,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         return i;
     }
 
-
     /********************************************************************************/
     /**
      * sumScale  总的比例   以竖屏为参考  屏幕宽为比例总
@@ -950,7 +920,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
     /**
      * bd09转成GCJ-02
-     *
      */
     private double[] bdToGaoDe(double bd_lat, double bd_lon) {
         double[] gd_lat_lon = new double[2];
@@ -965,7 +934,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
     /**
      * GCJ-02转成bd09
-     *
      */
     private double[] gaoDeToBaidu(double gd_lon, double gd_lat) {
         double[] bd_lat_lon = new double[2];
@@ -984,6 +952,92 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     private boolean isInstallByread(String packageName) {
         return new File("/data/data/" + packageName).exists();
     }
+
+
+    //生成密匙
+    public String getMd5Password(String str) {
+
+        //第几天
+        int i = DateUtils.getDayOfWeek();
+
+        String week = "";
+        //星期一
+        if (i == 1) {
+            week = "Mon";
+        } else if (i == 2) {
+            week = "Tue";
+        } else if (i == 3) {
+            week = "Wed";
+        } else if (i == 4) {
+            week = "Thu";
+        } else if (i == 5) {
+            week = "Fri";
+        } else if (i == 6) {
+            week = "Sat";
+        } else if (i == 7) {
+            week = "Sun";
+        }
+        //获取当前年
+        int month = Integer.parseInt(DateUtils.formatDataMonth(System.currentTimeMillis()));
+        String mon = "";
+        switch (month) {
+            case 1:
+                mon = "Jan";
+                break;
+            case 2:
+                mon = "Feb";
+                break;
+            case 3:
+                mon = "Mar";
+                break;
+            case 4:
+                mon = "Apr";
+                break;
+            case 5:
+                mon = "May";
+                break;
+            case 6:
+                mon = "Jun";
+                break;
+            case 7:
+                mon = "Jul";
+                break;
+            case 8:
+                mon = "Aug";
+                break;
+            case 9:
+                mon = "Sep";
+                break;
+            case 10:
+                mon = "Oct";
+                break;
+            case 11:
+                mon = "Nov";
+                break;
+            case 12:
+                mon = "Dec";
+                break;
+        }
+
+        String time = getTime();
+        if (time.length() == 1) {
+            time = "0" + time;
+        }
+
+        //先弄D和H的和
+        String password = CipherUtils.md5L(CipherUtils.md5L(week + time) + str + CipherUtils.md5L(DateUtils.formatDataYear(System.currentTimeMillis()) + mon));
+        return password;
+    }
+
+    /**
+     * getTime 获取系统时间
+     */
+    public static String getTime() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(System.currentTimeMillis());
+        return cal.get(Calendar.HOUR_OF_DAY) + "";
+    }
+
 
 
 }

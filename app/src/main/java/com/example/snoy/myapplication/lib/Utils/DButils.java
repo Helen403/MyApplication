@@ -261,13 +261,5 @@ public final class DButils {
             db.execSQL("drop table " + TABLE_NAME_FOREVER);
             onCreate(db);
         }
-
-
-        /**
-         * 判断拓展卡是否装载
-         */
-        private static boolean isMounted() {
-            return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-        }
     }
 }
