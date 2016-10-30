@@ -25,7 +25,7 @@ import com.example.snoy.myapplication.lib.LRecyclerView.view.LoadingFooter;
  * @created 2016/8/29 11:21
  *
  */
-public class LRecyclerView extends RecyclerView {
+public class MyRecyclerView extends RecyclerView {
     private boolean pullRefreshEnabled = true;
     private OnRefreshListener mRefreshListener;
     private OnLoadMoreListener mLoadMoreListener;
@@ -91,15 +91,15 @@ public class LRecyclerView extends RecyclerView {
 
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
 
-    public LRecyclerView(Context context) {
+    public MyRecyclerView(Context context) {
         this(context, null);
     }
 
-    public LRecyclerView(Context context, AttributeSet attrs) {
+    public MyRecyclerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public MyRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -136,20 +136,20 @@ public class LRecyclerView extends RecyclerView {
                     int count = headerAndFooterAdapter.getInnerAdapter().getItemCount();
                     if (count == 0) {
                         mEmptyView.setVisibility(View.VISIBLE);
-                        LRecyclerView.this.setVisibility(View.GONE);
+                        MyRecyclerView.this.setVisibility(View.GONE);
                     } else {
                         mEmptyView.setVisibility(View.GONE);
-                        LRecyclerView.this.setVisibility(View.VISIBLE);
+                        MyRecyclerView.this.setVisibility(View.VISIBLE);
                     }
                 }
             } else {
                 if (adapter != null && mEmptyView != null) {
                     if (adapter.getItemCount() == 0) {
                         mEmptyView.setVisibility(View.VISIBLE);
-                        LRecyclerView.this.setVisibility(View.GONE);
+                        MyRecyclerView.this.setVisibility(View.GONE);
                     } else {
                         mEmptyView.setVisibility(View.GONE);
-                        LRecyclerView.this.setVisibility(View.VISIBLE);
+                        MyRecyclerView.this.setVisibility(View.VISIBLE);
                     }
                 }
             }

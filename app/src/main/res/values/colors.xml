@@ -16,12 +16,6 @@
     <color name="possible_result_points">#c0ffbd21</color>
     <color name="textColor_sameAs_Title">#1FAEE6</color>
     <!-- 状态栏颜色 -->
-    <color name="status_color">#20AEE5</color>
-
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#ff2bc1ab</color>
-
-    <color name="color_ff">#F0F0F0</color>
     <color name="color_00">#8A000000</color>
+    <color name="status_color">#8A000000</color>
 </resources>

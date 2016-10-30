@@ -10,7 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.huiche.lib.lib.LRecyclerView.interfaces.BaseRefreshHeader;
+import com.example.snoy.myapplication.lib.LRecyclerView.interfaces.BaseRefreshHeader;
 
 
 public class JellyView extends View  implements BaseRefreshHeader {

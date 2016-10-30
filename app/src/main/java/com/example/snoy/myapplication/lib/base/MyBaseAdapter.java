@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,20 +41,19 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnCli
     //需要配置一下Context
     protected Context contextApplication = BaseApplication.context;
     //用于跳转的Context
-    protected Context context;
+    protected Context context = BaseActivity.context;
     protected ArrayList<T> data;
     protected View view;
 
-    public MyBaseAdapter(Context context) {
+    public MyBaseAdapter() {
         this.data = new ArrayList<>();
-        this.context = context;
     }
 
     /**
      * 设置数据
      */
     public void setData(List<T> data) {
-        if (data!=null){
+        if (data != null) {
             this.data.clear();
             this.data.addAll(data);
             notifyDataSetChanged();
@@ -69,7 +70,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnCli
             notifyDataSetChanged();
         }
     }
-    
+
     /**
      * 清除数据
      */
@@ -222,7 +223,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnCli
     /**
      * 跳转到另一个Activity，不携带数据，不设置flag
      */
-    public void goToActivityByClass( Class<?> cls) {
+    public void goToActivityByClass(Class<?> cls) {
         Intent intent = new Intent();
         intent.setClass(context, cls);
         context.startActivity(intent);
@@ -231,7 +232,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnCli
     /**
      * 跳转到另一个Activity，携带数据
      */
-    public void goToActivityByClass( Class<?> cls, Bundle bundle) {
+    public void goToActivityByClass(Class<?> cls, Bundle bundle) {
         Intent intent = new Intent();
         intent.setClass(context, cls);
         intent.putExtras(bundle);
@@ -242,7 +243,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnCli
     /**
      * 延迟去往新的Activity
      */
-    public void delayToActivity( final Class<?> cls, long delay) {
+    public void delayToActivity(final Class<?> cls, long delay) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -309,4 +310,50 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter implements View.OnCli
         click.onClick(v, v.getId());
     }
 
+
+
+    /******************************************************************************/
+    /**
+     * 通过反射获取资源 R.id
+     * 根据给定的类型名和字段名，返回R文件中的字段的值
+     *
+     * @param typeName  属于哪个类别的属性 （id,layout,drawable,string,color,attr......）
+     * @param fieldName 字段名
+     * @return 字段的值
+     */
+    public int getFieldValue(String typeName, String fieldName, Context context) {
+        int i;
+        try {
+            Class<?> clazz = Class.forName(context.getPackageName() + ".R$" + typeName);
+            i = clazz.getField(fieldName).getInt(null);
+        } catch (Exception e) {
+            return -1;
+        }
+        return i;
+    }
+
+    /********************************************************************************/
+    /**
+     * sumScale  总的比例   以竖屏为参考  屏幕宽为比例总
+     * ScaleW    宽占总的比例多少
+     * ScaleH    高占总的比例多少
+     */
+    public void setScaleView(View view, int sumScale, int ScaleW, int ScaleH) {
+        //屏幕的宽
+        int screenW = 0;
+        //屏幕的高
+        int screenH = 0;
+        WindowManager wm = (WindowManager) contextApplication.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        screenW = display.getWidth();
+        screenH = display.getHeight();
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) view.getLayoutParams();
+        /************************************************/
+        int tmpW = ScaleW / sumScale * screenW;
+        int tmpH = ScaleH / sumScale * screenW;
+        params.width = tmpW;
+        params.height = tmpH;
+        view.setLayoutParams(params);
+    }
+    /********************************************************************************/
 }

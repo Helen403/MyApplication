@@ -59,7 +59,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         mContext = getContext();
         // 初始情况，设置下拉刷新view高度为0
         mContainer = (LinearLayout) LayoutInflater.from(getContext()).inflate(
-                R.layout.listview_header, null);
+                R.layout.custermview_listview_header, null);
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, 0, 0, 0);
         this.setLayoutParams(lp);

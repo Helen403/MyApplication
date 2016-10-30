@@ -3,7 +3,6 @@ package com.example.snoy.myapplication.lib.Utils;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.example.snoy.myapplication.lib.base.BaseApplication;
 import com.google.gson.Gson;
@@ -13,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +49,10 @@ public final class ControlUtils {
 
     //配置
     private static Context contextApplication = BaseApplication.context;
+
+
+    //是否为本地接口模式  flag为true为本地接口模式  暂时只在post请求中使用
+    private static Boolean flag = true;
 
 
     /**
@@ -253,25 +259,31 @@ public final class ControlUtils {
     /**
      * post请求数据并转化
      */
-    public static <T> void posts(String url, HashMap<String, String> map, final Class<T> cls, final OnControlUtils<T> onControlUtilsListener) {
+    public static <T> void posts(String url, HashMap<String, String> map, final Class<T> cls, final OnControlUtils<T> onControlUtils) {
+        if (flag) {
+            String result = getJsonByAssets(cls);
+            onSuccess(url, cls, onControlUtils, result);
+            return;
+        }
+
         final String params = getJsonFromMap(map);
         //先从数据库中获取如果没有再请求
         String tmp = DButils.get(url + params);
         if (tmp != null) {
-            onSuccess(url, cls, onControlUtilsListener, tmp);
+            onSuccess(url, cls, onControlUtils, tmp);
             return;
         }
         HttpUtils.posts(url, map, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
-                onSuccess(url, cls, onControlUtilsListener, result);
+                onSuccess(url, cls, onControlUtils, result);
                 //数据成功返回就存储到数据库
                 DButils.put(url + params, result);
             }
 
             @Override
             public void onHttpFailure(String url) {
-                onFailure(url, onControlUtilsListener);
+                onFailure(url, onControlUtils);
             }
         });
     }
@@ -352,6 +364,12 @@ public final class ControlUtils {
      * post请求数据并转化
      */
     public static <T> void postsEveryTime(String url, HashMap<String, String> map, final Class<T> cls, final OnControlUtils<T> onControlUtils) {
+        if (flag) {
+            String result = getJsonByAssets(cls);
+            onSuccess(url, cls, onControlUtils, result);
+            return;
+        }
+
         HttpUtils.posts(url, map, new HttpUtils.OnHttpUtilsResultListener() {
             @Override
             public void onHttpSuccess(String url, String result) {
@@ -384,22 +402,36 @@ public final class ControlUtils {
                 onControlUtils.onSuccess(url, entity, list, result, jsonObject, jsonArray);
             } else {
                 onControlUtils.onFailure(url);
-                ToastUtils("请检测网络");
             }
         } else {
             onControlUtils.onFailure(url);
-            ToastUtils("请检测网络");
         }
     }
 
     private static <T> void onFailure(String url, OnControlUtils<T> onControlUtils) {
         onControlUtils.onFailure(url);
-        ToastUtils("请检测网络");
     }
 
     /*********************************************************************/
-    public static void ToastUtils(String msg) {
-        Toast.makeText(contextApplication, msg, Toast.LENGTH_SHORT).show();
+    //接口模式下数据 打开本地数据
+    public static <T> String getJsonByAssets(Class<T> cls) {
+        StringBuilder Tmp = new StringBuilder();
+        //拼接字符串
+        String[] array = cls.toString().split("\\.");
+        Tmp.append(array[array.length - 1]).append(".json");
+        StringBuffer arr = new StringBuffer();
+        try {
+            InputStream is = contextApplication.getAssets().open(Tmp.toString());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                arr.append(line);
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arr.toString();
     }
 
     /*********************************************************************/

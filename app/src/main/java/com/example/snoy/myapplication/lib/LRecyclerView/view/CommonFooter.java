@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.huiche.R;
+import com.example.snoy.myapplication.R;
 
 
 /**
@@ -29,7 +29,7 @@ public class CommonFooter extends RelativeLayout {
 
     public void init(Context context) {
 
-        inflate(context, R.layout.layout_recyclerview_footer, this);
+        inflate(context, R.layout.custermview_layout_recyclerview_footer, this);
     }
 
     public void init(Context context,int resId) {

@@ -60,13 +60,16 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     private static final int color = Color.rgb(228, 238, 249);
     /*************************************/
     protected RelativeLayout content;
+    //状态栏
+    protected ImageView status;
     //全布局
     protected LinearLayout ly_content;
     // 外界传入内容区域的布局
     protected ViewGroup contentView;
     //头部View
-    protected LinearLayout head_view;
-    protected TextView tv_left, tv_title, tv_right;
+    protected RelativeLayout head_view;
+    protected TextView tv_title, tv_right;
+    protected ImageView tv_left;
     /*******************************************/
     //设置左边默认图片
     protected static final int leftDrawable = R.mipmap.ic_launcher;
@@ -182,6 +185,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         context = this;
         fm = this.getSupportFragmentManager();
+        ft = fm.beginTransaction();
         dealLogicBeforeFindView();
         setFullScreen();
         getBuildContentView();
@@ -258,55 +262,40 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         ly_content = new LinearLayout(this);
         ly_content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         ly_content.setOrientation(LinearLayout.VERTICAL);
-        ly_content.setClipToPadding(true);
-        ly_content.setFitsSystemWindows(true);
         content.addView(ly_content);
 
+        status = new ImageView(this);
+        status.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(this, 20)));
+        status.setBackgroundColor(color);
+        ly_content.addView(status);
+
         //创建一个头部View 高度为44
-        head_view = new LinearLayout(this);
-        head_view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(this, 44)));
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        head_view = (RelativeLayout) inflater.inflate(R.layout.custermview_head_view, ly_content, false);
         head_view.setBackgroundColor(color);
         ly_content.addView(head_view);
 
         //添加左边的按钮
-        tv_left = new TextView(this);
-        LinearLayout.LayoutParams btnLeftLayoutParams = new LinearLayout.LayoutParams(dip2px(this, 44), LinearLayout.LayoutParams.MATCH_PARENT);
-        tv_left.setLayoutParams(btnLeftLayoutParams);
-        tv_left.setBackgroundColor(color);
-        tv_left.setGravity(Gravity.CENTER);
-        tv_left.setPadding(dip2px(this, 10), dip2px(this, 10), dip2px(this, 10), dip2px(this, 10));
-        Drawable drawableLeft = ContextCompat.getDrawable(this, leftDrawable);
-        assert drawableLeft != null;
-        drawableLeft.setBounds(0, 0, dip2px(this, 30), dip2px(this, 30));//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        tv_left.setCompoundDrawables(null, drawableLeft, null, null);//只放上边
-        head_view.addView(tv_left);
+        tv_left = (ImageView) head_view.findViewById(R.id.tv_left);
 
         //添加中间的文本
-        tv_title = new TextView(this);
-        LinearLayout.LayoutParams TextViewLayoutParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
-        TextViewLayoutParams.setMargins(dip2px(this, 10), dip2px(this, 5), dip2px(this, 10), dip2px(this, 5));
-        tv_title.setLayoutParams(TextViewLayoutParams);
-        tv_title.setBackgroundColor(color);
+        tv_title = (TextView) head_view.findViewById(R.id.tv_title);
         tv_title.setGravity(Gravity.CENTER);
         tv_title.setText("中间的标题");
-        tv_title.setTextSize(16);
-        head_view.addView(tv_title);
+        tv_title.setTextSize(18);
+        tv_title.setTextColor(Color.WHITE);
 
         //添加右边的按钮
-        tv_right = new TextView(this);
-        LinearLayout.LayoutParams btnRightLayoutParams = new LinearLayout.LayoutParams(dip2px(this, 44), LinearLayout.LayoutParams.MATCH_PARENT);
-        tv_right.setLayoutParams(btnRightLayoutParams);
-        tv_right.setBackgroundColor(color);
-        tv_right.setGravity(Gravity.CENTER);
-        tv_right.setPadding(dip2px(this, 10), dip2px(this, 10), dip2px(this, 10), dip2px(this, 10));
+        tv_right = (TextView) head_view.findViewById(R.id.tv_right);
         Drawable drawableRight = ContextCompat.getDrawable(this, RightDrawable);
         assert drawableRight != null;
         drawableRight.setBounds(0, 0, dip2px(this, 30), dip2px(this, 30));//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        tv_right.setCompoundDrawables(null, drawableRight, null, null);//只放上边
-        head_view.addView(tv_right);
+//        tv_right.setCompoundDrawables(null, drawableRight, null, null);//只放上边
+
+        tv_right.setTextColor(Color.WHITE);
+
 
         //从外面传来的View添加进入
-        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout.LayoutParams viewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
         contentView = (ViewGroup) inflater.inflate(getContentView(), content, false);
         contentView.setLayoutParams(viewLayoutParams);
@@ -361,29 +350,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         });
     }
 
-
-    /**
-     * 得到左边的按钮
-     */
-    public TextView getLeftBtn() {
-        return tv_left;
-    }
-
-    /**
-     * 得到中间的TextView
-     */
-    public TextView getCenterView() {
-        return tv_title;
-    }
-
-
-    /**
-     * 得到右边的按钮
-     */
-    public TextView getRightBtn() {
-        return tv_right;
-    }
-
     /**
      * 设置标题
      */
@@ -393,17 +359,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         }
     }
 
-    /**
-     * 设置左边按钮的图片资源
-     */
-    public void setLeftRes(int resId) {
-        if (null != tv_left) {
-            Drawable drawableRight = ContextCompat.getDrawable(this, resId);
-            assert drawableRight != null;
-            drawableRight.setBounds(0, 0, 80, 80);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-            tv_left.setCompoundDrawables(null, drawableRight, null, null);//只放上边
-        }
-    }
 
     /**
      * 设置左边按钮的图片资源
@@ -425,7 +380,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             head_view.setVisibility(View.GONE);
         }
     }
-
 
 
     /**
@@ -474,8 +428,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
             ViewCompat.setFitsSystemWindows(mChildView, false);
         }
-
-
         this.getWindow().setBackgroundDrawable(null);
     }
 
@@ -1037,7 +989,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         cal.setTimeInMillis(System.currentTimeMillis());
         return cal.get(Calendar.HOUR_OF_DAY) + "";
     }
-
 
 
 }

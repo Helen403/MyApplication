@@ -45,7 +45,6 @@ public class CaptureActivity extends Activity implements Callback {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custermview_activity_capture);
-        SystemBarUtils.initSystemBar(this);
         CameraManager.init(getApplication());
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         hasSurface = false;

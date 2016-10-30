@@ -1,6 +1,5 @@
 package com.example.snoy.myapplication.lib.LRecyclerView.recyclerview;
 
-import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.snoy.myapplication.lib.LRecyclerView.interfaces.OnItemClickListener;
 import com.example.snoy.myapplication.lib.LRecyclerView.view.ArrowRefreshHeader;
-import com.example.snoy.myapplication.lib.base.MyLBaseRecycleAdapter;
+import com.example.snoy.myapplication.lib.base.BaseApplication;
+import com.example.snoy.myapplication.lib.base.MyBaseRecycleAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,19 +68,18 @@ public class LRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         }
     };
 
-    private MyLBaseRecycleAdapter adapter;
-    private LRecyclerView myRecycleView;
+    private MyBaseRecycleAdapter adapter;
+    private MyRecyclerView myRecycleView;
     private ArrayList<T> data;
 
-    public <T> LRecyclerViewAdapter(Context context, Class<T> tClass, LRecyclerView myRecycleView) {
+    public <T> LRecyclerViewAdapter( Class<T> tClass, MyRecyclerView myRecycleView) {
         try {
             this.myRecycleView = myRecycleView;
             //默认是线性布局
-            myRecycleView.setLayoutManager(new LinearLayoutManager(context));
+            myRecycleView.setLayoutManager(new LinearLayoutManager(BaseApplication.context));
             //设置样式必须在调用setAdapter后调用否则不生效
             myRecycleView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-            adapter = (MyLBaseRecycleAdapter) tClass.newInstance();
-            adapter.setContext(context);
+            adapter = (MyBaseRecycleAdapter) tClass.newInstance();
             data = new ArrayList<>();
             setAdapter(adapter);
         } catch (Exception e) {
@@ -89,15 +88,14 @@ public class LRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     //重构  可选择样式
-    public <T> LRecyclerViewAdapter(Context context, Class<T> tClass, LRecyclerView myRecycleView, RecyclerView.LayoutManager layoutManager) {
+    public <T> LRecyclerViewAdapter( Class<T> tClass, MyRecyclerView myRecycleView, RecyclerView.LayoutManager layoutManager) {
         try {
             this.myRecycleView = myRecycleView;
             //默认是线性布局
             myRecycleView.setLayoutManager(layoutManager);
             //设置样式必须在调用setAdapter后调用否则不生效
             myRecycleView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-            adapter = (MyLBaseRecycleAdapter) tClass.newInstance();
-            adapter.setContext(context);
+            adapter = (MyBaseRecycleAdapter) tClass.newInstance();
             data = new ArrayList<>();
             setAdapter(adapter);
         } catch (Exception e) {
@@ -130,7 +128,7 @@ public class LRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      *
      * @param adapter
      */
-    public void setAdapter(RecyclerView.Adapter<MyLBaseRecycleAdapter<T>.RecycleViewHolder> adapter) {
+    public void setAdapter(RecyclerView.Adapter<MyBaseRecycleAdapter<T>.RecycleViewHolder> adapter) {
 
         if (mInnerAdapter != null) {
             notifyItemRangeRemoved(getHeaderViewsCount(), mInnerAdapter.getItemCount());

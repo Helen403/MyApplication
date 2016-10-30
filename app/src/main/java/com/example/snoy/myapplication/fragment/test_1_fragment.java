@@ -79,7 +79,7 @@ public class test_1_fragment extends BaseFragment {
             public void onClick(View v, int id) {
                 L("点击成功");
                 //  throw new RuntimeException("自定义异常");
-                goToActivityByClass(getActivity(), threeActivity.class);
+                goToActivityByClass( threeActivity.class);
 
             }
         });

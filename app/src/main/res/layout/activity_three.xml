@@ -4,10 +4,6 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:orientation="vertical">
-<com.example.snoy.myapplication.lib.custemview.MyRecycleView
-    android:id="@+id/myrecycleview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

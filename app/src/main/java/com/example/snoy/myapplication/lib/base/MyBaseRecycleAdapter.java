@@ -2,9 +2,7 @@ package com.example.snoy.myapplication.lib.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,12 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.snoy.myapplication.lib.Utils.ImageUtils;
-import com.example.snoy.myapplication.lib.custemview.MyRecycleView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by SNOY on 2016/8/13.
@@ -30,8 +28,7 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
 
     private Context contextApplication = BaseApplication.context;
     private ArrayList<T> data;
-    private MyRecycleView mRecyclerView;
-    private Context context;
+    public Context context = BaseActivity.context;
 
 
     private OnItemClickListener<T> mListener;
@@ -40,11 +37,8 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         mListener = li;
     }
 
-    public MyBaseRecycleAdapter(Context context, MyRecycleView mRecyclerView) {
-        this.context = context;
+    public MyBaseRecycleAdapter() {
         this.data = new ArrayList<>();
-        this.mRecyclerView = mRecyclerView;
-        init();
     }
 
 
@@ -127,12 +121,6 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
             return convertView;
         }
 
-        /**
-         * 获取当前的上下文
-         */
-        public Context getContext() {
-            return context;
-        }
 
         /**
          * 设置文字数据
@@ -172,75 +160,10 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         public void setImageByUrl(String url, ImageView imageView) {
             ImageUtils.getInstance().setImageByUrl(url, imageView);
         }
-
-
     }
 
+    /**************************************************************/
 
-    /*************************************************************/
-    private void init() {
-
-        // 设置刷新动画的颜色
-        mRecyclerView.setColor(Color.RED, Color.BLUE);
-        // 设置头部恢复动画的执行时间，默认500毫秒
-        mRecyclerView.setHeaderImageDurationMillis(300);
-        // 设置拉伸到最高时头部的透明度，默认0.5f
-        mRecyclerView.setHeaderImageMinAlpha(0.6f);
-
-
-        // 设置刷新和加载更多数据的监听，分别在onRefresh()和onLoadMore()方法中执行刷新和加载更多操作
-        mRecyclerView.setLoadDataListener(new MyRecycleView.LoadDataListener() {
-            @Override
-            public void onRefresh() {
-                new Thread(new MyRunnable(true)).start();
-            }
-
-            @Override
-            public void onLoadMore() {
-                new Thread(new MyRunnable(false)).start();
-            }
-        });
-    }
-
-    private Handler mHandler = new Handler();
-
-    class MyRunnable implements Runnable {
-
-        boolean isRefresh;
-
-        public MyRunnable(boolean isRefresh) {
-            this.isRefresh = isRefresh;
-        }
-
-        @Override
-        public void run() {
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (isRefresh) {
-                        onrefresh.onRefresh();
-                        //在UI线程中调用
-//                        refreshComplate();
-                    } else {
-                        onrefresh.onAddData();
-                        // 加载更多完成后调用，必须在UI线程中
-//                        loadMoreComplate();
-                    }
-                }
-            }, 1200);
-        }
-    }
-
-    protected void refreshComplate() {
-        mRecyclerView.getAdapter().notifyDataSetChanged();
-        // 刷新完成后调用，必须在UI线程中
-        mRecyclerView.refreshComplate();
-    }
-
-    protected void loadMoreComplate() {
-        mRecyclerView.getAdapter().notifyDataSetChanged();
-        mRecyclerView.loadMoreComplate();
-    }
 
     /**
      * 添加数据
@@ -249,7 +172,6 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         if (dataTmp != null) {
             data.addAll(dataTmp);
         }
-        loadMoreComplate();
     }
 
     public void setRefresh(List<T> dataTmp) {
@@ -257,7 +179,6 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
             data.clear();
             data.addAll(dataTmp);
         }
-        refreshComplate();
     }
 
     /*********************************************************************/
@@ -358,23 +279,59 @@ public abstract class MyBaseRecycleAdapter<T> extends RecyclerView.Adapter<MyBas
         click.onClick(v, v.getId());
     }
 
-
-
-    /*****************************************************************************************************/
-
-
-    private OnRefresh onrefresh;
-
-
-    public void setOnRefresh(OnRefresh onrefresh) {
-        this.onrefresh = onrefresh;
+    /*************************************************************************************/
+    /**
+     * 通过反射获取资源 R.id
+     * 根据给定的类型名和字段名，返回R文件中的字段的值
+     *
+     * @param typeName  属于哪个类别的属性 （id,layout,drawable,string,color,attr......）
+     * @param fieldName 字段名
+     * @return 字段的值
+     */
+    public int getFieldValue(String typeName, String fieldName, Context context) {
+        int i;
+        try {
+            Class<?> clazz = Class.forName(context.getPackageName() + ".R$" + typeName);
+            i = clazz.getField(fieldName).getInt(null);
+        } catch (Exception e) {
+            return -1;
+        }
+        return i;
     }
 
-    public interface OnRefresh {
-        void onRefresh();
+    /*********************************************************************/
+    /**
+     * 跳转到另一个Activity，不携带数据，不设置flag
+     */
+    public void goToActivityByClass(Class<?> cls) {
+        Intent intent = new Intent();
+        intent.setClass(context, cls);
+        context.startActivity(intent);
+    }
 
-        void onAddData();
+    /**
+     * 跳转到另一个Activity，携带数据
+     */
+    public void goToActivityByClass(Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(context, cls);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
 
+    /**
+     * 延迟去往新的Activity
+     */
+    public void delayToActivity(final Class<?> cls, long delay) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                context.startActivity(new Intent(context, cls));
+            }
+        }, delay);
+    }
+
+    /********************************************************************************************/
 }

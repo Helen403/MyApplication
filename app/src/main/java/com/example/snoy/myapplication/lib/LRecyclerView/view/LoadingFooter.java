@@ -7,8 +7,9 @@ import android.view.ViewStub;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.huiche.R;
-import com.huiche.lib.lib.LRecyclerView.progressindicator.AVLoadingIndicatorView;
+import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.lib.LRecyclerView.progressindicator.AVLoadingIndicatorView;
+
 
 public class LoadingFooter extends RelativeLayout {
 
@@ -36,7 +37,7 @@ public class LoadingFooter extends RelativeLayout {
 
     public void init(Context context) {
 
-        inflate(context, R.layout.layout_recyclerview_list_footer, this);
+        inflate(context, R.layout.custermview_layout_recyclerview_list_footer, this);
         setOnClickListener(null);
 
         setState(State.Normal, true);

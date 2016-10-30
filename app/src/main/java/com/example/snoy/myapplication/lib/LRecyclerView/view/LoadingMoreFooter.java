@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.huiche.R;
-import com.huiche.lib.lib.LRecyclerView.progressindicator.AVLoadingIndicatorView;
-import com.huiche.lib.lib.LRecyclerView.recyclerview.ProgressStyle;
+import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.lib.LRecyclerView.progressindicator.AVLoadingIndicatorView;
+import com.example.snoy.myapplication.lib.LRecyclerView.recyclerview.ProgressStyle;
 
 
 public class LoadingMoreFooter extends LinearLayout {

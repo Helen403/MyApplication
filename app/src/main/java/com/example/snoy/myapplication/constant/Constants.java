@@ -5,20 +5,13 @@ package com.example.snoy.myapplication.constant;
  */
 public interface Constants {
 
-    /**
-     * 聪
-     */
-    interface CONG {
-        final String region = "http://member.ahjmall.com/cloud/get_region_list.json";
-    }
 
-    /******************************************************************************************/
 
     /**
      * 海龙
      */
     interface Helen {
-        final String location = "http://member.ahjmall.com/cloud/get_region_by_location.json/query?location=%s,%s";
+         String location = "http://member.ahjmall.com/cloud/get_region_by_location.json/query?location=%s,%s";
     }
 
     /******************************************************************************************/

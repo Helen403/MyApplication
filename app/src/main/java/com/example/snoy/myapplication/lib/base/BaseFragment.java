@@ -21,9 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.snoy.myapplication.lib.activityMain.MainActivity;
 import com.example.snoy.myapplication.lib.Utils.ImageUtils;
-import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
 
 import java.util.ArrayList;
@@ -160,140 +158,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     public abstract void setListeners();
 
-    /************************************************************************/
-
-    /**
-     * 获取加载的图片
-     */
-    protected BufferCircleView getLoading() {
-        BufferCircleView bufferCircleView = null;
-        if (getActivity() instanceof MainActivity) {
-            bufferCircleView = (BufferCircleView) ((MainActivity) getActivity()).getLoading();
-        }
-        return bufferCircleView;
-    }
-
-    /**
-     * 得到左边的按钮
-     */
-    protected TextView getLeftBtn() {
-        TextView textView = null;
-        if (getActivity() instanceof MainActivity) {
-            textView = ((MainActivity) getActivity()).getLeftBtn();
-        }
-        return textView;
-    }
-
-    /**
-     * 得到中间的TextView
-     */
-    protected TextView getCenterView() {
-        TextView textView = null;
-        if (getActivity() instanceof MainActivity) {
-            textView = ((MainActivity) getActivity()).getCenterView();
-        }
-        return textView;
-    }
-
-
-    /**
-     * 得到右边的按钮
-     */
-    protected TextView getRightBtn() {
-        TextView textView = null;
-        if (getActivity() instanceof MainActivity) {
-            textView = ((MainActivity) getActivity()).getRightBtn();
-        }
-        return textView;
-    }
-
-    /**
-     * 设置标题
-     */
-    protected void setTitle(String title) {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).setTitle(title);
-        }
-
-    }
-
-    /**
-     * 设置左边按钮的图片资源
-     */
-    protected void setLeftRes(int resId) {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).setLeftRes(resId);
-        }
-
-    }
-
-    /**
-     * 设置左边按钮的图片资源
-     */
-    protected void setRightRes(int resId) {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).setRightRes(resId);
-        }
-
-    }
-
-    /**
-     * 隐藏上方的标题栏
-     */
-    protected void hideHeadView() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).hideHeadView();
-        }
-    }
-
-    /**
-     * 隐藏左边的按钮
-     */
-    protected void hidebtn_left() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).hidebtn_left();
-        }
-    }
-
-    /***
-     * 隐藏右边的按钮
-     */
-    protected void hidebtn_right() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).hidebtn_right();
-        }
-
-    }
-
-
-    /**
-     * 显示上方的标题栏
-     */
-    protected void showHeadView() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).showHeadView();
-        }
-    }
-
-    /**
-     * 显示左边的按钮
-     */
-    protected void showbtn_left() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).showbtn_left();
-        }
-
-    }
-
-    /***
-     * 显示右边的按钮
-     */
-    protected void showbtn_right() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).showbtn_right();
-        }
-    }
-
 
     /****************************************************************************/
 
@@ -350,9 +214,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         if (hidden) {
             //不可见
             //还原标题栏
-            showHeadView();
-            showbtn_left();
-            showbtn_right();
             //取消加载图片的任务
             ImageUtils.getInstance().cancelTask();
         } else {
@@ -372,7 +233,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     /**
      * 跳转到另一个Activity，不携带数据，不设置flag
      */
-    public void goToActivityByClass(Context context, Class<?> cls) {
+    public void goToActivityByClass(Class<?> cls) {
         Intent intent = new Intent(context, cls);
         startActivity(intent);
     }
@@ -380,7 +241,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     /**
      * 跳转到另一个Activity，携带数据
      */
-    public void goToActivityByClass(Context context, Class<?> cls, Bundle bundle) {
+    public void goToActivityByClass(Class<?> cls, Bundle bundle) {
         Intent intent = new Intent(context, cls);
         startActivity(intent);
     }
@@ -389,7 +250,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     /**
      * 延迟去往新的Activity
      */
-    public void delayToActivity(final Context context, final Class<?> cls, long delay) {
+    public void delayToActivity(final Class<?> cls, long delay) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

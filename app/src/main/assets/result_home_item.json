@@ -1,0 +1,62 @@
+{
+  "status": 10028,
+  "msg": "获取数据成功",
+  "data": [
+    {
+      "goods_id": "17",
+      "goods_name": "苹果i5s",
+      "goods_img": "http://i1.hexunimg.cn/2014-08-15/167580248.jpg",
+      "area": "西区街道 远洋广场",
+      "distance": "4.097千米"
+    },
+    {
+      "goods_id": "12",
+      "goods_name": "XIAOMI电视",
+      "goods_img": "http://i1.hexunimg.cn/2014-08-15/167580248.jpg",
+      "area": "环城街道 京华",
+      "distance": "4.579千米"
+    },
+    {
+      "goods_id": "12",
+      "goods_name": "XIAOMI电视",
+      "goods_img": "http://i1.hexunimg.cn/2014-08-15/167580248.jpg",
+      "area": "环城街道 京华",
+      "distance": "4.579千米"
+    },
+    {
+      "goods_id": "12",
+      "goods_name": "XIAOMI电视",
+      "goods_img": "http://i1.hexunimg.cn/2014-08-15/167580248.jpg",
+      "area": "环城街道 京华",
+      "distance": "4.579千米"
+    },
+    {
+      "goods_id": "12",
+      "goods_name": "XIAOMI电视",
+      "goods_img": "http://i1.hexunimg.cn/2014-08-15/167580248.jpg",
+      "area": "环城街道 京华",
+      "distance": "4.579千米"
+    },
+    {
+      "goods_id": "12",
+      "goods_name": "XIAOMI电视",
+      "goods_img": "http://i1.hexunimg.cn/2014-08-15/167580248.jpg",
+      "area": "环城街道 京华",
+      "distance": "4.579千米"
+    },
+    {
+      "goods_id": "12",
+      "goods_name": "XIAOMI电视",
+      "goods_img": "http://i1.hexunimg.cn/2014-08-15/167580248.jpg",
+      "area": "环城街道 京华",
+      "distance": "4.579千米"
+    },
+    {
+      "goods_id": "12",
+      "goods_name": "XIAOMI电视",
+      "goods_img": "http://i1.hexunimg.cn/2014-08-15/167580248.jpg",
+      "area": "环城街道 京华",
+      "distance": "4.579千米"
+    }
+  ]
+}

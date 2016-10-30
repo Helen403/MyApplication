@@ -18,7 +18,6 @@ public class twoActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-        tvId = new int[]{R.id.tv_1, R.id.tv_2};
     }
 
     @Override
@@ -34,7 +33,6 @@ public class twoActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        onSendBroadCast(oneActivity.class, null);
     }
 
     @Override

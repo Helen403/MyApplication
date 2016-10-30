@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.example.snoy.myapplication.lib.LRecyclerView.recyclerview.LRecyclerView;
+import com.example.snoy.myapplication.lib.LRecyclerView.recyclerview.MyRecyclerView;
 import com.example.snoy.myapplication.lib.LRecyclerView.recyclerview.LRecyclerViewAdapter;
 import com.example.snoy.myapplication.lib.LRecyclerView.view.LoadingFooter;
 
@@ -54,7 +54,7 @@ public class RecyclerViewStateUtils {
             if (state == LoadingFooter.State.NetWorkError) {
                 footerView.setOnClickListener(errorListener);
             } else if (state == LoadingFooter.State.TheEnd){
-                ((LRecyclerView)recyclerView).setNoMore(true);
+                ((MyRecyclerView)recyclerView).setNoMore(true);
             }
 
         }
