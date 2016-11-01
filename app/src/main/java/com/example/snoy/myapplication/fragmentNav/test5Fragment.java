@@ -15,10 +15,6 @@ public class test5Fragment extends BaseFragment {
     private TextView click;
 
 
-    @Override
-    public void dealLogicBeforeFindView() {
-
-    }
 
     @Override
     public int getContentView() {

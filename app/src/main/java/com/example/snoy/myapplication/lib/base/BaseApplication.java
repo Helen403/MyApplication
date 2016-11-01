@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.example.snoy.myapplication.lib.Exception.CrashHandler;
+import com.pgyersdk.crash.PgyCrashManager;
 
 
 /**
@@ -23,5 +24,6 @@ public final class BaseApplication extends Application {
         SDKInitializer.initialize(this);
         //捕获全局异常
         CrashHandler.getInstance().init();
+        PgyCrashManager.register(this);
     }
 }

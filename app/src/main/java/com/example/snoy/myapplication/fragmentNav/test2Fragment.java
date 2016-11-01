@@ -1,6 +1,10 @@
 package com.example.snoy.myapplication.fragmentNav;
 
+import android.view.View;
+import android.widget.TextView;
+
 import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.activity.threeActivity;
 import com.example.snoy.myapplication.lib.base.BaseFragment;
 
 /**
@@ -9,10 +13,7 @@ import com.example.snoy.myapplication.lib.base.BaseFragment;
 public class test2Fragment extends BaseFragment {
 
 
-    @Override
-    public void dealLogicBeforeFindView() {
-
-    }
+    TextView tv_1;
 
     @Override
     public int getContentView() {
@@ -21,7 +22,7 @@ public class test2Fragment extends BaseFragment {
 
     @Override
     public void findViews() {
-
+        tv_1 = (TextView) contentView.findViewById(R.id.tv_1);
     }
 
     @Override
@@ -30,7 +31,17 @@ public class test2Fragment extends BaseFragment {
 
     @Override
     public void setListeners() {
-
+        setOnListeners(tv_1);
+        setOnClick(new onClick() {
+            @Override
+            public void onClick(View v, int id) {
+                switch (id) {
+                    case R.id.tv_1:
+                        goToActivityByClass(threeActivity.class);
+                        break;
+                }
+            }
+        });
     }
 
 }

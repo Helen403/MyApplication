@@ -55,6 +55,11 @@ public final class ControlUtils {
     private static Boolean flag = true;
 
 
+    //下一页
+    int page = 1;
+    int row = 10;
+
+
     /**
      * 单位是秒  60 * 60 * 12 半日  测试为30秒         --------根据项目需求来自己修改
      * 时间超过规定的时间就删除数据库的数据  图片的数据就不删除  就删除json数据

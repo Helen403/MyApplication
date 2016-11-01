@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,6 +40,8 @@ import com.example.snoy.myapplication.lib.Utils.DateUtils;
 import com.example.snoy.myapplication.lib.Utils.ImageUtils;
 import com.example.snoy.myapplication.lib.custemview.BufferCircleView;
 import com.example.snoy.myapplication.lib.custemview.MyNetFailView;
+import com.pgyersdk.crash.PgyCrashManager;
+import com.pgyersdk.feedback.PgyFeedbackShakeManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -183,6 +186,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PgyCrashManager.register(this);
+        PgyFeedbackShakeManager.register(this, true);
         context = this;
         fm = this.getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -415,6 +420,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
      * 判断是否铺满全屏
      */
     public void setFullScreen() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Window window = this.getWindow();
         //设置透明状态栏,这样才能让 ContentView 向上
@@ -601,6 +607,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        PgyCrashManager.unregister();
         if (this.broadcastReceiver != null) {
             this.unregisterReceiver(this.broadcastReceiver);
         }

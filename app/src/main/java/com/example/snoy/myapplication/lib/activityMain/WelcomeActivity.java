@@ -1,5 +1,7 @@
 package com.example.snoy.myapplication.lib.activityMain;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -20,6 +22,9 @@ import com.example.snoy.myapplication.lib.Utils.DButils;
 import com.example.snoy.myapplication.lib.Utils.HttpUtils;
 import com.example.snoy.myapplication.lib.Utils.ImageUtils;
 import com.example.snoy.myapplication.lib.base.BaseActivity;
+import com.pgyersdk.javabean.AppBean;
+import com.pgyersdk.update.PgyUpdateManager;
+import com.pgyersdk.update.UpdateManagerListener;
 
 
 public final class WelcomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
@@ -60,9 +65,44 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
 
     @Override
     public void initData() {
+        //检测版本更新
+        checkEdition();
         //初始化手势检测器
         initDetector();
         gotoTimer();
+    }
+    //检测版本更新
+    private void checkEdition() {
+        PgyUpdateManager.register(context,
+                new UpdateManagerListener() {
+
+                    @Override
+                    public void onUpdateAvailable(final String result) {
+
+                        // 将新版本信息封装到AppBean中
+                        final AppBean appBean = getAppBeanFromString(result);
+                        new AlertDialog.Builder(context)
+                                .setTitle("更新")
+                                .setMessage("")
+                                .setNegativeButton(
+                                        "确定",
+                                        new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(
+                                                    DialogInterface dialog,
+                                                    int which) {
+                                                startDownloadTask(
+                                                        context,
+                                                        appBean.getDownloadURL());
+                                            }
+                                        }).show();
+                    }
+
+                    @Override
+                    public void onNoUpdateAvailable() {
+                    }
+                });
     }
 
     @Override
@@ -273,5 +313,12 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
             }
         }
         return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PgyUpdateManager.unregister();
+
     }
 }

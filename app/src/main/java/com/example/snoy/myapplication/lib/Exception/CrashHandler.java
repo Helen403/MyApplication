@@ -1,8 +1,13 @@
 package com.example.snoy.myapplication.lib.Exception;
 
-import android.os.*;
+import android.content.Context;
+import android.os.Build;
+import android.os.Environment;
 import android.os.Process;
 import android.util.Log;
+
+import com.example.snoy.myapplication.lib.base.BaseApplication;
+import com.pgyersdk.crash.PgyCrashManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,6 +20,8 @@ import java.text.SimpleDateFormat;
  * 捕获全局异常
  */
 public final class CrashHandler implements Thread.UncaughtExceptionHandler {
+
+    Context context = BaseApplication.context;
 
     //定义文件存放路径
     private static final String PATH = Environment.getExternalStorageDirectory().getPath() + "/project_helen/Exception/";
@@ -46,6 +53,7 @@ public final class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread thread, Throwable throwable) {
+        PgyCrashManager.reportCaughtException(context, new RuntimeException(throwable));
         //记录异常信息到本地文本中
         dumpExceptionToSDCard(throwable);
         if (defaultCrashHandler != null) {

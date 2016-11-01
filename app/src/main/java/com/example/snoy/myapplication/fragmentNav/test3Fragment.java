@@ -29,7 +29,6 @@ public class test3Fragment extends BaseFragment {
     @Override
     protected void onAttachMyRecycleViewAdapter() {
         super.onAttachMyRecycleViewAdapter();
-        myRecycleView = (MyRecycleView) contentView.findViewById(R.id.myrecycleview);
     }
 
     @Override
