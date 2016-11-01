@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.lib.base.BaseActivity;
-import com.pgyersdk.feedback.PgyFeedback;
 
 /**
  * Created by Administrator on 2016/9/20.
@@ -26,7 +25,12 @@ public class threeActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                T("asdsadsa");
+            }
+        });
 
     }
 
@@ -40,7 +44,12 @@ public class threeActivity extends BaseActivity {
                     case R.id.tv_11:
 
 //                        PgyFeedback.getInstance().showActiivty(context);
-                        PgyFeedback.getInstance().showActivity(context);
+//                        PgyFeedback.getInstance().showActivity(context);
+//                        try {
+//                            throw new Exception();
+//                        } catch (Exception e) {
+//                            PgyCrashManager.reportCaughtException(context, e);
+//                        }
 
 
                         break;

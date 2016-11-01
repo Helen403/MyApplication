@@ -1,11 +1,13 @@
 package com.example.snoy.myapplication.lib.activityMain;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.constant.Constants;
@@ -21,10 +24,13 @@ import com.example.snoy.myapplication.lib.NavView.NavImgLayout;
 import com.example.snoy.myapplication.lib.Utils.DButils;
 import com.example.snoy.myapplication.lib.Utils.HttpUtils;
 import com.example.snoy.myapplication.lib.Utils.ImageUtils;
+import com.example.snoy.myapplication.lib.Utils.ProjectUtil;
 import com.example.snoy.myapplication.lib.base.BaseActivity;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
+
+import dmax.dialog.SpotsDialog;
 
 
 public final class WelcomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
@@ -36,8 +42,12 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
     private NavImgLayout navImag;
     private ImageView iv_logo;
     private boolean flag = true;
-    private Handler handler = new Handler();
     private boolean flagOnce = true;
+
+
+    private AlertDialog mDialog;
+    private InnerHandler mHandler = new InnerHandler();
+    private TextView tvMsgShow;
 
 
     /**
@@ -61,53 +71,19 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
         aigpic = (AnimImageGroup) findViewById(R.id.animpicid);
         iv_logo = (ImageView) findViewById(R.id.iv_logo);
         navImag = (NavImgLayout) findViewById(R.id.navImag);
+        tvMsgShow = (TextView) findViewById(R.id.tvMsgShow);
+        mDialog = new SpotsDialog(this, "初始化...");
     }
 
     @Override
     public void initData() {
-        //检测版本更新
-        checkEdition();
         //初始化手势检测器
         initDetector();
         gotoTimer();
     }
-    //检测版本更新
-    private void checkEdition() {
-        PgyUpdateManager.register(context,
-                new UpdateManagerListener() {
-
-                    @Override
-                    public void onUpdateAvailable(final String result) {
-
-                        // 将新版本信息封装到AppBean中
-                        final AppBean appBean = getAppBeanFromString(result);
-                        new AlertDialog.Builder(context)
-                                .setTitle("更新")
-                                .setMessage("")
-                                .setNegativeButton(
-                                        "确定",
-                                        new DialogInterface.OnClickListener() {
-
-                                            @Override
-                                            public void onClick(
-                                                    DialogInterface dialog,
-                                                    int which) {
-                                                startDownloadTask(
-                                                        context,
-                                                        appBean.getDownloadURL());
-                                            }
-                                        }).show();
-                    }
-
-                    @Override
-                    public void onNoUpdateAvailable() {
-                    }
-                });
-    }
 
     @Override
     public void setListeners() {
-
     }
 
     /**
@@ -187,61 +163,58 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
      * 跳转定时器
      */
     private void gotoTimer() {
-        handler.postDelayed(new Runnable() {
+        mDialog.show();
+        mHandler.sendEmptyMessage(0);
+    }
+
+    //第一次进入
+    public void startOnce() {
+        tvMsgShow.setVisibility(View.INVISIBLE);
+        Animation anim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_left_out);
+        anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void run() {
-                if (!TextUtils.isEmpty(DButils.getString("once"))) {
-                    //不是第一次登录
-                    goToMainActivity();
-                } else {
-                    Animation anim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_left_out);
-                    anim.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation) {
 
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            iv_logo.setVisibility(View.INVISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    iv_logo.startAnimation(anim);
-
-
-                    Animation navanim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_right_in);
-                    navanim.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                            navImag.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    navImag.startAnimation(navanim);
-                    aigpic.nextContent();
-
-                    flag = true;
-
-                    //标记为第一次登录
-                    DButils.putString("once", "Helen");
-                    //加载一次网络数据
-                    loadDatas();
-                }
             }
-        }, 2000);
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                iv_logo.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        iv_logo.startAnimation(anim);
+
+
+        Animation navanim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.custermview_img_right_in);
+        navanim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                navImag.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        navImag.startAnimation(navanim);
+        aigpic.nextContent();
+
+        flag = true;
+
+        //标记为第一次登录
+        DButils.putString("once", "Helen");
+        //加载一次网络数据
+        loadDatas();
     }
 
 
@@ -319,6 +292,86 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
     protected void onDestroy() {
         super.onDestroy();
         PgyUpdateManager.unregister();
-
     }
+
+    @SuppressLint("HandlerLeak")
+    private class InnerHandler extends Handler {
+        private ProjectUtil.ToolNetwork mNetwork;
+
+        @SuppressWarnings("static-access")
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    tvMsgShow.setText("正在检查网络……");
+                    mNetwork = ProjectUtil.ToolNetwork.getInstance();
+                    mNetwork.validateNetWork();
+                    mHandler.sendEmptyMessageDelayed(1, 500);
+                    break;
+                case 1:
+                    if (mNetwork == null) {
+                        finish();
+                    }
+                    T("当前网络: " + mNetwork.getNetworkType());
+                    mHandler.sendEmptyMessageDelayed(2, 1000);
+                    break;
+                case 2:
+                    tvMsgShow.setText("检查版本……");
+                    mHandler.sendEmptyMessageDelayed(3, 500);
+                    break;
+                case 3:
+                    tvMsgShow.setText("检查数据库……");
+                    mHandler.sendEmptyMessageDelayed(4, 500);
+                    break;
+                case 4:
+                    mDialog.dismiss();
+                    // //检测版本更新
+                    checkEdition();
+                    break;
+                case 5:
+                    mDialog.dismiss();
+                    if (!TextUtils.isEmpty(DButils.getString("once"))) {
+                        goToMainActivity();
+                    } else {
+                        startOnce();
+                    }
+                    break;
+            }
+        }
+    }
+
+    //检测版本更新
+    public void checkEdition() {
+        // 版本检测方式2：带更新回调监听
+        PgyUpdateManager.register(context, new UpdateManagerListener() {
+            @Override
+            public void onUpdateAvailable(final String result) {
+
+                final AppBean appBean = getAppBeanFromString(result);
+                new android.support.v7.app.AlertDialog.Builder(context)
+                        .setMessage("新版本：" + appBean.getVersionCode() + " 是否更新？")
+                        .setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startDownloadTask(context, appBean.getDownloadURL());
+                            }
+                        })
+                        .setNegativeButton("暂不", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mHandler.sendEmptyMessage(5);
+                            }
+                        })
+                        .setCancelable(false)
+                        .create().show();
+            }
+
+            @Override
+            public void onNoUpdateAvailable() {
+                T("已经是最新版本！");
+                mHandler.sendEmptyMessage(5);
+            }
+        });
+    }
+
 }
