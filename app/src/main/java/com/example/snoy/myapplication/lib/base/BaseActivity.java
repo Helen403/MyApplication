@@ -104,6 +104,10 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /*********************************************/
     //从外界传入的广播
     private BroadcastReceiver broadcastReceiver;
+    //加载更多
+    protected int page = 1;
+    protected int rows = 10;
+
 
     /**
      * 关闭Activity的广播，放在自定义的基类中，让其他的Activity继承这个Activity就行
