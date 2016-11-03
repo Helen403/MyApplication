@@ -11,6 +11,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -104,9 +107,12 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     /*********************************************/
     //从外界传入的广播
     private BroadcastReceiver broadcastReceiver;
+    /*********************************************/
     //加载更多
     protected int page = 1;
     protected int rows = 10;
+    /*********************************************/
+    protected static UIHandler handler = new UIHandler(Looper.getMainLooper());
 
 
     /**
@@ -999,6 +1005,36 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(System.currentTimeMillis());
         return cal.get(Calendar.HOUR_OF_DAY) + "";
+    }
+
+    /****************************************************************************************/
+    public static class UIHandler extends Handler {
+        private IHandler handler;//回调接口，消息传递给注册者
+
+        public UIHandler(Looper looper) {
+            super(looper);
+        }
+
+        public UIHandler(Looper looper, IHandler handler) {
+            super(looper);
+            this.handler = handler;
+        }
+
+        public void setHandler(IHandler handler) {
+            this.handler = handler;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (handler != null) {
+                handler.handleMessage(msg);//有消息，就传递
+            }
+        }
+    }
+
+    public interface IHandler {
+        void handleMessage(Message msg);
     }
 
 
