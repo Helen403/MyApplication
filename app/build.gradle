@@ -15,9 +15,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
     }
 }
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -47,4 +50,5 @@ dependencies {
     compile files('libs/pinyin4j-2.5.0.jar')
     compile files('libs/pgyer_sdk_2.4.4.jar')
     compile 'com.github.d-max:spots-dialog:0.7@aar'
+
 }

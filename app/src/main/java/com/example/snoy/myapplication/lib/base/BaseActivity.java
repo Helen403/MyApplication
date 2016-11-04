@@ -260,6 +260,11 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             onFragmentChange(0);
             initData();
             setListeners();
+            //有数据就传递
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
+                onTransmittingData(bundle);
+            }
             onAttachMyRecycleViewAdapter();
         } else {
             myNetFailView.setVisibility(View.VISIBLE);
@@ -334,6 +339,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     protected void dealLogicBeforeFindView() {
     }
 
+
     /***
      * 设置内容区域
      */
@@ -344,6 +350,10 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     public abstract void initData();
 
     public abstract void setListeners();
+
+
+    protected void onTransmittingData(Bundle bundle) {
+    }
 
     /******************************************************************/
     /**
@@ -430,8 +440,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
      * 判断是否铺满全屏
      */
     public void setFullScreen() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
         Window window = this.getWindow();
         //设置透明状态栏,这样才能让 ContentView 向上
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -480,6 +490,20 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
                 context.startActivity(new Intent(context, cls));
             }
         }, delay);
+    }
+
+
+    /**
+     * [含有Bundle通过Class打开编辑界面]
+     */
+    public void goToActivityByClassForResult(Class<?> cls, Bundle bundle,
+                                       int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(this, cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, requestCode);
     }
 
     /*********************************************************************************************/
