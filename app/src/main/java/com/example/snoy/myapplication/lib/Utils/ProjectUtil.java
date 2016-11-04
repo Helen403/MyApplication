@@ -79,6 +79,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.snoy.myapplication.lib.base.BaseActivity;
 import com.example.snoy.myapplication.lib.base.BaseApplication;
 
 import java.io.BufferedOutputStream;
@@ -2194,12 +2195,12 @@ public final class ProjectUtil {
 		public static void validateNetWork() {
 
 			if (!isConnected()) {
-				Builder dialogBuilder = new Builder(mContext);
+				Builder dialogBuilder = new Builder(BaseActivity.context);
 				dialogBuilder.setTitle("网络设置");
 				dialogBuilder.setMessage("网络不可用，是否现在设置网络？");
 				dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						((Activity) mContext).startActivityForResult(new Intent(Settings.ACTION_SETTINGS), which);
+						BaseActivity.context.startActivityForResult(new Intent(Settings.ACTION_SETTINGS), which);
 					}
 				});
 				dialogBuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

@@ -52,7 +52,13 @@ public final class BufferCircleView extends RelativeLayout {
         GradientDrawable gd = new GradientDrawable();//创建drawable
         gd.setColor(fillColor);
         gd.setCornerRadius(roundRadius);
-        ll.setBackground(gd);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            ll.setBackground(gd);
+        } else {
+            ll.setBackgroundDrawable(gd);
+        }
     }
 
     /**

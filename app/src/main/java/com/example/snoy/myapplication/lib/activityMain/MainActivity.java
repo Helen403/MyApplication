@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -53,6 +54,21 @@ public final class MainActivity extends BaseActivity implements RadioGroup.OnChe
 
     @Override
     public void findViews() {
+    }
+
+    @Override
+    public void initData() {
+    }
+
+    @Override
+    public void setListeners() {
+    }
+
+    @Override
+    protected void onNoNetInitData() {
+        super.onNoNetInitData();
+        myNetFailView.setVisibility(View.GONE);
+        /******************************************/
         /**
          * 根据名字动态获取资源
          */
@@ -61,10 +77,7 @@ public final class MainActivity extends BaseActivity implements RadioGroup.OnChe
             radioButtons[i] = (RadioButton) findViewById(resId);
         }
         rgTab = (RadioGroup) findViewById(R.id.rg_tab);
-    }
-
-    @Override
-    public void initData() {
+        /*********************************************************************/
         //设置文字和图片   R.mipmap.ic_launcher为背景选择  自己设
         int count = fragments.length;
         for (int i = 0; i < count; i++) {
@@ -85,11 +98,6 @@ public final class MainActivity extends BaseActivity implements RadioGroup.OnChe
         radioButtons[0].setSelected(true);
         rgTab.setOnCheckedChangeListener(this);
         initService();
-    }
-
-    @Override
-    public void setListeners() {
-
     }
 
     /****************************************************************************************/

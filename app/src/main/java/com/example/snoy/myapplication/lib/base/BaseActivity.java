@@ -211,6 +211,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         setBroadCastFinish();
         //检测网络状态
         checkNet();
+        //没网络的特别运行
+        onNoNetInitData();
     }
 
 
@@ -263,7 +265,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             //有数据就传递
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
-                onTransmittingData(bundle);
+                onGetBundle(bundle);
             }
             onAttachMyRecycleViewAdapter();
         } else {
@@ -288,6 +290,10 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         status.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(this, 20)));
         status.setBackgroundColor(color);
         ly_content.addView(status);
+        //低版本就不用
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
+            status.setVisibility(View.GONE);
+        }
 
         //创建一个头部View 高度为44
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -352,7 +358,11 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     public abstract void setListeners();
 
 
-    protected void onTransmittingData(Bundle bundle) {
+    protected void onGetBundle(Bundle bundle) {
+    }
+
+    //没网络的运行
+    protected void onNoNetInitData() {
     }
 
     /******************************************************************/
@@ -441,20 +451,21 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
      */
     public void setFullScreen() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
-        Window window = this.getWindow();
-        //设置透明状态栏,这样才能让 ContentView 向上
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-        ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
-        View mChildView = mContentView.getChildAt(0);
-        if (mChildView != null) {
-            //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
-            ViewCompat.setFitsSystemWindows(mChildView, false);
-        }
         this.getWindow().setBackgroundDrawable(null);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
+        }else{
+            Window window = this.getWindow();
+            //设置透明状态栏,这样才能让 ContentView 向上
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            ViewGroup mContentView = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
+            View mChildView = mContentView.getChildAt(0);
+            if (mChildView != null) {
+                //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 使其不为系统 View 预留空间.
+                ViewCompat.setFitsSystemWindows(mChildView, false);
+            }
+        }
     }
 
 

@@ -30,8 +30,6 @@ import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 
-import dmax.dialog.SpotsDialog;
-
 
 public final class WelcomeActivity extends BaseActivity implements GestureDetector.OnGestureListener {
 
@@ -66,24 +64,31 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
 
     @Override
     public void findViews() {
+    }
+
+    @Override
+    public void initData() {
+    }
+
+    @Override
+    public void setListeners() {
+    }
+
+
+    @Override
+    protected void onNoNetInitData() {
+        super.onNoNetInitData();
+        myNetFailView.setVisibility(View.GONE);
         hideHeadView();
         status.setBackgroundColor(Color.parseColor("#18bbff"));
         aigpic = (AnimImageGroup) findViewById(R.id.animpicid);
         iv_logo = (ImageView) findViewById(R.id.iv_logo);
         navImag = (NavImgLayout) findViewById(R.id.navImag);
         tvMsgShow = (TextView) findViewById(R.id.tvMsgShow);
-        mDialog = new SpotsDialog(this, "初始化...");
-    }
-
-    @Override
-    public void initData() {
+//        mDialog = new SpotsDialog(this, "初始化...");
         //初始化手势检测器
         initDetector();
         gotoTimer();
-    }
-
-    @Override
-    public void setListeners() {
     }
 
     /**
@@ -163,7 +168,7 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
      * 跳转定时器
      */
     private void gotoTimer() {
-        mDialog.show();
+//        mDialog.show();
         mHandler.sendEmptyMessage(0);
     }
 
@@ -305,14 +310,19 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
                 case 0:
                     tvMsgShow.setText("正在检查网络……");
                     mNetwork = ProjectUtil.ToolNetwork.getInstance();
-                    mNetwork.validateNetWork();
+//                    mNetwork.validateNetWork();
                     mHandler.sendEmptyMessageDelayed(1, 500);
                     break;
                 case 1:
                     if (mNetwork == null) {
                         finish();
                     }
-                    T("当前网络: " + mNetwork.getNetworkType());
+                    String type = mNetwork.getNetworkType();
+                    if (TextUtils.isEmpty(type)) {
+                        T("请检测网络!");
+                    } else {
+                        T("当前网络: " + type);
+                    }
                     mHandler.sendEmptyMessageDelayed(2, 1000);
                     break;
                 case 2:
@@ -324,12 +334,12 @@ public final class WelcomeActivity extends BaseActivity implements GestureDetect
                     mHandler.sendEmptyMessageDelayed(4, 500);
                     break;
                 case 4:
-                    mDialog.dismiss();
+//                    mDialog.dismiss();
                     // //检测版本更新
                     checkEdition();
                     break;
                 case 5:
-                    mDialog.dismiss();
+//                    mDialog.dismiss();
                     if (!TextUtils.isEmpty(DButils.getString("once"))) {
                         goToMainActivity();
                     } else {

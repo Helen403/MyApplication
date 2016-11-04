@@ -42,7 +42,11 @@ public final class MyNetFailView extends RelativeLayout implements View.OnClickL
         gd.setColor(fillColor);
         gd.setCornerRadius(roundRadius);
         gd.setStroke(strokeWidth, strokeColor);
-        refresh.setBackground(gd);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            refresh.setBackground(gd);
+        } else {
+            refresh.setBackgroundDrawable(gd);
+        }
         refresh.setTextColor(Color.parseColor("#B37ED1"));
     }
 
@@ -57,7 +61,11 @@ public final class MyNetFailView extends RelativeLayout implements View.OnClickL
         gd.setColor(fillColor);
         gd.setCornerRadius(roundRadius);
         gd.setStroke(strokeWidth, strokeColor);
-        refresh.setBackground(gd);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            refresh.setBackground(gd);
+        } else {
+            refresh.setBackgroundDrawable(gd);
+        }
         refresh.setTextColor(Color.WHITE);
     }
 

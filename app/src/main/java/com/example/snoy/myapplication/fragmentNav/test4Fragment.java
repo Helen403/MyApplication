@@ -4,11 +4,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.lib.Utils.LocationUtils;
 import com.example.snoy.myapplication.lib.base.BaseFragment;
-
-import com.baidu.location.BDLocation;
 
 
 /**
@@ -18,10 +17,6 @@ public class test4Fragment extends BaseFragment {
 
     private TextView click;
 
-    @Override
-    public void dealLogicBeforeFindView() {
-
-    }
 
     @Override
     public int getContentView() {
@@ -33,6 +28,7 @@ public class test4Fragment extends BaseFragment {
         super.onShowMessage(relativeLayout);
 
     }
+
 
     @Override
     public void findViews() {
