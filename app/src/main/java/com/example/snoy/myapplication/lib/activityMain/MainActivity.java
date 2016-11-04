@@ -126,6 +126,7 @@ public final class MainActivity extends BaseActivity implements RadioGroup.OnChe
         ft.show(fm.findFragmentByTag(checkedId + ""));
         currentIndex = checkedId;
         ft.commit();
+
     }
 
     /****************************************************************************************/
