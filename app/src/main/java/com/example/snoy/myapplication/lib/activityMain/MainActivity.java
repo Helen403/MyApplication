@@ -109,6 +109,7 @@ public final class MainActivity extends BaseActivity implements RadioGroup.OnChe
     private void initService() {
         Intent intent = new Intent(MainActivity.this, CoreService.class);
         startService(intent);
+
     }
 
     /****************************************************************************************/
