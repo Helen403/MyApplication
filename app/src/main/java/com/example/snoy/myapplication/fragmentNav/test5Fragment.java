@@ -1,8 +1,12 @@
 package com.example.snoy.myapplication.fragmentNav;
 
-import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.lib.base.BaseFragment;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.activity.FourActivity;
+import com.example.snoy.myapplication.lib.base.BaseFragment;
 
 
 /**
@@ -10,6 +14,9 @@ import com.example.snoy.myapplication.lib.base.BaseFragment;
  */
 public class test5Fragment extends BaseFragment {
 
+    private TextView rowOneItemOne;
+    private TextView rowOneItemTwo;
+    private ImageView rowTwoItemOne;
 
 
     @Override
@@ -19,6 +26,9 @@ public class test5Fragment extends BaseFragment {
 
     @Override
     public void findViews() {
+        rowOneItemOne = (TextView) contentView.findViewById(R.id.row_one_item_one);
+        rowOneItemTwo = (TextView) contentView.findViewById(R.id.row_one_item_two);
+        rowTwoItemOne = (ImageView) contentView.findViewById(R.id.row_two_item_one);
     }
 
     @Override
@@ -28,6 +38,18 @@ public class test5Fragment extends BaseFragment {
 
     @Override
     public void setListeners() {
+        setOnListeners(rowOneItemOne);
+        setOnClick(new onClick() {
+            @Override
+            public void onClick(View v, int id) {
+                switch (id){
+                    case R.id.row_one_item_one:
+                        goToActivityByClass(FourActivity.class);
+                        break;
+                }
+            }
+        });
+
     }
 
     private void showShare() {
@@ -60,8 +82,6 @@ public class test5Fragment extends BaseFragment {
 //        // 启动分享GUI
 //        oks.show(getActivity());
     }
-
-
 
 
 }

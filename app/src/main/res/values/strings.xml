@@ -20,4 +20,19 @@
     <string name="text_day_ago">天前</string>
     <string name="text_month_ago">月前</string>
     <string name="text_year_ago">年前</string>
+
+
+
+    <string-array name="gravity_values">
+        <item>bottom</item>
+        <item>center</item>
+        <item>top</item>
+    </string-array>
+
+    <string-array name="window_anim">
+        <item>Like Activity</item>
+        <item>Like Toast</item>
+        <item>Like Dialog</item>
+        <item>Like InputMethod</item>
+    </string-array>
 </resources>

@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:padding="10dp"
-        android:src="@mipmap/ic_launcher"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:src="@mipmap/custermview_back_arrow" />
 
     <TextView
         android:id="@+id/tv_title"
