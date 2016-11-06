@@ -61,7 +61,7 @@ public class JDPullToRefreshRecyclerview extends LinearLayout{
     }
 
     private void initView(Context context) {
-        LayoutInflater.from(getContext()).inflate(R.layout.layout_custom_ptr,this,true);
+        LayoutInflater.from(getContext()).inflate(R.layout.custermview_layout_custom_ptr,this,true);
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerview);
         mHeaderView = findViewById(R.id.pull_to_refresh_header);
         mPersonImg = (ImageView) mHeaderView.findViewById(R.id.img_person);
@@ -194,7 +194,7 @@ public class JDPullToRefreshRecyclerview extends LinearLayout{
             } else if (mCurrentStatus == STATUS_REFRESHING) {
                 mStatusText.setText("更新中...");
                 mBoxImg.setImageDrawable(null);
-                frameAnim = (AnimationDrawable) getResources().getDrawable(R.drawable.anim_drawable_jd);
+                frameAnim = (AnimationDrawable) getResources().getDrawable(R.drawable.custermview_anim_drawable_jd);
                 mPersonImg.setImageDrawable(frameAnim);
                 frameAnim.start();
             } else if (mCurrentStatus == STATUS_COMPLETE){

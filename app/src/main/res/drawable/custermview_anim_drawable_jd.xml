@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
-    <item android:drawable="@drawable/jd2"
+    <item android:drawable="@drawable/custermview_jd2"
         android:duration="75"/>
-    <item android:drawable="@drawable/jd3"
+    <item android:drawable="@drawable/custermview_jd3"
         android:duration="75"/>
-    <item android:drawable="@drawable/jd4"
+    <item android:drawable="@drawable/custermview_jd4"
         android:duration="75"/>
 </animation-list>

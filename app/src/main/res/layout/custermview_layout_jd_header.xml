@@ -16,7 +16,7 @@
             android:layout_height="73dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/scale_drawable_person"/>
+            android:src="@drawable/custermview_scale_drawable_person"/>
 
         <ImageView
             android:id="@+id/img_box"
@@ -24,7 +24,7 @@
             android:layout_height="15dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/scale_drawable_box"/>
+            android:src="@drawable/custermview_scale_drawable_box"/>
     </RelativeLayout>
 
     <LinearLayout

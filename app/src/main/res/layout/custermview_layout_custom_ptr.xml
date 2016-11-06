@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/layout_jd_header"
+        layout="@layout/custermview_layout_jd_header"
         />
 
     <android.support.v7.widget.RecyclerView

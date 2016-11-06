@@ -48,7 +48,7 @@ public class LoadingDialog {
         // 首先得到整个View
         @SuppressWarnings("all")
         View view = LayoutInflater.from(context).inflate(
-                R.layout.loading_dialog_view, null);
+                R.layout.custermview_loading_dialog_view, null);
         initView(view);
         // 创建自定义样式的Dialog
         mLoadingDialog = new Dialog(context, R.style.loading_dialog) {

@@ -2,7 +2,6 @@ package com.example.snoy.myapplication.lib.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Handler;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.example.snoy.myapplication.lib.Exception.CrashHandler;
@@ -15,7 +14,6 @@ import com.pgyersdk.crash.PgyCrashManager;
 public final class BaseApplication extends Application {
 
     public static Context context;
-    public static Handler handler = new Handler();
 
     @Override
     public void onCreate() {
