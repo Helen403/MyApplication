@@ -17,9 +17,9 @@ import android.media.ExifInterface;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.util.LruCache;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
-
 
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.lib.base.BaseApplication;
@@ -620,6 +620,24 @@ public final class ImageUtils {
         matrix.postScale(scaleWidth, scaleHeight);
         return Bitmap.createBitmap(bitMap, 0, 0, width, height, matrix, true);
     }
+
+    /****************************************************************************************/
+
+
+    /**
+     * 通过Base32将Bitmap转换成Base64字符串
+     * @param bit
+     * @return
+     */
+    public String Bitmap2StrByBase64(Bitmap bit){
+        ByteArrayOutputStream bos=new ByteArrayOutputStream();
+        bit.compress(Bitmap.CompressFormat.JPEG, 40, bos);//参数100表示不压缩
+        byte[] bytes=bos.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+
+    /****************************************************************************************/
 
 
 

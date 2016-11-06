@@ -441,6 +441,32 @@ public final class ControlUtils {
 
     /*********************************************************************/
 
+//    /**
+//     * post请求数据并转化
+//     */
+//    public static <T, E> void postsEveryTime(String url, final E e, final Class<T> cls, final OnControlUtils<T> onControlUtils) {
+//        HashMap<String, String> map = null;
+//        String params = "";
+//        if (e != null) {
+//            params = getJsonFromEntity(e);
+//            map = GsonToMaps(params);
+//        }
+//        HttpUtils.posts(url, map, new HttpUtils.OnHttpUtilsResultListener() {
+//            @Override
+//            public void onHttpSuccess(String url, String result) {
+//                onSuccess(url, cls, onControlUtils, result);
+//            }
+//
+//            @Override
+//            public void onHttpFailure(String url) {
+//                onFailure(url, onControlUtils);
+//            }
+//        });
+//    }
+
+
+    /*********************************************************************/
+
     /**
      * 异步下载数据的回调接口
      */

@@ -29,6 +29,9 @@ public class threeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 T("asdsadsa");
+//                Message msg = Message.obtain();
+//                msg.obj = new BusinessBean();
+//                handler.sendMessage(msg);
             }
         });
 
@@ -42,6 +45,13 @@ public class threeActivity extends BaseActivity {
             public void onClick(View v, int id) {
                 switch (id){
                     case R.id.tv_11:
+
+//                        handler.setHandler(new IHandler() {
+//                            @Override
+//                            public void handleMessage(Message msg) {
+//                               // msg.obj;
+//                            }
+//                        });
 
 //                        PgyFeedback.getInstance().showActiivty(context);
 //                        PgyFeedback.getInstance().showActivity(context);

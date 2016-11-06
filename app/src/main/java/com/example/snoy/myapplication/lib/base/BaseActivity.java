@@ -12,8 +12,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -61,10 +59,10 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     public static BaseActivity context;
     //配置一下
     protected Context contextAppliction = BaseApplication.context;
-    /******************************************/
+    /*******************************************************************************************/
     //沉侵的颜色  和导航栏颜色
     private static final int color = Color.rgb(228, 238, 249);
-    /*************************************/
+    /*******************************************************************************************/
     protected RelativeLayout content;
     //状态栏
     protected ImageView status;
@@ -76,26 +74,26 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     protected RelativeLayout head_view;
     protected TextView tv_title, tv_right;
     protected ImageView tv_left;
-    /*******************************************/
+    /***********************************************************************************************/
     //设置左边默认图片
     protected static final int leftDrawable = R.mipmap.ic_launcher;
     //设置右边默认图片
     private static final int RightDrawable = R.mipmap.ic_launcher;
-    /*******************************************/
+    /*************************************************************************************************/
     //加载中的View
     protected BufferCircleView bufferCircleView;
     //网络失败的View
     protected MyNetFailView myNetFailView;
-    /******************************************/
+    /************************************************************************************************/
     protected LayoutInflater inflater;
-    /*****************************************/
+    /*********************************************************************************************/
     //特殊提供节约空间的方法
     protected TextView tv[];
     protected ImageView iv[];
     //特定的
     protected int tvId[];
     protected int ivId[];
-    /*****************************************/
+    /*************************************************************************************************/
     protected FragmentManager fm;
     protected FragmentTransaction ft;
     //跳转的id
@@ -104,15 +102,18 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     protected ArrayList<BaseFragment> fragmentList = new ArrayList<>();
     //跳转的记录标记
     protected int indexFragment = 0;
-    /*********************************************/
+    /**************************************************************************************************/
     //从外界传入的广播
     private BroadcastReceiver broadcastReceiver;
-    /*********************************************/
+    /*************************************************************************************************/
     //加载更多
     protected int page = 1;
     protected int rows = 10;
-    /*********************************************/
-    protected static UIHandler handler = new UIHandler(Looper.getMainLooper());
+    /*************************************************************************************************/
+     public  Handler handler = new Handler();
+    /************************************************************************************************/
+//    protected static UIHandler handler = new UIHandler(Looper.getMainLooper());
+
 
 
     /**
@@ -1043,6 +1044,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     }
 
     /****************************************************************************************/
+  /*
     public static class UIHandler extends Handler {
         private IHandler handler;//回调接口，消息传递给注册者
 
@@ -1071,6 +1073,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     public interface IHandler {
         void handleMessage(Message msg);
     }
+*/
+    /****************************************************************************************/
 
 
 }

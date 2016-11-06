@@ -7,10 +7,12 @@ import android.widget.TextView;
 import com.example.snoy.myapplication.R;
 import com.example.snoy.myapplication.activity.FourActivity;
 import com.example.snoy.myapplication.lib.base.BaseFragment;
+import com.example.snoy.myapplication.lib.loadingdialog.LoadingDialog;
 
 
 /**
  * Created by SNOY on 2016/8/23.
+ *
  */
 public class test5Fragment extends BaseFragment {
 
@@ -38,13 +40,21 @@ public class test5Fragment extends BaseFragment {
 
     @Override
     public void setListeners() {
-        setOnListeners(rowOneItemOne);
+        setOnListeners(rowOneItemOne, rowOneItemTwo);
         setOnClick(new onClick() {
             @Override
             public void onClick(View v, int id) {
-                switch (id){
+                switch (id) {
                     case R.id.row_one_item_one:
                         goToActivityByClass(FourActivity.class);
+                        break;
+                    case R.id.row_one_item_two:
+                        new LoadingDialog(getActivity())
+                        .setInterceptBack(false)
+                                         .setLoadingText("加载中...")//设置loading时显示的文字
+                                .show();
+
+
                         break;
                 }
             }
@@ -52,6 +62,53 @@ public class test5Fragment extends BaseFragment {
 
     }
 
+    /************************************************************************************/
+//    https://github.com/ForgetAll/LoadingDialog
+//    LoadingDialog ld = new LoadingDialog(this);
+//    ld.setLoadingText("加载中")
+//            .setSuccessText("加载成功")//显示加载成功时的文字
+//    //.setFailedText("加载失败")
+//    .setInterceptBack(intercept_back_event)
+//    .setLoadSpeed(speed)
+//    .setRepeatCount(repeatTime)
+//    .setDrawColor(color)
+//    .show();
+//
+////在你代码中合适的位置调用反馈
+//    ld.loadSuccess();
+////ld.loadFailed();
+    /************************************************************************************/
+//    如果你不想要这个动态画出来的效果，你也可以通过closeSuccessAnim()或者closeFailedAnim()关闭它：
+//
+//    LoadingDialog ld = new LoadingDialog(this);
+//    ld.setLoadingText("加载中")
+//            .setSuccessText("加载成功")
+//    .setInterceptBack(intercept_back_event)
+//    .setLoadSpeed(speed)
+//    .closeSuccessAnim()
+//    .setDrawColor(color)
+//    .setRepeatCount(repeatTime)
+//    .show();
+
+    /************************************************************************************/
+
+//    setSize(int size)：可以通过这个来设置弹框的尺寸
+//    show()：展示你设置的loadingDialog
+//    close()：关闭动画释放一些资源
+//    setLoadingText(String msg)：设置Loading时的文字
+//    setSuccessText(String msg)：设置Loading成功时文字
+//    setFailed(String msg)：设置Loading失败时的文字
+//    loadSuccess()：调用这个方法展示一个成功的反馈
+//    loadFailed()：调用这个方法展示一个失败的反馈
+//    closeSuccessAnim()：关闭成功反馈的动态绘制
+//    closeFailedAnim()：关闭失败反馈的动态绘制
+//    setInterceptBack(boolean interceptBack)：是否拦截用户back，如果设置为true，那么一定要调用close()，不然用户只能把你的程序干掉才能退出了，在我的例子中有一个解决的思路你可以参考一下。
+//    getInterceptBack()：返回dialog是否拦截的布尔值
+//    setLoadSpeed(Speed speed)：参数是一个枚举，一共两个值，SPEED_ONE是比较慢的，SPEED_TWO比前一个快一点，为毛不再加？处理起来比较麻烦...
+//    setDrawColor(int color)：可以改变绘制的颜色，圆和里面的勾啊，叉啊的颜色，不建议你用，不一定好看。
+//    setRepeatCount(int count)：设置动态绘制的次数，比如你设置了值为1，那么除了加载的时候绘制一次，还会再绘制一次。如果你有这个需要，可以设置他的重绘次数。
+
+    /************************************************************************************/
     private void showShare() {
 //        ShareSDK.initSDK(getActivity());
 //        OnekeyShare oks = new OnekeyShare();
