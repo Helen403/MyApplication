@@ -1,13 +1,10 @@
 package com.example.snoy.myapplication.fragmentNav;
 
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.util.Log;
 
-import com.baidu.location.BDLocation;
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.lib.Utils.LocationUtils;
 import com.example.snoy.myapplication.lib.base.BaseFragment;
+import com.example.snoy.myapplication.lib.shoppoing.ShoppingView;
 
 
 /**
@@ -15,47 +12,40 @@ import com.example.snoy.myapplication.lib.base.BaseFragment;
  */
 public class test4Fragment extends BaseFragment {
 
-    private TextView click;
-
 
     @Override
     public int getContentView() {
-        return R.layout.fragment_test_1;
-    }
-
-    @Override
-    protected void onShowMessage(RelativeLayout relativeLayout) {
-        super.onShowMessage(relativeLayout);
-
+        return R.layout.activity_four;
     }
 
 
     @Override
     public void findViews() {
-        click = (TextView) contentView.findViewById(R.id.click);
+
+        ShoppingView mSv1 = (ShoppingView) contentView.findViewById(R.id.sv_1);
+        mSv1.setOnShoppingClickListener(new ShoppingView.ShoppingClickListener() {
+            @Override
+            public void onAddClick(int num) {
+                Log.d("@=>", "add.......num=> " + num);
+            }
+
+            @Override
+            public void onMinusClick(int num) {
+                Log.d("@=>", "minus.......num=> " + num);
+            }
+        });
+
+        ShoppingView mSv2 = (ShoppingView) contentView.findViewById(R.id.sv_2);
+        mSv2.setTextNum(1);
     }
 
     @Override
     public void initData() {
-        click.setText("这是第四个个Fragment");
-        LocationUtils.getBDLocation(new LocationUtils.OnLocationUtils() {
-            @Override
-            public void onSuccess(BDLocation location) {
-                T(location.getLatitude()+","+location.getLongitude());
-            }
-        });
     }
-
-
 
 
     @Override
     public void setListeners() {
-        click.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
     }
 
 }
