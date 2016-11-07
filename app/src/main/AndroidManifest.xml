@@ -67,6 +67,13 @@
         <activity android:name=".activity.FourActivity"/>
 
 
+        <!--  选择城市-->
+        <activity android:name=".activity.ChoiceCityActivity"/>
+        <activity android:name=".activity.JoinCompanyActivity"/>
+        <activity android:name=".activity.CreateCompanyActivity"/>
+
+
+
 
         <!--百度地图-->
         <meta-data

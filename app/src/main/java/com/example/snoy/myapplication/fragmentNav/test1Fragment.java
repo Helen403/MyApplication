@@ -7,10 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
+import com.example.snoy.myapplication.activity.ChoiceCityActivity;
 import com.example.snoy.myapplication.lib.Utils.DButils;
 import com.example.snoy.myapplication.lib.base.BaseFragment;
 import com.example.snoy.myapplication.lib.custemview.ImageCycleView;
-import com.example.snoy.myapplication.activity.oneActivity;
 
 import java.util.ArrayList;
 
@@ -69,7 +69,7 @@ public class test1Fragment extends BaseFragment {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), oneActivity.class);
+                Intent intent = new Intent(getActivity(), ChoiceCityActivity.class);
                 startActivity(intent);
             }
         });
