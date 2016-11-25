@@ -52,4 +52,5 @@ dependencies {
     //compile 'com.github.d-max:spots-dialog:0.7@aar'
     compile 'com.android.support:percent:22.2.0'
     compile 'com.zhy:base-rvadapter:3.0.3'
+    compile files('libs/ksoap2-android-assembly-2.5.2-jar-with-dependencies.jar')
 }

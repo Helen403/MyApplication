@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.snoy.myapplication.R;
-import com.example.snoy.myapplication.activity.FourActivity;
 import com.example.snoy.myapplication.lib.base.BaseFragment;
 import com.example.snoy.myapplication.lib.loadingdialog.LoadingDialog;
 
@@ -46,15 +45,13 @@ public class test5Fragment extends BaseFragment {
             public void onClick(View v, int id) {
                 switch (id) {
                     case R.id.row_one_item_one:
-                        goToActivityByClass(FourActivity.class);
+
                         break;
                     case R.id.row_one_item_two:
                         new LoadingDialog(getActivity())
                         .setInterceptBack(false)
                                          .setLoadingText("加载中...")//设置loading时显示的文字
                                 .show();
-
-
                         break;
                 }
             }
